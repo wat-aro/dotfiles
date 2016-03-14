@@ -1,0 +1,18 @@
+[user]
+	name = wat-aro
+	email = kazutas1008@gmail.com
+[core]
+	editor = emacs
+	precomposeunicode = true
+	quotepath = false
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[push]
+	default = simple
+[alias]
+	co = checkout
+	st = status
+	br = branch
+	ci = commit

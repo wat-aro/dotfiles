@@ -1,0 +1,27 @@
+#use "metro.ml"
+
+(* type ekimei_t = {
+   kanji : string
+   kana : string
+   romaji : string
+   shozoku : string
+   } *)
+(* 目的：ローマ字の駅名（文字列）と駅名リスト(ekimei_t list 型)を受け取り
+   園駅の漢字表記を返す *)
+(* romaji_to_kanji -> string -> ekimei_t list -> strin *)
+let rec romaji_to_kanji name lst = match lst with
+    [] -> ""
+  | {kanji = kanji; kana = kana; romaji = romaji; shozoku = shozoku} :: rest ->
+     if name = romaji
+     then kanji
+     else romaji_to_kanji name rest(* romaji_to_kanji name rest *)
+
+
+
+(* test *)
+let test1 = romaji_to_kanji "" [] = ""
+let test2 = romaji_to_kanji "" global_ekimei_list = ""
+let test3 = romaji_to_kanji "myogadani" [] = ""
+let test4 = romaji_to_kanji "myogadani" global_ekimei_list = "茗荷谷"
+let test5 = romaji_to_kanji "aoyamaicchome" global_ekimei_list = "青山一丁目"
+let test6 = romaji_to_kanji "heiwadai" global_ekimei_list = "平和台"
