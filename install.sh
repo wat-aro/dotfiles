@@ -1,8 +1,8 @@
 #!/bin/bash
 for f in .??*
 do
-    filepath="${PWD}/${file}"
-    homefile="${HOME}/${file}"
+    filepath="${PWD}/${f}"
+    homefile="${HOME}/${f}"
     
     [[ "$f" == ".git" ]] && continue
     [[ "$f" == ".DS_Store" ]] && continue
