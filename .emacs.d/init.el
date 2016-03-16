@@ -39,14 +39,15 @@
 (setenv "LC_ALL" "ja_JP.UTF-8")
 
 ;; PATH
-(load-file (expand-file-name "~/.emacs.d/shellenv.el"))
+(exec-path-from-shell-initialize)
 
 (let ((default-directory (locate-user-emacs-file "./elisp")))
   (add-to-list 'load-path default-directory)
   (normal-top-level-add-subdirs-to-load-path))
 
-(dolist (path (reverse (split-string (getenv "PATH") ":")))
-  (add-to-list 'exec-path path))
+;; (load-file (expand-file-name "~/.emacs.d/shellenv.el"))
+;; (dolist (path (reverse (split-string (getenv "PATH") ":")))
+;;   (add-to-list 'exec-path path))
 
 ;;; Coding:
 (setq-default indent-tabs-mode nil)
