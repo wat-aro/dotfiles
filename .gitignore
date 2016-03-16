@@ -6,3 +6,4 @@
 .emacs.d/auto-save-list/
 backups/
 .emacs.d/places
+.emacs.d/shellenv.el
