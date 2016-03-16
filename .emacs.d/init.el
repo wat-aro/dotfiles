@@ -1,283 +1,81 @@
-;; -*- Mode: Emacs-Lisp ; Coding: utf-8 -*-
-;; ------------------------------------------------------------------------
+;;; Package: --- Sammary
+;;; Commentary:
+;;; Code:
+;;; GC
+(setq-default gc-cons-percentage 0.5)
 
-;; 文字コード
-(cond
- ((eq system-type 'gnu/linux)
-  (prefer-coding-system 'utf-8)
-  (setq coding-system-for-read 'utf-8)
-  (setq coding-system-for-write 'utf-8))
- ((eq system-type 'darwin)
-  (set-default-coding-systems 'utf-8-unix)
-  (set-terminal-coding-system 'utf-8-unix)
-  (set-keyboard-coding-system 'utf-8-unix)
-  (prefer-coding-system 'utf-8-unix)
-  ))
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+;;; Variables
+(set-language-environment 'Japanese)
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq make-backup-files nil)
+(setq delete-auto-save-files t)
+(setq use-dialog-box nil)
 (setenv "LANG" "ja_JP.UTF-8")
 
-
-;; package
+;;; Packages:
+(when (or (require 'cask "~/.cask/cask.el" t)
+	  (require 'cask nil t))
+  (cask-initialize))
 (package-initialize)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
-;; cl
-(eval-when-compile (require 'cl))
+(require 'use-package)
+(pallet-mode t)
 
-;; @ load-path
-(setq default-directory "~/")
-(setq command-line-default-directory "~/")
+;; nyan-mode
+(custom-set-variables '(nyan-bar-length 16))
+(nyan-mode t)
 
-;; load-pathの追加関数
-(defun add-to-load-path (&rest paths)
-  (let (path)
-    (dolist (path paths paths)
-      (let ((default-directory (expand-file-name (concat user-emacs-directory path))))
-        (add-to-list 'load-path default-directory)
-        (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-            (normal-top-level-add-subdirs-to-load-path))))))
+;;; color-theme
+(load-theme 'gotham t)
 
-;; load-pathに追加するフォルダ
-;; 2つ以上フォルダを指定する場合の引数 => (add-to-load-path "elisp" "xxx" "xxx")
-(add-to-load-path "elisp" "elpa")
 
-;; load environment value
+;;; Environment:
+(setenv "LC_ALL" "ja_JP.UTF-8")
+
+;; PATH
 (load-file (expand-file-name "~/.emacs.d/shellenv.el"))
+
+(let ((default-directory (locate-user-emacs-file "./elisp")))
+  (add-to-list 'load-path default-directory)
+  (normal-top-level-add-subdirs-to-load-path))
+
 (dolist (path (reverse (split-string (getenv "PATH") ":")))
   (add-to-list 'exec-path path))
 
-
-;;; --- バックアップとオートセーブ ---
-;; バックアップファイルとオートセーブファイルを ~/.emacs.d/backups/ へ集める
-(add-to-list 'backup-directory-alist
-             (cons "." "~/.emacs.d/backups/"))
-(setq auto-save-file-name-transforms
-      `((".*" ,(expand-file-name "~/.emacs.d/backups/") t)))
-
-;; 行番号を表示する
-(global-linum-mode t)
-(set-face-attribute 'linum nil
-                    :foreground "#800"
-                    :height 0.9)
-
-;; 行番号フォーマット
-(setq linum-format "%4d")
-
-;;; 右から左に読む言語に対応させないことで描画高速化
-(setq-default bidi-display-reordering nil)
-
-;;; splash screenを無効にする
-(setq inhibit-splash-screen t)
-
-;;; 同じ内容を履歴に記録しないようにする
-(setq history-delete-duplicates t)
-
-;; C-u C-SPC C-SPC ...でどんどん過去のマークを遡る
-(setq set-mark-command-repeat-pop t)
-
-;;; 複数のディレクトリで同じファイル名のファイルを開いたときのバッファ名を調整する
-(require 'uniquify)
-;; filename<dir> 形式のバッファ名にする
-(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
-(setq uniquify-ignore-buffers-re "*[^*]+*")
-
-;;; ファイルを開いた位置を保存する
-(require 'saveplace)
-(setq-default save-place t)
-(setq save-place-file (concat user-emacs-directory "places"))
-
-;;; ミニバッファ履歴を次回Emacs起動時にも保存する
-(savehist-mode 1)
-
-;;; モードラインに時刻を表示する
-(display-time)
-
-;;; GCを減らして軽くする
-(setq gc-cons-threshold (* 10 gc-cons-threshold))
-
-;;; ログの記録行数を増やす
-(setq message-log-max 10000)
-
-;;; 履歴をたくさん保存する
-(setq history-length 1000)
-
-;;; メニューバーとツールバーとスクロールバーを消す
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-
-;;フォントをRictyにする
-(set-face-font 'default "Ricty-15:nil")
-
-;; スタートアップ非表示
-(setq inhibit-startup-screen t)
-
-;; scratchの初期メッセージ消去
-(setq initial-scratch-message "")
-;; gothamテーマ
-;; (load-theme 'gotham t)
-(load-theme 'clues t)
-
-;; 括弧の自動補完
-(require 'smartparens)
-(add-to-list 'sp-lisp-modes 'gauche-mode)
-(require 'smartparens-config)
-(smartparens-global-mode t)
-(require 'paredit)
-(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-(add-hook 'lisp-interacton-mode-hook 'enable-paredit-mode)
-(add-hook 'scheme-mode-hook 'enable-paredit-mode)
-(add-hook 'slime-mode-hook 'enable-paredit-mode)
-(add-hook 'inferior-scheme-mode-hook 'enable-paredit-mode)
-(add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
-
-;; ;; 括弧の範囲内を強調表示
-(show-paren-mode t)
-(setq show-paren-delay 0)
-
-;; 行末の空白を強調表示
-(setq-default show-trailing-whitespace t)
-(set-face-background 'trailing-whitespace "#b14770")
-
-;; タイトルバーにファイルのフルパス表示
-(setq frame-title-format "%f")
-
-;; タブ幅
-(setq default-tab-width 2)
-
-;; インデントにタブ文字を使用しない
+;;; Coding:
 (setq-default indent-tabs-mode nil)
-                                        ; yes or noをy or n
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; 最近開いたファイルの保存数を増やす
-(setq recentf-max-saved-items 3000)
-
-;; ミニバッファの履歴を保存する
-(savehist-mode 1)
-
-;; ミニバッファの履歴の保存数を増やす
-(setq history-length 3000)
-
-;; バックアップを残さない
-(setq make-backup-files nil)
-
-;; 行間
-(setq-default line-spacing 0)
-
-;; 1行ずつスクロール
-(setq scroll-conservatively 35
-      scroll-margin 0
-      scroll-step 1)
-(setq comint-scroll-show-maximum-output t)
 
 ;; フレームの透明度
-(set-frame-parameter (selected-frame) 'alpha '(0.95))
-
-;; モードラインに行番号表示
-(line-number-mode t)
-
-;; モードラインに列番号表示
-(column-number-mode t)
-
-;; C-RET で矩形選択
-;; (cua-mode t)
-;; (setq cua-enable-cua-keys nil)
-;; (define-key global-map (kbd "C-x RET") 'cua-set-rectangle-mark)
+(set-frame-parameter (selected-frame) 'alpha '(0.90))
 
 ;; ピープ音を鳴らさない
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
 
-;; スクリーンの最大化
-(set-frame-parameter nil 'fullscreen 'maximized)
 
-(when (eq system-type 'darwin)
-  (setq ns-command-modifier (quote meta)))
+;; White space
+(setq-default show-trailing-whitespace t)
 
-;; C-k で行全体を削除（改行を含む）
-;; (setq kill-whole-line t)
+;; Uniquify
+(custom-set-variables '(uniquify-buffer-name-style 'post-forward-angle-brackets))
 
-;; C-h を バックスペースへ
-(keyboard-translate ?\C-h ?\C-?)
+;; Show paren
+(show-paren-mode t)
 
-;; C-x ? を help へ
-(global-set-key "\C-x?" 'help-command)
+;; Column mode
+(column-number-mode t)
 
-;; インタラクティブにウィンドウを分割する
-(setq split-height-threshold nil)
-(setq split-width-threshold 100)
+;; 行番号の表示
+(global-linum-mode)
 
-;; C-t でウィンドウを切り替える。
-(global-set-key "\C-t" 'other-window)
-
-;; C-j で改行とインデント
-(global-set-key "\C-j" 'newline-and-indent)
-
-;; M-f,M-bの挙動を変更
-;; (require 'misc)
-;; (global-set-key (kbd "M-f") 'forward-to-word)
-;; (global-set-key (kbd "M-b") 'backward-to-word)
-
-;; C-a で行の先頭に。もう一度 C-aで文字の始まる位置に移動
-(defun my-goto-line-beginning-or-indent (&optional $position)
-  (interactive)
-  (or $position (setq $position (point)))
-  (let (($starting-position (progn (back-to-indentation) (point))))
-    (if (eq $starting-position $position)
-        (move-beginning-of-line 1))))
-
-(global-set-key (kbd "C-a") 'my-goto-line-beginning-or-indent)
-
-;; indent-guide
-;; (require 'indent-guide)
-;; (indent-guide-global-mode)
-;; (setq indent-guide-recursive t)
-
-;; dired
-;; diredを2つのウィンドウで開いている時に、デフォルトの移動orコピー先をもう一方のdiredで開いているディレクトリにする
-(setq dired-dwim-target t)
-;; ディレクトリを再帰的にコピーする
-(setq dired-recursive-copies 'always)
-
-(require 'dired-subtree)
-;;; iを置き換え
-(define-key dired-mode-map (kbd "i") 'dired-subtree-insert)
-;;; org-modeのようにTABで折り畳む
-(define-key dired-mode-map (kbd "<tab>") 'dired-subtree-remove)
-;;; C-x n nでsubtreeにナローイング
-(define-key dired-mode-map (kbd "C-x n n") 'dired-subtree-narrow)
-
-;;; ファイル名以外の情報を(と)で隠したり表示したり
-(require 'dired-details)
-(dired-details-install)
-(setq dired-details-hidden-string "")
-(setq dired-details-hide-link-targets nil)
-(setq dired-details-initially-hide nil)
-
-;;; dired-subtreeをdired-detailsに対応させる
-(defun dired-subtree-after-insert-hook--dired-details ()
-  (dired-details-delete-overlays)
-  (dired-details-activate))
-(add-hook 'dired-subtree-after-insert-hook
-          'dired-subtree-after-insert-hook--dired-details)
-
-;; find-dired対応
-(defadvice find-dired-sentinel (after dired-details (proc state) activate)
-  (ignore-errors
-    (with-current-buffer (process-buffer proc)
-      (dired-details-activate))))
-;; (progn (ad-disable-advice 'find-dired-sentinel 'after 'dired-details) (ad-update 'find-dired-sentinel))
-
-;;; [2014-12-30 Tue]^をdired-subtreeに対応させる
-(defun dired-subtree-up-dwim (&optional arg)
-  "subtreeの親ディレクトリに移動。そうでなければ親ディレクトリを開く(^の挙動)。"
-  (interactive "p")
-  (or (dired-subtree-up arg)
-      (dired-up-directory)))
-(define-key dired-mode-map (kbd "^") 'dired-subtree-up-dwim)
-
-;; @ modeline
+;; 行番号フォーマット
+(setq linum-format "%4d")
 
 ;; モードラインの割合表示を総行数表示
 (defvar my-lines-page-mode t)
@@ -298,244 +96,39 @@
         '(:eval (format my-mode-line-format
                         (count-lines (point-max) (point-min))))))
 
-;; multi-term
-(setq multi-term-program shell-file-name)
+;;; splash screenを無効にする
+(setq inhibit-splash-screen t)
 
-(global-set-key (kbd "C-c n") 'multi-term-next)
-(global-set-key (kbd "C-c p") 'multi-term-prev)
+;; scratchの初期メッセージ消去
+(setq initial-scratch-message "")
 
-(add-hook 'term-mode-hook
-          (lambda ()
-            (define-key term-raw-map (kbd "C-t") 'other-window)
-            (define-key term-raw-map (kbd "C-y") 'term-paste)
-            (define-key term-raw-map (kbd "C-h") 'term-send-backspace)
-            (define-key term-raw-map (kbd "M-d") 'term-send-forward-kill-word)
-            (define-key term-raw-map (kbd "M-<backspace>") 'term-send-backward-kill-word)
-            (define-key term-raw-map (kbd "M-DEL") 'term-send-backward-kill-word)
-            (define-key term-raw-map (kbd "C-v") nil)
-            (define-key term-raw-map (kbd "ESC ESC") 'term-send-raw)
-            (define-key term-raw-map (kbd "C-q") 'toggle-term-view)))
+;; タイトルバーにファイルのフルパス表示
+(setq frame-title-format "%f")
 
-(defun toggle-term-view () (interactive)
-       (cond ((eq major-mode 'term-mode)
-              (fundamental-mode)
-              (view-mode-enable)
-              (local-set-key (kbd "C-c C-c") 'toggle-term-view)
-              (setq multi-term-cursor-point (point)))
-             ((eq major-mode 'fundamental-mode)
-              (view-mode-disable)
-              (goto-char multi-term-cursor-point)
-              (multi-term-internal))))
+;;; 同じ内容を履歴に記録しないようにする
+(setq history-delete-duplicates t)
 
-;; auto-complete
-(require 'auto-complete)
-(require 'auto-complete-config)    ; 必須ではないですが一応
-(global-auto-complete-mode t)
-(define-key ac-completing-map (kbd "M-n") 'ac-next)      ; C-nで次候補選択
-(define-key ac-completing-map (kbd "M-p") 'ac-previous)  ; C-p で前候補選択
-(ac-config-default)
-(setq ac-fuzzy-enable t)
-(add-to-list 'ac-modes 'enh-ruby-mode)
-(add-to-list 'ac-modes 'web-mode)
-(add-to-list 'ac-modes 'inferior-scheme-mode)
-(add-to-list 'ac-modes 'gauche-mode)
-(add-to-list 'ac-modes 'kahua-mode)
+;; C-u C-SPC C-SPC ...でどんどん過去のマークを遡る
+(setq set-mark-command-repeat-pop t)
 
+; yes or noをy or n
+(fset 'yes-or-no-p 'y-or-n-p)
 
-(defvar ac-source-scheme
-  '((candidates
-     . (lambda ()
-         (require 'scheme-complete)
-         (all-completions ac-target (car (scheme-current-env))))))
-  "Source for scheme keywords.")
+;;; ファイルを開いた位置を保存する
+(use-package saveplace
+  :init
+  (setq-default save-place t)
+  (setq save-place-file (concat user-emacs-directory "places")))
 
-;; (eval-after-load 'scheme
-;;   '(progn
-;;     (define-key scheme-mode-map "\e\t" 'scheme-smart-complete)
-;;     (define-key scheme-mode-map "\t" 'scheme-complete-or-indent))
-;;   )
-(add-hook 'scheme-mode-hook
-          (lambda ()
-            (make-local-variable 'ac-sources)
-            (setq ac-sources (append ac-sources '(ac-source-scheme)))
-            (setq default-scheme-implementation 'gauche)
-            (setq *current-scheme-implementation* 'gauche)
-            (set (make-local-variable 'eldoc-documentation-function)
-                 'scheme-get-current-symbol-info)
-            (eldoc-mode t)
-            )
-          )
+;;; ミニバッファ履歴を次回Emacs起動時にも保存する
+(savehist-mode 1)
 
-(add-hook 'inferior-scheme-mode-hook
-          (lambda ()
-            (make-local-variable 'ac-sources)
-            (setq ac-sources (append ac-sources '(ac-source-scheme)))
-            (setq default-scheme-implementation 'gauche)
-            (setq *current-scheme-implementation* 'gauche)
-            (set (make-local-variable 'eldoc-documentation-function)
-                 'scheme-get-current-symbol-info)
-            (eldoc-mode t)
-            )
-          )
-
-;;; popwin
-(require 'popwin)
-(popwin-mode 1)
-;; M-x anything
-(setq helm-samewindow nil)
-(push '("*anything*" :height 20) popwin:special-display-config)
-
-;; M-x dired-jump-other-window
-(push '(dired-mode :position top) popwin:special-display-config)
-
-;; M-!
-(push "*Shell Command Output*" popwin:special-display-config)
-
-;; M-x compile
-(push '(compilation-mode :noselect t) popwin:special-display-config)
-
-;; slime
-(push "*slime-apropos*" popwin:special-display-config)
-(push "*slime-macroexpansion*" popwin:special-display-config)
-(push "*slime-description*" popwin:special-display-config)
-(push '("*slime-compilation*" :noselect t) popwin:special-display-config)
-(push "*slime-xref*" popwin:special-display-config)
-(push '(sldb-mode :stick t) popwin:special-display-config)
-(push 'slime-repl-mode popwin:special-display-config)
-(push 'slime-connection-list-mode popwin:special-display-config)
-
-;; undo-tree
-(push '(" *undo-tree*" :width 0.3 :position right) popwin:special-display-config)
-
-
-;; migemo
-(require 'migemo)
-(setq migemo-command "cmigemo")
-(setq migemo-options '("-q" "--emacs"))	
-
-;; Set your installed path
-(setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
-
-(setq migemo-user-dictionary nil)
-(setq migemo-regex-dictionary nil)
-(setq migemo-coding-system 'utf-8)
-(load-library "migemo")
-(migemo-init)
-
-;; helm
-(require 'helm-config)
-(helm-mode 1)
-;; ミニバッファでC-hをバックスペースに割り当て
-(define-key helm-read-file-map (kbd "C-h") 'delete-backward-char)
-;; C-iで補完
-(define-key helm-read-file-map (kbd "C-i") 'helm-execute-persistent-action)
-(when (require 'popwin)
-  (setq helm-samewindow nil)
-  (defvar display-buffer-function 'popwin:display-buffer)
-  (setq popwin:special-display-config '(("*compilatoin*" :noselect t)
-                                        ("helm" :regexp t :height 0.4)
-                                        )))
-
-(defvar helm-source-emacs-commands
-  (helm-build-sync-source "Emacs commands"
-    :candidates (lambda ()
-                  (let ((cmds))
-                    (mapatoms
-                     (lambda (elt) (when (commandp elt) (push elt cmds))))
-                    cmds))
-    :coerce #'intern-soft
-    :action #'command-execute)
-  "A simple helm source for Emacs commands.")
-
-(defvar helm-source-emacs-commands-history
-  (helm-build-sync-source "Emacs commands history"
-    :candidates (lambda ()
-                  (let ((cmds))
-                    (dolist (elem extended-command-history)
-                      (push (intern elem) cmds))
-                    cmds))
-    :coerce #'intern-soft
-    :action #'command-execute)
-  "Emacs commands history")
-
-(custom-set-variables
- '(helm-mini-default-sources '(helm-source-buffers-list
-                               helm-source-recentf
-                               helm-source-files-in-current-dir
-                               helm-source-emacs-commands-history
-                               helm-source-emacs-commands
-                               )))
-
-(define-key global-map (kbd "C-;") 'helm-mini)
-(define-key global-map (kbd "M-y") 'helm-show-kill-ring)
-
-
-(require 'helm-migemo)
-;;; この修正が必要
-(eval-after-load "helm-migemo"
-  '(defun helm-compile-source--candidates-in-buffer (source)
-     (helm-aif (assoc 'candidates-in-buffer source)
-         (append source
-                 `((candidates
-                    . ,(or (cdr it)
-                           (lambda ()
-                             ;; Do not use `source' because other plugins
-                             ;; (such as helm-migemo) may change it
-                             (helm-candidates-in-buffer (helm-get-current-source)))))
-                   (volatile) (match identity)))
-       source)))
-
-
-(require 'helm-swoop)
-;;; isearchからの連携を考えるとC-r/C-sにも割り当て推奨
-(define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-(define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-
-;;; 検索結果をcycle
-(setq helm-swoop-move-to-line-cycle t)
-
-(cl-defun helm-swoop-nomigemo (&key $query ($multiline current-prefix-arg))
-  "シンボル検索用Migemo無効版helm-swoop"
-  (interactive)
-  (let ((helm-swoop-pre-input-function
-         (lambda () (format "\\_<%s\\_> " (thing-at-point 'symbol)))))
-    (helm-swoop :$source (delete '(migemo) (copy-sequence (helm-c-source-swoop)))
-                :$query $query :$multiline $multiline)))
-;;; C-M-:に割り当て
-(global-set-key (kbd "C-M-:") 'helm-swoop-nomigemo)
-
-;;; [2014-11-25 Tue]
-(when (featurep 'helm-anything)
-  (defadvice helm-resume (around helm-swoop-resume activate)
-    "helm-anything-resumeで復元できないのでその場合に限定して無効化"
-    ad-do-it))
-
-;;; ace-isearch
-(global-ace-isearch-mode 1)
-
-;;; [2015-03-23 Mon]C-u C-s / C-u C-u C-s
-(defun isearch-forward-or-helm-swoop (use-helm-swoop)
-  (interactive "p")
-  (let (current-prefix-arg
-        (helm-swoop-pre-input-function 'ignore))
-    (call-interactively
-     (case use-helm-swoop
-       (1 'isearch-forward)
-       (4 'helm-swoop)
-       (16 'helm-swoop-nomigemo)))))
-
-(global-set-key (kbd "C-s") 'isearch-forward-or-helm-swoop)
-
-;; git-gutter
-(require 'git-gutter)
+;;; モードラインに時刻を表示する
+(display-time)
 
 ;; anzu
 (global-anzu-mode +1)
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(anzu-deactivate-region t)
  '(anzu-mode-lighter "")
  '(anzu-search-threshold 1000)
@@ -545,60 +138,290 @@
  '(rspec-use-rake-when-possible nil)
  '(tab-width 2))
 
-;;; emacs-lisp
 
-;; emacs-lisp-mode-hook 用の関数を定義
-(defun elisp-mode-hooks ()
-  "Lisp-mode-hooks"
-  (when (require 'eldoc nil t)
-    (setq eldoc-idle-delay 0.2)
-    (setq eldoc-echo-area-use-multiline-p t)
-    (eldoc-mode)))
 
-;; emacs-lisp-mode のフックをセットアップ
-(add-hook 'emacs-lisp-mode-hook 'elisp-mode-hooks)
+;; volatile-highlights.el
+(use-package volatile-highlights
+  :diminish volatile-highlights-mode
+  :init
+  (volatile-highlights-mode t))
 
-                                        ; カーソル位置のフェイス情報を表示
-(defun my-get-face (&optional $point)
-  (interactive)
-  (or $point (setq $point (point)))
-  (let (($face (or (get-char-property $point 'read-face-name)
-                   (get-char-property $point 'face))))
-    (if $face
-        (message (format "%s" $face))
-      (message "no face"))))
+;; Rainbow mode
+(use-package rainbow-mode
+  :defer t
+  :diminish rainbow-mode)
 
-;;式の評価結果を注釈するための設定
-(require 'lispxmp)
-(define-key emacs-lisp-mode-map (kbd "C-c C-d") 'lispxmp)
+;;; --- バックアップとオートセーブ ---
+;; バックアップファイルとオートセーブファイルを ~/.emacs.d/backups/ へ集める
+(add-to-list 'backup-directory-alist
+             (cons "." "~/.emacs.d/backups/"))
+(setq auto-save-file-name-transforms
+      `((".*" ,(expand-file-name "~/.emacs.d/backups/") t)))
 
-;; 自動コンパイル
-(require 'auto-async-byte-compile)
-;; 自動コンパイルを無効にするファイル名の正規表現
-(setq auto-async-byte-compile-exclude-file-regexp "/junk/")
-(add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
-(setq eldoc-idledeley 0.2)
-(setq eldoc-minor-mode-string "")
 
-;; scheme
+(progn
+  (bind-key "C-?"    'help-command)
+  (bind-key "C-t"   'other-window)
+  (bind-key "C-j"    'newline-and-indent)
+  (bind-key "C-S-n" 'make-frame)
+  (bind-key "C-S-w" 'delete-frame)
+  (bind-key "C-M-y" 'helm-show-kill-ring)
+  (bind-key "C-c n" 'multi-term-next))
+
+(keyboard-translate ?\C-h ?\C-?)
+
+;; exchange meta-key to super-key
+(setq ns-command-modifier 'meta)
+(setq ns-alternate-modifier 'super)
+
+(custom-set-variables
+ '(key-chord-two-keys-delay 0.02))
+(key-chord-mode t)
+(key-chord-define-global "df" 'find-function)
+(key-chord-define-global "fh" 'describe-function)
+(key-chord-define-global "fv" 'find-variable)
+(key-chord-define-global "pi" 'package-install)
+(key-chord-define-global "kl" 'align-regexp)
+
+;; Helm
+(use-package helm :defer t
+  :diminish helm-mode
+  :init
+  (require 'helm-config)
+  (bind-key "C-x C-f" 'helm-find-files)
+  (bind-key "M-x" 'helm-M-x)
+  (bind-key "C-;" 'helm-mini)
+  (helm-mode t)
+  :config
+  (bind-keys :map helm-map
+              ("C-i" . helm-execute-persistent-action)
+              ("C-h" . delete-backward-char)))
+
+;; Helm-ag
+(custom-set-variables '(helm-ff-file-compressed-list '("epub" "gz" "bz2" "zip" "7z")))
+(bind-key "C-:" 'helm-ag)
+
+;; Auto-Complete
+(use-package auto-complete
+  :diminish auto-complete-mode
+  :config
+  (add-to-list 'ac-dictionary-directories (locate-user-emacs-file "./ac-dict"))
+  (require 'auto-complete-config)
+  (ac-config-default)
+  (global-auto-complete-mode t)
+  (bind-key "M-n" 'ac-next)
+  (bind-key "M-p" 'ac-previous)
+  (setq ac-auto-show-menu 0.5)
+  (setq ac-menu-height 20)
+  (robe-mode))
+
+
+;; Magit
+;; (use-package magit :defer t)
+(setq-default magit-auto-revert-mode nil)
+(setq vc-handled-backends '())
+(eval-after-load "vc" '(remove-hook 'find-file-hooks 'vc-find-file-hook))
+(bind-key "C-x m" 'magit-status)
+(bind-key "C-c l" 'magit-blame)
+
+;; (use-package magit-find-file :defer t)
+(bind-key "M-t" 'magit-find-file-completing-read)
+
+(add-to-list 'auto-mode-alist '("/\\.gitexclude\\'" . gitignore-mode))
+
+;; Conf-Mode
+(require 'generic-x)
+(add-to-list 'auto-mode-alist '("/\\.*conf\\(ig\\)?\\'" . conf-mode) t)
+(add-to-list 'auto-mode-alist '("/\\.*rc\\'" . conf-mode) t)
+
+;; Projectile
+(use-package projectile :defer t
+  :config
+  (use-package helm-projectile)
+  (custom-set-variables
+   '(projectile-completion-system 'helm))
+  (projectile-global-mode t)
+  (helm-projectile-on)
+  (add-hook 'projectile-mode-hook 'projectile-rails-on))
+
+;; Flycheck
+(use-package flycheck
+  :diminish flycheck-mode
+  :init
+  (global-flycheck-mode t)
+  :config
+  ;; (flycheck-package-setup)
+  )
+
+;; Smartparens
+(use-package smartparens
+  :diminish smartparens-mode)
+(require 'smartparens-config)
+(smartparens-global-mode t)
+
+;; which-fund
+(which-function-mode t)
+
+(use-package popwin)
+
+;;; Language
+
+(custom-set-variables
+ '(sql-product 'mysql))
+
+;; Web
+(defun my/web-mode-hook ()
+  "Set variables for web-mode."
+  (custom-set-variables
+   '(web-mode-enable-auto-pairing nil)))
+
+(defun sp-web-mode-is-code-context  (id action context)
+  "This snippet is derived from http://web-mode.org/ ."
+  (when (and (eq action 'insert)
+             (not (or (get-text-property (point) 'part-side)
+                      (get-text-property (point) 'block-side))))
+    t))
+
+(use-package web-mode :defer t
+  :init
+  (add-hook 'web-mode-hook 'my/web-mode-hook)
+  (add-hook 'web-mode-hook 'emmet-mode)
+  (--each '("\\.html?\\'" "\\.tpl\\'" "\\.tpl\\.xhtml\\'" "\\.ejs\\'" "\\.hbs\\'" "\\.html\\.erb\\'")
+    (add-to-list 'auto-mode-alist (cons it 'web-mode)))
+  :config
+  (sp-local-pair 'web-mode "<" nil :when '(sp-web-mode-is-code-context)))
+
+(add-to-list 'auto-mode-alist '("/Gemfile.lock\\'" . conf-mode))
+
+(use-package ruby-mode
+  :config
+  (add-hook 'ruby-mode-hook
+            '(lambda ()
+               (setq flycheck-checker 'ruby-rubocop)
+               (flycheck-mode 1)))
+  (use-package ruby-electric-mode :defer t
+    :config
+    (ruby-electric-mode t))
+  (use-package ruby-block
+    :config
+    (ruby-block-mode t))
+  (use-package rcodetools
+    :config
+    (bind-key "C-c d" 'xmp ruby-mode-map)))
+
+(use-package rubocop
+  :init
+  (add-hook 'ruby-mode-hook
+            '(lambda ()
+               (rubocop-mode t)
+               (flycheck-define-checker ruby-rubocop
+                 "A Ruby syntax and style checker using the RuboCop tool."
+                 :command ("rubocop" "--format" "emacs"
+                           (config-file "--config" flycheck-rubocoprc)
+                           source)
+                 :error-patterns
+                 ((warning line-start
+                           (file-name) ":" line ":" column ": " (or "C" "W") ": " (message)
+                           line-end)
+                  (error line-start
+                         (file-name) ":" line ":" column ": " (or "E" "F") ": " (message)
+                         line-end)))
+               (setq flycheck-checker 'ruby-rubocop)
+               (ruby-electric-mode t)
+               (ruby-block-mode t)
+               (setq ruby-block-highlight-toggle t)
+               (flycheck-mode 1))))
+
+(magic-filetype-set-auto-mode 'ruby)
+
+;; inf-ruby
+(use-package inf-ruby :defer t
+  :config
+  (custom-set-variables
+   '(inf-ruby-default-implementation "pry")
+   '(inf-ruby-eval-binding "Pry.toplevel_binding"))
+  (add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on))
+
+;; robe
+;; (add-hook 'ruby-mode-hook 'robe-mode)
+;; (autoload 'robe-mode "robe" "Code navigation, documentation lookup and completion for Ruby" t nil)
+;; (autoload 'ac-robe-setup "ac-robe" "auto-complete robe" nil nil)
+;; (add-hook 'robe-mode-hook 'ac-robe-setup)
+
+(use-package robe
+  :init
+  (add-hook 'ruby-mode-hook 'robe-mode)
+  :config
+  (add-hook 'robe-mode-hook 'ac-robe-setup))
+
+
+;; Lisp
+(defvar my/emacs-lisp-ac-sources
+  '(ac-source-features ac-source-functions ac-source-variables ac-source-symbols))
+
+(defun my/emacs-lisp-mode-hook ()
+  ""
+  (rainbow-mode t)
+  (auto-complete-mode 1)
+  (setq ac-sources (append ac-sources my/emacs-lisp-ac-sources))
+  (set-face-foreground 'font-lock-regexp-grouping-backslash "indian red")
+  (set-face-foreground 'font-lock-regexp-grouping-construct "peru"))
+
+(defvar my/emacs-lisp-modes
+  '(emacs-lisp-mode-hook lisp-interaction-mode-hook ielm-mode-hook))
+(--each my/emacs-lisp-modes
+  (add-hook it 'turn-on-eldoc-mode)
+  (add-hook it 'elisp-slime-nav-mode)
+  (add-hook it 'my/emacs-lisp-mode-hook))
+
+;; `Cask' is NOT emacs-lisp-mode
+(add-to-list 'auto-mode-alist '("/Cask\\'" . lisp-mode))
+
+(use-package paredit :defer t
+  :diminish paredit-mode
+  :init
+  (--each my/emacs-lisp-modes (add-hook it 'enable-paredit-mode))
+  :config
+  (bind-keys :map paredit-mode-map
+             ("C-<right>" . 'right-word)
+             ("C-<left>"  . 'left-word)))
+
+;; Common Lisp
+;; slime
+(use-package slime :defer t
+  :config
+  ;;(setq display-buffer-function 'popwin:display-buffer)
+  (when (fboundp 'popwin:w3m-browse-url)
+    (setq browse-url-browser-function 'popwin:w3m-browse-url))
+  (setq popwin:special-display-config
+        (append popwin:special-display-config
+                '(("*anything for files*")
+                  ("*anything find-file*")
+                  ("*anything moccur*")
+                  ("*anything complete*")
+                  ("*anything*")
+                  ("*w3m*")
+                  ("*slime-apropos*")
+                  ("*slime-macroexpansion*")
+                  ("*slime-description*")
+                  ("*slime-compilation*" :noselect t)
+                  ("*slime-xref*")
+                  (slime-connection-list-mode)
+                  (sldb-mode :height 20 :stick t)
+                  (direx:direx-mode :position left :width 25 :dedicated t)
+                  ("*quickrun*")))))
+
+;; Scheme
 (setq process-coding-system-alist
       (cons '("gosh" utf-8 . utf-8) process-coding-system-alist))
-(setq scheme-program-name "gosh -i")
-(add-to-list 'auto-mode-alist '("\\.scm" . scheme-mode))
-;; (setq auto-mode-alist
-;;      (cons '("\.\(scm\)$" . gauche-mode) auto-mode-alist))
-;; (autoload 'gauche-mode "gauche-mode" "Major mode for Scheme." t)
-;; (autoload 'run-scheme "gauche-mode" "Run an inferior Scheme process." t)
+(defvar scheme-program-name "gosh -i")
 (autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
 (autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
 
 (defun scheme-other-window ()
-  "Run Gauche on other window"
+  "Run Gauche on other window."
   (interactive)
-  ;;(split-window-horizontally (/ (frame-width) 2))
+  (split-window-horizontally (/ (frame-width) 2))
   (let ((buf-name (buffer-name (current-buffer))))
     (scheme-mode)
     (switch-to-buffer-other-window
@@ -607,48 +430,7 @@
     (switch-to-buffer-other-window
      (get-buffer-create buf-name))))
 
-(define-key global-map
-  "\C-cg" 'scheme-other-window)
-
-(defun my/gauche-info-index (topic)
-  (interactive
-   (list (read-string
-          (concat "Gauche help topic : ")
-          (current-word))))
-  (switch-to-buffer-other-window (get-buffer-create "*info*"))
-  (let ((info-file "/usr/share/info/gauche-refe.info.gz"))
-    (info info-file)
-    (Info-index topic)))
-;; swank-gaucheを使うためのSLIME設定
-;;
-;;(push "<path-to-slime-dir>" load-path)
-;; (require 'slime)
-;; (slime-setup
-;;  '(slime-fancy
-;;    slime-scheme))
-
-;; ;; swank-gauche.scmが格納されているディレクトリへのパスを設定して下さい。
-;; (setq swank-gauche-path "/usr/local/Cellar/swank-gauche-master")
-
-;; ;; Gaucheのソースを持っていて、かつ、コンパイル済の場合、ソースのトップ
-;; ;; ディレクトリへのパスを設定して下さい。Gaucheのマニュアルに記載されている
-;; ;; オペレータの引数名がルックアップ出来るようになります。
-;; (setq swank-gauche-gauche-source-path "/usr/local/Cellar/gauche/Gauche")
-
-;; (push swank-gauche-path load-path)
-;; (require 'swank-gauche)
-
-;; (setq slime-lisp-implementations
-;;       '((gauche ("gosh") :init gauche-init :coding-system utf-8-unix)))
-
-;; ;; バッファのモジュールを決定するための設定
-;; (setq slime-find-buffer-package-function 'find-gauche-package)
-;; ;; c-p-c補完に設定
-;; (setq slime-complete-symbol-function 'slime-complete-symbol*)
-;; ;; web上のGaucheリファレンスマニュアルを引く設定
-;; (define-key slime-mode-map (kbd "C-c C-d H") 'gauche-ref-lookup)
-
-
+(bind-key "C-c g" 'scheme-other-window)
 
 (put 'and-let* 'scheme-indent-function 1)
 (put 'begin0 'scheme-indent-function 0)
@@ -717,246 +499,180 @@
 (put 'with-locking-mutex 'scheme-indent-funcion 1)
 (put 'guard 'scheme-indent-function 1)
 
-;;==========================================================
-;;         web-modeの設定
-;;==========================================================
-(require 'web-mode)
-(defun my-web-mode-hook ()
-  "Hooks for Web mode."
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-comment-style 2)
-  (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
-  (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
-  (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
-  (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil))
-  (setq web-mode-enable-auto-pairing nil)
-  )
 
-(add-hook 'web-mode-hook  'my-web-mode-hook)
-
-(defun sp-web-mode-is-code-context (id action context)
-  (and (eq action 'insert)
-       (not (or (get-text-property (point) 'part-side)
-                (get-text-property (point) 'block-side)))))
-
-(sp-local-pair 'web-mode "<" nil :when '(sp-web-mode-is-code-context))
+;; ac-slime
+(use-package ac-slime :defer t
+  :init
+  (add-hook 'slime-mode-hook 'set-up-slime-ac)
+  (add-hook 'slime-repl-mode-hook 'set-up-slime-ac))
 
 
-(setq web-mode-enable-current-element-highlight t)
-(setq web-mode-enable-current-column-highlight t)
-
-(setq web-mode-ac-sources-alist
-        '(("css" . (ac-source-css-property))
-          ("html" . (ac-source-words-in-buffer ac-source-abbrev))))
+;; JavaScript
+(use-package js2-mode :defer t
+  :mode "\\.js\\'")
 
 
+;; CoffeeScript
+(use-package coffee :defer t
+  :config
+  (setq-default coffee-tab-width 2)
+  (defun my/coffee-hook ()
+    (set (make-local-variable 'tab-width) 2))
+  (add-hook 'coffee-mode 'my/coffee-hook))
 
-;; 色の設定
+;; Markdown Mode
+(use-package markdown-mode :defer t
+  :mode ("\\.md\\'" . gfm-mode)
+  :config
+  ;;(unbind-key "`" markdown-mode-map)
+  (visual-line-mode nil))
 
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.[gj]sp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
-
-
-                                        ; ======================================================================
-
-
-;; js2-mode
-(require 'js2-mode)
-(autoload 'js2-mode "js" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
-;;; Common Lisp
-(require 'slime)
-;; (load (expand-file-name "~/.roswell/impls/ALL/ALL/quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "ros -L sbcl -Q run")
-(slime-setup '(slime-repl slime-fancy slime-banner slime-indentation))
-(setq slime-net-coding-system 'utf-8-unix)
-
-;;; ac-slime
-(require 'ac-slime)
-(add-hook 'slime-mode-hook 'set-up-slime-ac)
-(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+;; Emmet-mode
+(use-package emmet-mode :defer t
+  :init
+  (add-hook 'web-mode-hook  'emmet-mode)
+  (add-hook 'css-mode-hook  'emmet-mode))
 
 
-;; open-jnkfile
-(require 'open-junk-file)
-(setq open-junk-file-format "~/Documents/junk/%Y-%m%d-%H%M%S.")
-(global-set-key "\C-xj" 'open-junk-file)
+;;; Others
 
-;; org
-(require 'org)
-(require 'ob-scheme)
-(require 'ob-ruby)
+;; Recentf
+(use-package recentf-ext
+  :init
+  (custom-set-variables
+   '(recentf-max-saved-items 2000)
+   '(recentf-auto-cleanup 100)
+   '(recentf-exclude '("/recentf" "COMMIT_EDITMSG" "/.?TAGS" "^/sudo:" "/\\.emacs\\.d/games/*-scores"))
+   (list 'recentf-auto-save-timer (run-with-idle-timer 30 t 'recentf-save-list)))
+  (recentf-mode t)
+  (bind-key "C-c t" 'helm-recentf))
 
-(setq org-directory "~/Documents/junk")
-(setq org-agenda-files (list org-directory))
+;; Undo Tree
+(use-package undo-tree
+  :diminish undo-tree-mode
+  :init
+  (global-undo-tree-mode)
+  (bind-key "C-_" #'undo-tree-undo)
+  (bind-key "C-?" #'undo-tree-redo))
 
-(setq org-src-fontify-natively t)
+;; expand-region.el
+(use-package expand-region :defer t
+  :init
+  (bind-key "C-@" 'er/expand-region)
+  (bind-key "C-`" 'er/contract-region))
 
-(defun my-org-confirm-babel-evaluate (lang body)
-  (not (or (string= lang "scheme")
-           (string= lang "emacs-lisp")
-           (string= lang "ruby")
-           (string= lang "C")
-           (string= lang "cpp")
-           )))
+;; Annotate.el
+(use-package annotate :defer t
+  :init
+  (bind-key "M-@"   'annotate-annotate)
+  (bind-key "C-M-@" 'annotate-clear-annotations))
 
-(setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
-(global-set-key (kbd "C-c l")
-                'org-store-link)
+;;; Tools:
 
-(require 'flycheck)
+;; Open junk file
+(use-package open-junk-file
+  :init
+  (custom-set-variables
+   '(open-junk-file-format "~/Document/junk/%Y/%m/%Y-%m-%d-%H%M%S."))
+  (bind-key "C-x j" 'open-junk-file))
 
-(flycheck-define-checker c/c++
-  "A C/C++ checker using g++."
-  :command ("g++" "-Wall" "-Wextra" source)
-  :error-patterns  ((error line-start
-                           (file-name) ":" line ":" column ":" " エラー: " (message)
-                           line-end)
-                    (warning line-start
-                             (file-name) ":" line ":" column ":" " 警告: " (message)
-                             line-end))
-  :modes (c-mode c++-mode))
+;; ElScreen
+(use-package elscreen
+  :init
+  (custom-set-variables
+   '(elscreen-prefix-key (kbd "C-z"))
+   '(elscreen-tab-display-kill-screen nil)
+   '(elscreen-tab-display-control nil))
+  ;;(bind-key "C-t p" 'helm-elscreen)
+  (bind-key* "C-<tab>" 'elscreen-next)
+  (bind-key* "<C-iso-lefttab>" 'elscreen-previous)
+  (elscreen-start))
 
-;;; C
-(require 'cc-mode)
+;; Swoop
+(use-package helm-swoop
+  :init
+  (setq helm-swoop-move-to-line-cycle t)
+  (bind-key "M-C-;" 'helm-swoop)
+;;  (bind-key "C-;" 'helm-multi-swoop)
+  :config
+  (bind-key "C-r" 'helm-previous-line helm-swoop-map)
+  (bind-key "C-s" 'helm-next-line helm-swoop-map))
 
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (setq c-default-style "linux")
-            (setq indent-tabs-mode t)
-            (setq c-basic-offset 2)
-            'flycheck-mode
-            (setq c-auto-newline t)
-            ))
+;; direx
+(use-package direx :defer t
+  :init
+  (bind-key "M-C-\\" 'direx-project:jump-to-project-root-other-window))
 
+;; dired-k
+(use-package dired-k :defer t
+  :init
+  (add-hook 'dired-initial-position-hook 'dired-k)
+  (bind-key "K" 'dired-k dired-mode-map))
 
-;;; Ocaml
-;;; tuareg
-(add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . tuareg-mode))
-(autoload 'tuareg-mode "tuareg" "Major mode for editing OCaml code" t)
-(autoload 'tuareg-run-ocaml "tuareg" "Run an inferior OCaml process." t)
-(autoload 'ocamldebug "ocamldebug" "Run the OCaml debugger" t)
-;;(setq tuareg-use-smie nil)
+;; Visual
+(bind-key "M-%" 'vr/query-replace)
 
-;;; merlin
-(require 'merlin)
-;; (push "<SHARE_DIR>/emacs/site-lisp" load-path) ; directory containing merlin.el
-(setq merlin-command "~/.opam/system/bin/ocamlmerlin")
-(autoload 'merlin-mode "merlin" "Merlin mode" t)
-(add-hook 'tuareg-mode-hook 'merlin-mode)
-;; (setq merlin-ac-setup 'easy)
-(add-hook 'merlin-mode-hook
-          (lambda ()
-            (setq ac-sources (append ac-sources '(merlin-ac-source)))))
+;; image-mode
+(use-package image-mode :defer t
+  :config
+  (bind-key "<wheel-up>"    'image-previous-line    image-mode-map)
+  (bind-key "<wheel-down>"  'image-next-line        image-mode-map)
+  (bind-key "<wheel-right>" 'image-forward-hscroll  image-mode-map)
+  (bind-key "<wheel-left>"  'image-backward-hscroll image-mode-map))
 
-
-
-;;; flycheck OCaml
-(with-eval-after-load 'merlin
-  ;; Disable Merlin's own error checking
-  (setq merlin-error-after-save nil)
-
-  ;; Enable Flycheck checker
-  (flycheck-ocaml-setup))
-
-
-;;; Ruby
-(setq ruby-insert-encoding-magic-comment nil)
-(autoload 'ruby-mode "ruby-mode"
-  "Mode for editing ruby source files" t)
-(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode)) ;; shebangがrubyの場合、ruby-modeを開く
-
-
-;; ;; ruby-modeのインデントを改良する
-(setq ruby-deep-indent-paren-style nil)
-(defadvice ruby-indent-line (after unindent-closing-paren activate)
-  (let ((column (current-column))
-        indent offset)
-    (save-excursion
-      (back-to-indentation)
-      (let ((state (syntax-ppss)))
-        (setq offset (- column (current-column)))
-        (when (and (eq (char-after) ?\))
-                   (not (zerop (car state))))
-          (goto-char (cadr state))
-          (setq indent (current-indentation)))))
-    (when indent
-      (indent-line-to indent)
-      (when (> offset 0) (forward-char offset)))))
-
-;; ;;ruby-end
-;; (ruby-end-mode nil)
-;; (require 'ruby-end)
-;; (add-hook 'ruby-mode-hook
-;;   '(lambda ()
-;;      (abbrev-mode 1)
-;;      (electric-indent-mode t)
-;;      (electric-layout-mode t)))
-
-(require 'ruby-block)
-(ruby-block-mode t)
-(setq ruby-block-highlight-toggle t)
+;; multiple-cursors
+;; http://qiita.com/ongaeshi/items/3521b814aa4bf162181d
+(use-package multiple-cursors
+  :init
+  (require 'smartrep)
+  (declare-function smartrep-define-key "smartrep")
+  (bind-key "C-M-c" 'mc/edit-lines)
+  (bind-key "C-M-r" 'mc/mark-all-in-region)
+  (global-unset-key (kbd "C-."))
+  (smartrep-define-key global-map "C-."
+    '(("C-." . 'mc/mark-next-like-this)
+      ("n"   . 'mc/mark-next-like-this)
+      ("p"   . 'mc/mark-previous-like-this)
+      ("m"   . 'mc/mark-more-like-this-extended)
+      ("u"   . 'mc/unmark-next-like-this)
+      ("U"   . 'mc/unmark-previous-like-this)
+      ("s"   . 'mc/skip-to-next-like-this)
+      ("S"   . 'mc/skip-to-previous-like-this)
+      ("*"   . 'mc/mark-all-like-this)
+      ("d"   . 'mc/mark-all-like-this-dwim)
+      ("i"   . 'mc/insert-numbers)
+      ("o"   . 'mc/sort-regions)
+      ("O"   . 'mc/reverse-regions))))
 
 
-;; ;;; robe
-(add-hook 'ruby-mode-hook 'robe-mode)
-(autoload 'robe-mode "robe" "Code navigation, documentation lookup and completion for Ruby" t nil)
-(autoload 'ac-robe-setup "ac-robe" "auto-complete robe" nil nil)
-(add-hook 'robe-mode-hook 'ac-robe-setup)
+;; which-key
+(use-package which-key
+  :diminish which-key-mode
+  :init
+  (which-key-setup-side-window-right-bottom)
+  (which-key-mode t))
 
-;; ;;rbenv
-;; (require 'rbenv)
-;; (global-rbenv-mode)
-;; (setq rbenv-installation-dir "/usr/local/Cellar/rbenv/1.0.0")
-;; (setq rbenv-show-active-ruby-in-modeline -1)
 
- ;; C-c , v RSpec実行
- ;; C-c , s カ-ソルが当たっているサンプルを実行
- ;; C-c , t Specとソースを切り替える
-;; (require 'rspec-mode)
 
-;; ;; inf-rubyでpryを使う
-(require 'inf-ruby)
-(setq inf-ruby-default-implementation "pry")
-(setq inf-ruby-eval-binding "Pry.toplevel_binding")
-(add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on)
 
-;; ;; (setq inf-ruby-default-implementation "pry")
-;; ;; (setq inf-ruby-eval-binding "Pry.toplevel_binding")
-;; ;; (add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on)
 
-;; ;; rcodetools
-(require 'rcodetools)
-(defun ruby-mode-hook-rcodetools ()
-  (define-key ruby-mode-map (kbd "<C-tab>") 'rct-complete-symbol)
-  (define-key ruby-mode-map (kbd "C-c d") 'xmp))
-(add-hook 'ruby-mode-hook 'ruby-mode-hook-rcodetools)
-(defun make-ruby-scratch-buffer ()
-  (with-current-buffer (get-buffer-create "*ruby scratch*")
-    (ruby-mode)
-    (current-buffer)))
-(defun ruby-scratch ()
+
+;; スクリーンの最大化
+(set-frame-parameter nil 'fullscreen 'maximized)
+
+
+;; C-a で行の先頭に。もう一度 C-aで文字の始まる位置に移動
+(defun my-goto-line-beginning-or-indent (&optional $position)
   (interactive)
-  (pop-to-buffer (make-ruby-scratch-buffer)))
+  (or $position (setq $position (point)))
+  (let (($starting-position (progn (back-to-indentation) (point))))
+    (if (eq $starting-position $position)
+      (move-beginning-of-line 1))))
 
-;;; キーボードマクロ
-(fset 'endspace
-      "\C-e  \C-n")
+(bind-key "C-a" 'my-goto-line-beginning-or-indent)
 
-(fset 'next-eval
-      "\C-\M-e\C-x\C-e")
 
+;; Beacon — Never lose your cursor again
+(beacon-mode 1)
+
+;;; init.el ends here

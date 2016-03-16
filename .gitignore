@@ -1,1 +1,8 @@
 *~
+*.dat
+.cask/
+.emacs.d/history
+.emacs.d/recentf
+.emacs.d/auto-save-list/
+backups/
+.emacs.d/places

@@ -1,5 +1,5 @@
 #!/bin/bash
-for f in .??*
+for file in .??*
 do
     filepath="${PWD}/${file}"
     homefile="${HOME}/${file}"
