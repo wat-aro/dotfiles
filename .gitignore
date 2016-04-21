@@ -7,3 +7,6 @@
 backups/
 .emacs.d/places
 .emacs.d/shellenv.el
+.emacs.d/url
+.emacs.d/rake.cache
+.emacs.d/projectile-bookmarks.eld

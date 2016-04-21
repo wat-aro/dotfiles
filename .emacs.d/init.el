@@ -13,10 +13,12 @@
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-(setq make-backup-files nil)
+;;(setq make-backup-files nil)
 (setq delete-auto-save-files t)
 (setq use-dialog-box nil)
 (setenv "LANG" "ja_JP.UTF-8")
+
+(set-face-font 'default "Ricty-15:nil")
 
 ;;; Packages:
 (when (or (require 'cask "~/.cask/cask.el" t)
@@ -27,12 +29,11 @@
 (require 'use-package)
 (pallet-mode t)
 
-;; nyan-mode
-(custom-set-variables '(nyan-bar-length 16))
-(nyan-mode t)
-
 ;;; color-theme
-(load-theme 'gotham t)
+;; (load-theme 'flatland t)
+;; (load-theme 'hamburg t)
+(load-theme 'clues t)
+;; (load-theme 'gotham t)
 
 
 ;;; Environment:
@@ -139,7 +140,9 @@
  '(rspec-use-rake-when-possible nil)
  '(tab-width 2))
 
-
+;; インタラクティブにウィンドウを分割
+(setq split-height-threshold nil)
+(setq split-width-threshold 100)
 
 ;; volatile-highlights.el
 (use-package volatile-highlights
@@ -158,16 +161,18 @@
              (cons "." "~/.emacs.d/backups/"))
 (setq auto-save-file-name-transforms
       `((".*" ,(expand-file-name "~/.emacs.d/backups/") t)))
+(setq create-lockfiles nil)
 
 
 (progn
-  (bind-key "C-?"    'help-command)
-  (bind-key "C-t"   'other-window)
-  (bind-key "C-j"    'newline-and-indent)
-  (bind-key "C-S-n" 'make-frame)
-  (bind-key "C-S-w" 'delete-frame)
-  (bind-key "C-M-y" 'helm-show-kill-ring)
-  (bind-key "C-c n" 'multi-term-next))
+  (bind-key  "C-?"   'help-command)
+  (bind-key* "C-t"   'other-window)
+  (bind-key  "C-j"   'newline-and-indent)
+  (bind-key  "C-S-n" 'make-frame)
+  (bind-key  "C-S-w" 'delete-frame)
+  (bind-key  "C-M-y" 'helm-show-kill-ring)
+  (bind-key  "C-c n" 'multi-term-next)
+  (bind-key  "C-c v" 'revert-buffer))
 
 (keyboard-translate ?\C-h ?\C-?)
 
@@ -176,13 +181,14 @@
 (setq ns-alternate-modifier 'super)
 
 (custom-set-variables
- '(key-chord-two-keys-delay 0.02))
+ '(key-chord-two-keys-delay 0.01))
 (key-chord-mode t)
 (key-chord-define-global "df" 'find-function)
 (key-chord-define-global "fh" 'describe-function)
 (key-chord-define-global "fv" 'find-variable)
 (key-chord-define-global "pi" 'package-install)
 (key-chord-define-global "kl" 'align-regexp)
+(key-chord-define-global "db" 'describe-variable)
 
 ;; Helm
 (use-package helm :defer t
@@ -214,6 +220,7 @@
   (bind-key "M-p" 'ac-previous)
   (setq ac-auto-show-menu 0.5)
   (setq ac-menu-height 20)
+  (setq ac-use-fuzzy t)
   (robe-mode))
 
 
@@ -256,14 +263,41 @@
 
 ;; Smartparens
 (use-package smartparens
-  :diminish smartparens-mode)
-(require 'smartparens-config)
-(smartparens-global-mode t)
+  :diminish
+  smartparens-mode
+  :init
+  (require 'smartparens-config)
+  (smartparens-global-mode t)
+  (sp-pair "<%" " %>"))
+
+
 
 ;; which-fund
 (which-function-mode t)
 
-(use-package popwin)
+(use-package popwin
+  :init
+  (setq display-buffer-function 'popwin:display-buffer)
+  :config
+  (when (fboundp 'popwin:w3m-browse-url)
+    (setq browse-url-browser-function 'popwin:w3m-browse-url))
+  (setq popwin:special-display-config
+        (append popwin:special-display-config
+                '(("*w3m*")
+                  ("*slime-apropos*")
+                  ("*slime-macroexpansion*")
+                  ("*slime-description*")
+                  ("*slime-compilation*" :noselect t)
+                  ("*slime-xref*")
+                  (slime-connection-list-mode)
+                  (sldb-mode :height 40 :stick t)
+                  slime-repl-mode
+                  slime-connection-list-mode
+                  (direx:direx-mode :position left :width 25 :dedicated t)
+                  ("*quickrun*")
+                  (dired-mode :position top)
+                  ("*Shell Command Output*")
+                  (compilation-mode :noselect t)))))
 
 ;;; Language
 
@@ -274,7 +308,20 @@
 (defun my/web-mode-hook ()
   "Set variables for web-mode."
   (custom-set-variables
-   '(web-mode-enable-auto-pairing nil)))
+   '(web-mode-enable-auto-pairing nil))
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-comment-style 2)
+  (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil))
+  (setq web-mode-ac-sources-alist
+        '(("css" . (ac-source-css-property))
+          ("html" . (ac-source-words-in-buffer ac-source-abbrev))))
+  (setq web-mode-enable-current-element-highlight t)
+  (setq web-mode-enable-current-column-highlight t))
 
 (defun sp-web-mode-is-code-context  (id action context)
   "This snippet is derived from http://web-mode.org/ ."
@@ -287,10 +334,18 @@
   :init
   (add-hook 'web-mode-hook 'my/web-mode-hook)
   (add-hook 'web-mode-hook 'emmet-mode)
-  (--each '("\\.html?\\'" "\\.tpl\\'" "\\.tpl\\.xhtml\\'" "\\.ejs\\'" "\\.hbs\\'" "\\.html\\.erb\\'")
+  (--each '("\\.html?\\'" "\\.tpl\\'" "\\.tpl\\.xhtml\\'" "\\.ejs\\'" "\\.hbs\\'" "\\.html\\.erb\\'" "\\.html\\.slim\\'"
+            "\\.css?\\'" "\\.css\\.scss\\'" "\\.js\\.coffee\\.erb\\'")
     (add-to-list 'auto-mode-alist (cons it 'web-mode)))
+  (sp-local-pair 'web-mode "<" nil :when '(sp-web-mode-is-code-context))
   :config
-  (sp-local-pair 'web-mode "<" nil :when '(sp-web-mode-is-code-context)))
+  (setq web-mode-markup-indent-offset 2))
+
+(with-eval-after-load 'flycheck
+  (flycheck-add-mode 'html-tidy 'web-mode)
+  (flycheck-add-mode 'css-csslint 'web-mode))
+
+
 
 (add-to-list 'auto-mode-alist '("/Gemfile.lock\\'" . conf-mode))
 
@@ -300,15 +355,25 @@
             '(lambda ()
                (setq flycheck-checker 'ruby-rubocop)
                (flycheck-mode 1)))
-  (use-package ruby-electric-mode :defer t
-    :config
-    (ruby-electric-mode t))
-  (use-package ruby-block
-    :config
-    (ruby-block-mode t))
+    (use-package ruby-block
+      :config
+      (ruby-block-mode t))
+    ;; (use-package ruby-electric
+    ;;   :config
+    ;;   (ruby-electric-mode t)
   (use-package rcodetools
     :config
     (bind-key "C-c d" 'xmp ruby-mode-map)))
+
+;; (use-package ruby-electric
+;;   :defer t
+;;   :commands ruby-electric-mode
+;;   :init
+;;   (progn
+;;     (add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t))))
+;;   :config
+;;   (progn
+;;     (setq ruby-electric-expand-delimiters-list nil)))
 
 (use-package rubocop
   :init
@@ -328,12 +393,11 @@
                          (file-name) ":" line ":" column ": " (or "E" "F") ": " (message)
                          line-end)))
                (setq flycheck-checker 'ruby-rubocop)
-               (ruby-electric-mode t)
-               (ruby-block-mode t)
                (setq ruby-block-highlight-toggle t)
                (flycheck-mode 1))))
 
-(magic-filetype-set-auto-mode 'ruby)
+;; (magic-filetype-set-auto-mode 'ruby)
+(setq ruby-insert-encoding-magic-comment nil)
 
 ;; inf-ruby
 (use-package inf-ruby :defer t
@@ -361,7 +425,7 @@
   '(ac-source-features ac-source-functions ac-source-variables ac-source-symbols))
 
 (defun my/emacs-lisp-mode-hook ()
-  ""
+  "My Emacs Lisp mode."
   (rainbow-mode t)
   (auto-complete-mode 1)
   (setq ac-sources (append ac-sources my/emacs-lisp-ac-sources))
@@ -381,7 +445,12 @@
 (use-package paredit :defer t
   :diminish paredit-mode
   :init
-  (--each my/emacs-lisp-modes (add-hook it 'enable-paredit-mode))
+  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+  (add-hook 'lisp-interacton-mode-hook 'enable-paredit-mode)
+  (add-hook 'scheme-mode-hook 'enable-paredit-mode)
+  (add-hook 'slime-mode-hook 'enable-paredit-mode)
+  (add-hook 'inferior-scheme-mode-hook 'enable-paredit-mode)
+  (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
   :config
   (bind-keys :map paredit-mode-map
              ("C-<right>" . 'right-word)
@@ -390,27 +459,17 @@
 ;; Common Lisp
 ;; slime
 (use-package slime :defer t
+  :init
+  (setq inferior-lisp-program "ros -L sbcl -Q run")
+  (load (expand-file-name "~/.roswell/impls/ALL/ALL/quicklisp/slime-helper.el"))
+  (setq inferior-lisp-program "ros -L sbcl -Q run")
+  (setf slime-lisp-implementations
+        `((sbcl    ("sbcl" "--dynamic-space-size" "2000"))
+          (roswell ("ros" "dynamic-space-size=2000" "-Q" "-l" "~/.sbclrc" "run"))))
+  (setf slime-default-lisp 'roswell)
   :config
-  ;;(setq display-buffer-function 'popwin:display-buffer)
-  (when (fboundp 'popwin:w3m-browse-url)
-    (setq browse-url-browser-function 'popwin:w3m-browse-url))
-  (setq popwin:special-display-config
-        (append popwin:special-display-config
-                '(("*anything for files*")
-                  ("*anything find-file*")
-                  ("*anything moccur*")
-                  ("*anything complete*")
-                  ("*anything*")
-                  ("*w3m*")
-                  ("*slime-apropos*")
-                  ("*slime-macroexpansion*")
-                  ("*slime-description*")
-                  ("*slime-compilation*" :noselect t)
-                  ("*slime-xref*")
-                  (slime-connection-list-mode)
-                  (sldb-mode :height 20 :stick t)
-                  (direx:direx-mode :position left :width 25 :dedicated t)
-                  ("*quickrun*")))))
+  ;; (setq display-buffer-function 'popwin:display-buffer)
+  )
 
 ;; Scheme
 (setq process-coding-system-alist
@@ -509,8 +568,29 @@
 
 
 ;; JavaScript
+(defun js2-mode-hooks ()
+  (font-lock-add-keywords nil
+                          '(("^[^\n]\\{80\\}\\(.*\\)$" 1 font-lock-warning-face t)))
+
+  (defun underscore-require ()
+    (interactive)
+    (insert (format "var _ = require('underscore');"))
+    )
+  (local-set-key (kbd "C-x c j") 'underscore-require))
+
 (use-package js2-mode :defer t
-  :mode "\\.js\\'")
+  :mode "\\.js\\'"
+  :init
+  (add-hook 'js2-mode-hook 'js2-mode-hooks)
+  (add-hook 'js2-mode-hook 'ac-js2-mode)
+  :defer
+  (custom-set-variables '(js2-basic-offset 2)))
+
+(use-package coffee-mode :defer t
+  :mode "\\.js\\.coffee\\'"
+  :config
+  (custom-set-variables '(coffee-tab-width 2)))
+
 
 
 ;; CoffeeScript
@@ -532,8 +612,10 @@
 (use-package emmet-mode :defer t
   :init
   (add-hook 'web-mode-hook  'emmet-mode)
-  (add-hook 'css-mode-hook  'emmet-mode))
-
+  (add-hook 'css-mode-hook  'emmet-mode)
+  :config
+  (bind-key "C-c j" 'emmet-expand-line emmet-mode-keymap)
+  (bind-key "C-j" nil emmet-mode-keymap))
 
 ;;; Others
 
@@ -553,8 +635,8 @@
   :diminish undo-tree-mode
   :init
   (global-undo-tree-mode)
-  (bind-key "C-_" #'undo-tree-undo)
-  (bind-key "C-?" #'undo-tree-redo))
+  (bind-key "C-/" #'undo-tree-undo)
+  (bind-key "C-'" #'undo-tree-redo))
 
 ;; expand-region.el
 (use-package expand-region :defer t
@@ -574,20 +656,20 @@
 (use-package open-junk-file
   :init
   (custom-set-variables
-   '(open-junk-file-format "~/Document/junk/%Y/%m/%Y-%m-%d-%H%M%S."))
+   '(open-junk-file-format "~/Documents/junk/%Y/%m/%Y-%m-%d-%H%M%S."))
   (bind-key "C-x j" 'open-junk-file))
 
 ;; ElScreen
-(use-package elscreen
-  :init
-  (custom-set-variables
-   '(elscreen-prefix-key (kbd "C-z"))
-   '(elscreen-tab-display-kill-screen nil)
-   '(elscreen-tab-display-control nil))
-  ;;(bind-key "C-t p" 'helm-elscreen)
-  (bind-key* "C-<tab>" 'elscreen-next)
-  (bind-key* "<C-iso-lefttab>" 'elscreen-previous)
-  (elscreen-start))
+;; (use-package elscreen
+;;   :init
+;;   (custom-set-variables
+;;    '(elscreen-prefix-key (kbd "C-z"))
+;;    '(elscreen-tab-display-kill-screen nil)
+;;    '(elscreen-tab-display-control nil))
+;;   ;;(bind-key "C-t p" 'helm-elscreen)
+;;   (bind-key* "C-<tab>" 'elscreen-next)
+;;   (bind-key* "<C-iso-lefttab>" 'elscreen-previous)
+;;   (elscreen-start))
 
 ;; Swoop
 (use-package helm-swoop
@@ -631,7 +713,7 @@
   (bind-key "C-M-r" 'mc/mark-all-in-region)
   (global-unset-key (kbd "C-."))
   (smartrep-define-key global-map "C-."
-    '(("C-." . 'mc/mark-next-like-this)
+    '(("C-'" . 'mc/mark-next-like-this)
       ("n"   . 'mc/mark-next-like-this)
       ("p"   . 'mc/mark-previous-like-this)
       ("m"   . 'mc/mark-more-like-this-extended)
@@ -645,7 +727,6 @@
       ("o"   . 'mc/sort-regions)
       ("O"   . 'mc/reverse-regions))))
 
-
 ;; which-key
 (use-package which-key
   :diminish which-key-mode
@@ -653,17 +734,31 @@
   (which-key-setup-side-window-right-bottom)
   (which-key-mode t))
 
+(use-package ag-mode
+  :init
+  (add-hook 'ag-mode-hook '(lambda ()
+                             (use-package wgrep-ag)
+                             (setq wgrep-auto-save-buffer t)  ; 編集完了と同時に保存
+                             (setq wgrep-enable-key "r")      ; "r" キーで編集モードに
+                             (wgrep-ag-setup)))
+  :config
+  (setq ag-highlight-search t)
+  (setq ag-reuse-buffers t)
+  (use-package wgrep-ag)
+  (setq wgrep-auto-save-buffer t)
+  (setq wgrep-enable-key "r")
+  (wgrep-ag-setup))
 
-
-
-
+;; 自動でバッファの再読み込み
+(global-auto-revert-mode 1)
 
 ;; スクリーンの最大化
 (set-frame-parameter nil 'fullscreen 'maximized)
 
-
+"Add an optionally FUZZY slime completion source to `ac-sources'."
 ;; C-a で行の先頭に。もう一度 C-aで文字の始まる位置に移動
 (defun my-goto-line-beginning-or-indent (&optional $position)
+  "Go to POSITION, if add optionally."
   (interactive)
   (or $position (setq $position (point)))
   (let (($starting-position (progn (back-to-indentation) (point))))
@@ -672,8 +767,20 @@
 
 (bind-key "C-a" 'my-goto-line-beginning-or-indent)
 
-
 ;; Beacon — Never lose your cursor again
 (beacon-mode 1)
+
+;; nyan-mode
+;; (custom-set-variables '(nyan-bar-length 16))
+;; (nyan-mode t)
+
+(defun sicp ()
+  (interactive)
+  (info "~/.emacs.d/info/sicp.info"))
+
+(defun onlisp ()
+  (interactive)
+  (info "~/.emacs.d/info/onlisp.info"))
+
 
 ;;; init.el ends here

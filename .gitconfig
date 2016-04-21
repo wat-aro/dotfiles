@@ -9,10 +9,14 @@
 	diff = auto
 	status = auto
 	branch = auto
+	interactive = auto
 [push]
-	default = simple
+	default = matching
 [alias]
 	co = checkout
 	st = status
 	br = branch
 	ci = commit
+  puf = push --force-with-lease
+[rerere]
+	enabled = true
