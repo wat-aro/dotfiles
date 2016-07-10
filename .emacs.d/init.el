@@ -29,6 +29,15 @@
 (require 'use-package)
 (pallet-mode t)
 
+;;; skk
+(when (require 'skk nil t)
+  (global-set-key "\C-\\" 'skk-mode)
+  (setq default-input-method "japanese-skk")
+  (require 'skk-study))
+
+(require 'sticky)
+(use-sticky-key ?\; sticky-alist:ja)
+
 ;;; color-theme
 ;; (load-theme 'flatland t)
 ;; (load-theme 'hamburg t)
@@ -180,15 +189,15 @@
 (setq ns-command-modifier 'meta)
 (setq ns-alternate-modifier 'super)
 
-(custom-set-variables
- '(key-chord-two-keys-delay 0.01))
-(key-chord-mode t)
-(key-chord-define-global "df" 'find-function)
-(key-chord-define-global "fh" 'describe-function)
-(key-chord-define-global "fv" 'find-variable)
-(key-chord-define-global "pi" 'package-install)
-(key-chord-define-global "kl" 'align-regexp)
-(key-chord-define-global "db" 'describe-variable)
+;; (custom-set-variables
+;;  '(key-chord-two-keys-delay 0.01))
+;; (key-chord-mode t)
+;; (key-chord-define-global "df" 'find-function)
+;; (key-chord-define-global "fh" 'describe-function)
+;; (key-chord-define-global "fv" 'find-variable)
+;; (key-chord-define-global "pk" 'package-install)
+;; (key-chord-define-global "kl" 'align-regexp)
+;; (key-chord-define-global "dv" 'describe-variable)
 
 ;; Helm
 (use-package helm :defer t
@@ -254,12 +263,7 @@
 
 ;; Flycheck
 (use-package flycheck
-  :diminish flycheck-mode
-  :init
-  (global-flycheck-mode t)
-  :config
-  ;; (flycheck-package-setup)
-  )
+  :ensure t)
 
 ;; Smartparens
 (use-package smartparens
@@ -334,12 +338,14 @@
   :init
   (add-hook 'web-mode-hook 'my/web-mode-hook)
   (add-hook 'web-mode-hook 'emmet-mode)
-  (--each '("\\.html?\\'" "\\.tpl\\'" "\\.tpl\\.xhtml\\'" "\\.ejs\\'" "\\.hbs\\'" "\\.html\\.erb\\'" "\\.html\\.slim\\'"
-            "\\.css?\\'" "\\.css\\.scss\\'" "\\.js\\.coffee\\.erb\\'")
+  (--each '("\\.html?\\'" "\\.tpl\\'" "\\.tpl\\.xhtml\\'" "\\.ejs\\'" "\\.hbs\\'"
+            "\\.html\\.erb\\'" "\\.html\\.slim\\'" "\\.css?\\'" "\\.css\\.scss\\'"
+            "\\.js\\.coffee\\.erb\\'" "\\.js\\.erb\\'")
     (add-to-list 'auto-mode-alist (cons it 'web-mode)))
   (sp-local-pair 'web-mode "<" nil :when '(sp-web-mode-is-code-context))
   :config
-  (setq web-mode-markup-indent-offset 2))
+  (setq web-mode-markup-indent-offset 2)
+  (flycheck-mode t))
 
 (with-eval-after-load 'flycheck
   (flycheck-add-mode 'html-tidy 'web-mode)
@@ -350,6 +356,7 @@
 (add-to-list 'auto-mode-alist '("/Gemfile.lock\\'" . conf-mode))
 
 (use-package ruby-mode
+  :interpreter (("ruby" . ruby-mode))
   :config
   (add-hook 'ruby-mode-hook
             '(lambda ()
@@ -363,7 +370,8 @@
     ;;   (ruby-electric-mode t)
   (use-package rcodetools
     :config
-    (bind-key "C-c d" 'xmp ruby-mode-map)))
+    (bind-key "C-c d" 'xmp ruby-mode-map)
+    (flycheck-mode t)))
 
 ;; (use-package ruby-electric
 ;;   :defer t
@@ -401,17 +409,19 @@
 
 ;; inf-ruby
 (use-package inf-ruby :defer t
+  :init
+  (add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on)
+  ;; (add-hook 'inf-ruby-mode-hook 'robe-start)
   :config
   (custom-set-variables
    '(inf-ruby-default-implementation "pry")
-   '(inf-ruby-eval-binding "Pry.toplevel_binding"))
-  (add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on))
+   '(inf-ruby-eval-binding "Pry.toplevel_binding")))
 
 ;; robe
-;; (add-hook 'ruby-mode-hook 'robe-mode)
-;; (autoload 'robe-mode "robe" "Code navigation, documentation lookup and completion for Ruby" t nil)
-;; (autoload 'ac-robe-setup "ac-robe" "auto-complete robe" nil nil)
-;; (add-hook 'robe-mode-hook 'ac-robe-setup)
+(add-hook 'ruby-mode-hook 'robe-mode)
+(autoload 'robe-mode "robe" "Code navigation, documentation lookup and completion for Ruby" t nil)
+(autoload 'ac-robe-setup "ac-robe" "auto-complete robe" nil nil)
+(add-hook 'robe-mode-hook 'ac-robe-setup)
 
 (use-package robe
   :init
@@ -578,28 +588,95 @@
     )
   (local-set-key (kbd "C-x c j") 'underscore-require))
 
-(use-package js2-mode :defer t
-  :mode "\\.js\\'"
-  :init
-  (add-hook 'js2-mode-hook 'js2-mode-hooks)
-  (add-hook 'js2-mode-hook 'ac-js2-mode)
-  :defer
-  (custom-set-variables '(js2-basic-offset 2)))
+;; (use-package js2-mode
+;;   :mode "\\.js\\'"
+;;   :init
+;;   (add-hook 'js2-mode-hook 'js2-mode-hooks)
+;;   (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+;;   :config
+;;   (custom-set-variables '(js2-basic-offset 2)))
+
+;; (use-package turn
+;;   :config
+;;   (use-package tern-auto-complete)
+;;   (tern-ac-setup))
+
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\.js$" . js2-mode))
+(add-hook 'js2-mode-hook
+          (lambda ()
+            (tern-mode t)))
+(custom-set-variables '(js2-basic-offset 2))
+
+(eval-after-load 'tern
+  '(progn
+     (require 'tern-auto-complete)
+     (tern-ac-setup)))
 
 (use-package coffee-mode :defer t
   :mode "\\.js\\.coffee\\'"
   :config
-  (custom-set-variables '(coffee-tab-width 2)))
+  (custom-set-variables '(coffee-tab-width 2))
+  (flycheck-mode t))
 
 
 
 ;; CoffeeScript
-(use-package coffee :defer t
-  :config
-  (setq-default coffee-tab-width 2)
-  (defun my/coffee-hook ()
-    (set (make-local-variable 'tab-width) 2))
-  (add-hook 'coffee-mode 'my/coffee-hook))
+;; (use-package coffee :defer t
+;;   :config
+;;   (setq-default coffee-tab-width 2)
+;;   (defun my/coffee-hook ()
+;;     (set (make-local-variable 'tab-width) 2))
+;;   (add-hook 'coffee-mode 'my/coffee-hook))
+
+
+;;; Ocaml
+;;; tuareg
+(add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . tuareg-mode))
+(autoload 'tuareg-mode "tuareg" "Major mode for editing OCaml code" t)
+(autoload 'tuareg-run-ocaml "tuareg" "Run an inferior OCaml process." t)
+(autoload 'ocamldebug "ocamldebug" "Run the OCaml debugger" t)
+;;(setq tuareg-use-smie nil)
+
+;;; merlin
+(require 'merlin)
+;; (push "<SHARE_DIR>/emacs/site-lisp" load-path) ; directory containing merlin.el
+(setq merlin-command "~/.opam/system/bin/ocamlmerlin")
+(autoload 'merlin-mode "merlin" "Merlin mode" t)
+(add-hook 'tuareg-mode-hook 'merlin-mode)
+;; (setq merlin-ac-setup 'easy)
+(add-hook 'merlin-mode-hook
+          (lambda ()
+            (setq ac-sources (append ac-sources '(merlin-ac-source)))))
+
+
+
+;;; flycheck OCaml
+(with-eval-after-load 'merlin
+  ;; Disable Merlin's own error checking
+  (setq merlin-error-after-save nil)
+  ;; Enable Flycheck checker
+  (flycheck-ocaml-setup))
+
+;; ;; OCaml
+;; ;; tuareg
+;; (add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . tuareg-mode))
+;; (autoload 'tuareg-mode "tuareg" "Major mode for editing OCaml code" t)
+;; (autoload 'tuareg-run-ocaml "tuareg" "Run an inferior OCaml process." t)
+;; (autoload 'ocamldebug "ocamldebug" "Run the OCaml debugger" t)
+
+;; ;; merlin
+;; (use-package merlin :  defer t
+;;   :init
+;;   (add-hook 'tuareg-mode-hook 'merlin-mode)
+;;   (add-hook 'merlin-mode-hook
+;;             (lambda ()
+;;               (setq ac-sources (append ac-sources '(merlin-ac-source)))))
+;;   :config
+;;   (setq merlin-error-after-save nil)
+;;   (flycheck-ocaml-setup))
+
+
 
 ;; Markdown Mode
 (use-package markdown-mode :defer t
@@ -616,6 +693,11 @@
   :config
   (bind-key "C-c j" 'emmet-expand-line emmet-mode-keymap)
   (bind-key "C-j" nil emmet-mode-keymap))
+
+(use-package slim-mode
+  :mode
+  ("\\.slim\\'" . slim-mode)
+  ("\\.html\\.slim\\'" . slim-mode))
 
 ;;; Others
 
@@ -658,6 +740,25 @@
   (custom-set-variables
    '(open-junk-file-format "~/Documents/junk/%Y/%m/%Y-%m-%d-%H%M%S."))
   (bind-key "C-x j" 'open-junk-file))
+
+;; org
+(use-package org
+  :config
+  (use-package ob-ruby)
+  (setq org-directory "~/Documents/junk")
+  (setq org-agenda-files (list org-directory))
+
+  (setq org-src-fontify-natively t)
+
+  (defun my-org-confirm-babel-evaluate (lang body)
+    (not (or (string= lang "ditaa")
+             (string= lang "emacs-lisp")
+             (string= lang "ruby")
+             (string= lang "C")
+             (string= lang "cpp")
+             )))
+  (setq org-hide-leading-stars t)
+  (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate))
 
 ;; ElScreen
 ;; (use-package elscreen
@@ -734,7 +835,7 @@
   (which-key-setup-side-window-right-bottom)
   (which-key-mode t))
 
-(use-package ag-mode
+(use-package ag-mode :defer t
   :init
   (add-hook 'ag-mode-hook '(lambda ()
                              (use-package wgrep-ag)
