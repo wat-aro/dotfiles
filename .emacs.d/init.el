@@ -181,7 +181,8 @@
   (bind-key  "C-S-w" 'delete-frame)
   (bind-key  "C-M-y" 'helm-show-kill-ring)
   (bind-key  "C-c n" 'multi-term-next)
-  (bind-key  "C-c v" 'revert-buffer))
+  (bind-key  "C-c v" 'revert-buffer)
+  (bind-key  "C-s-t" 'other-frame))
 
 (keyboard-translate ?\C-h ?\C-?)
 
@@ -411,24 +412,42 @@
 (use-package inf-ruby :defer t
   :init
   (add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on)
-  ;; (add-hook 'inf-ruby-mode-hook 'robe-start)
   :config
   (custom-set-variables
    '(inf-ruby-default-implementation "pry")
    '(inf-ruby-eval-binding "Pry.toplevel_binding")))
 
-;; robe
-(add-hook 'ruby-mode-hook 'robe-mode)
-(autoload 'robe-mode "robe" "Code navigation, documentation lookup and completion for Ruby" t nil)
-(autoload 'ac-robe-setup "ac-robe" "auto-complete robe" nil nil)
-(add-hook 'robe-mode-hook 'ac-robe-setup)
 
-(use-package robe
+;; robe
+;; (autoload 'ac-robe-setup "ac-robe" "auto-complete robe" nil nil)
+(use-package robe :defer t
   :init
   (add-hook 'ruby-mode-hook 'robe-mode)
-  :config
   (add-hook 'robe-mode-hook 'ac-robe-setup))
 
+(use-package ac-robe-setup :defer t
+  :commands (ac-robe-setup))
+
+;;; helm-gtags
+(add-hook 'helm-gtags-mode-hook
+'(lambda ()
+;;入力されたタグの定義元へジャンプ
+(local-set-key (kbd "M-t") 'helm-gtags-find-tag)
+
+;;入力タグを参照する場所へジャンプ
+(local-set-key (kbd "M-r") 'helm-gtags-find-rtag)  
+
+;;入力したシンボルを参照する場所へジャンプ
+(local-set-key (kbd "M-s") 'helm-gtags-find-symbol)
+
+;;タグ一覧からタグを選択し, その定義元にジャンプする
+(local-set-key (kbd "M-l") 'helm-gtags-select)
+
+;;ジャンプ前の場所に戻る
+(local-set-key (kbd "M-j") 'helm-gtags-pop-stack)))
+
+(add-hook 'php-mode-hook 'helm-gtags-mode)
+(add-hook 'ruby-mode-hook 'helm-gtags-mode)
 
 ;; Lisp
 (defvar my/emacs-lisp-ac-sources
@@ -601,17 +620,33 @@
 ;;   (use-package tern-auto-complete)
 ;;   (tern-ac-setup))
 
-(autoload 'js2-mode "js2-mode" nil t)
-(add-to-list 'auto-mode-alist '("\.js$" . js2-mode))
-(add-hook 'js2-mode-hook
-          (lambda ()
-            (tern-mode t)))
-(custom-set-variables '(js2-basic-offset 2))
+(use-package js2-mode
+  :init
+  (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+  :mode "\\.js\\'"
+  :config
+  (custom-set-variables '(js2-basic-offset 2))
+  (bind-keys :map js2-mode-map
+             ("C-c C-e" . nodejs-repl-send-last-sexp)
+             ("C-c C-l" . nodejs-repl-load-file)
+             ("C-c C-b" . nodejs-repl-send-buffer)
+             ("C-c C-r" . nodejs-repl-send-region)))
+;; (autoload 'js2-mode "js2-mode" nil t)
+;; (add-to-list 'auto-mode-alist '("\.js$" . js2-mode))
+;; (add-hook 'js2-mode-hook
+;;           (lambda ()
+;;             (tern-mode t)))
+;; (custom-set-variables '(js2-basic-offset 2))
 
-(eval-after-load 'tern
-  '(progn
-     (require 'tern-auto-complete)
-     (tern-ac-setup)))
+(use-package tern
+  :config
+  (use-package tern-auto-complete)
+  (tern-ac-setup))
+
+;; (eval-after-load 'tern
+;;   '(progn
+;;      (require 'tern-auto-complete)
+;;      (tern-ac-setup)))
 
 (use-package coffee-mode :defer t
   :mode "\\.js\\.coffee\\'"
@@ -619,6 +654,9 @@
   (custom-set-variables '(coffee-tab-width 2))
   (flycheck-mode t))
 
+(use-package nodejs-repl
+  :init
+  (add-hook 'js2-mode-hook (lambda () (tern-mode t))))
 
 
 ;; CoffeeScript
