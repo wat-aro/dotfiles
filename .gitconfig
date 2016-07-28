@@ -18,5 +18,6 @@
 	br = branch
 	ci = commit
   puf = push --force-with-lease
+  b = browse
 [rerere]
 	enabled = true

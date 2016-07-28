@@ -29,21 +29,21 @@
 (require 'use-package)
 (pallet-mode t)
 
-;;; skk
-(when (require 'skk nil t)
-  (global-set-key "\C-\\" 'skk-mode)
-  (setq default-input-method "japanese-skk")
-  (require 'skk-study))
+;; ;;; skk
+;; (when (require 'skk nil t)
+;;   (global-set-key "\C-\\" 'skk-mode)
+;;   (setq default-input-method "japanese-skk")
+;;   (require 'skk-study))
 
-(require 'sticky)
-(use-sticky-key ?\; sticky-alist:ja)
+;; (require 'sticky)
+;; (use-sticky-key ?\; sticky-alist:ja)
 
 ;;; color-theme
 ;; (load-theme 'flatland t)
 ;; (load-theme 'hamburg t)
 (load-theme 'clues t)
 ;; (load-theme 'gotham t)
-
+;; (load-theme 'vsc t)
 
 ;;; Environment:
 (setenv "LC_ALL" "ja_JP.UTF-8")
@@ -383,7 +383,7 @@
 ;;   :config
 ;;   (progn
 ;;     (setq ruby-electric-expand-delimiters-list nil)))
-
+(setq ruby-deep-indent-paren nil)
 (use-package rubocop
   :init
   (add-hook 'ruby-mode-hook
@@ -433,19 +433,14 @@
 '(lambda ()
 ;;入力されたタグの定義元へジャンプ
 (local-set-key (kbd "M-t") 'helm-gtags-find-tag)
-
 ;;入力タグを参照する場所へジャンプ
 (local-set-key (kbd "M-r") 'helm-gtags-find-rtag)  
-
 ;;入力したシンボルを参照する場所へジャンプ
 (local-set-key (kbd "M-s") 'helm-gtags-find-symbol)
-
 ;;タグ一覧からタグを選択し, その定義元にジャンプする
 (local-set-key (kbd "M-l") 'helm-gtags-select)
-
 ;;ジャンプ前の場所に戻る
 (local-set-key (kbd "M-j") 'helm-gtags-pop-stack)))
-
 (add-hook 'php-mode-hook 'helm-gtags-mode)
 (add-hook 'ruby-mode-hook 'helm-gtags-mode)
 
@@ -736,6 +731,11 @@
   :mode
   ("\\.slim\\'" . slim-mode)
   ("\\.html\\.slim\\'" . slim-mode))
+
+(use-package haml-mode
+  :mode
+  ("\\.haml\\'" . slim-mode)
+  ("\\.html\\.haml\\'" . slim-mode))
 
 ;;; Others
 
