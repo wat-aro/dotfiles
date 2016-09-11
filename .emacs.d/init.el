@@ -41,8 +41,8 @@
 ;;; color-theme
 ;; (load-theme 'flatland t)
 ;; (load-theme 'hamburg t)
-(load-theme 'clues t)
-;; (load-theme 'gotham t)
+;; (load-theme 'clues t)
+(load-theme 'gotham t)
 ;; (load-theme 'vsc t)
 
 ;;; Environment:
@@ -51,8 +51,10 @@
 ;; PATH
 (exec-path-from-shell-initialize)
 
-(let ((default-directory (locate-user-emacs-file "./elisp")))
+(let ((default-directory (locate-user-emacs-file "./elisp"))
+      (opam-directory "~/.opam/system/share/emacs/site-lisp"))
   (add-to-list 'load-path default-directory)
+  (add-to-list 'load-path opam-directory)
   (normal-top-level-add-subdirs-to-load-path))
 
 ;; (load-file (expand-file-name "~/.emacs.d/shellenv.el"))
@@ -340,7 +342,7 @@
   (add-hook 'web-mode-hook 'my/web-mode-hook)
   (add-hook 'web-mode-hook 'emmet-mode)
   (--each '("\\.html?\\'" "\\.tpl\\'" "\\.tpl\\.xhtml\\'" "\\.ejs\\'" "\\.hbs\\'"
-            "\\.html\\.erb\\'" "\\.html\\.slim\\'" "\\.css?\\'" "\\.css\\.scss\\'"
+            "\\.html\\.erb\\'" "\\.html\\+smartphone\\.erb\\'" "\\.html\\.slim\\'" "\\.css?\\'"
             "\\.js\\.coffee\\.erb\\'" "\\.js\\.erb\\'")
     (add-to-list 'auto-mode-alist (cons it 'web-mode)))
   (sp-local-pair 'web-mode "<" nil :when '(sp-web-mode-is-code-context))
@@ -352,7 +354,20 @@
   (flycheck-add-mode 'html-tidy 'web-mode)
   (flycheck-add-mode 'css-csslint 'web-mode))
 
+(require 'scss-mode)
+(add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
 
+;; インデント幅を2にする
+;; コンパイルは compass watchで行うので自動コンパイルをオフ
+(defun scss-custom ()
+  "scss-mode-hook"
+  (and
+   (set (make-local-variable 'css-indent-offset) 2)
+   (set (make-local-variable 'scss-compile-at-save) nil)
+   )
+  )
+(add-hook 'scss-mode-hook
+  '(lambda() (scss-custom)))
 
 (add-to-list 'auto-mode-alist '("/Gemfile.lock\\'" . conf-mode))
 
@@ -362,7 +377,8 @@
   (add-hook 'ruby-mode-hook
             '(lambda ()
                (setq flycheck-checker 'ruby-rubocop)
-               (flycheck-mode 1)))
+               (flycheck-mode 1)
+               (setq ruby-deep-indent-paren nil)))
     (use-package ruby-block
       :config
       (ruby-block-mode t))
@@ -396,7 +412,7 @@
                            source)
                  :error-patterns
                  ((warning line-start
-                           (file-name) ":" line ":" column ": " (or "C" "W") ": " (message)
+                           (file-name) ":" line ":" column ": " (or "C" "W") ": " (messae)
                            line-end)
                   (error line-start
                          (file-name) ":" line ":" column ": " (or "E" "F") ": " (message)
@@ -618,14 +634,14 @@
 (use-package js2-mode
   :init
   (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
-  :mode "\\.js\\'"
+  :mode "\\.js\\'" "\\.json\\'"
   :config
   (custom-set-variables '(js2-basic-offset 2))
   (bind-keys :map js2-mode-map
              ("C-c C-e" . nodejs-repl-send-last-sexp)
              ("C-c C-l" . nodejs-repl-load-file)
              ("C-c C-b" . nodejs-repl-send-buffer)
-             ("C-c C-r" . nodejs-repl-send-region)))
+             ("C-c C-g" . nodejs-repl-send-region)))
 ;; (autoload 'js2-mode "js2-mode" nil t)
 ;; (add-to-list 'auto-mode-alist '("\.js$" . js2-mode))
 ;; (add-hook 'js2-mode-hook
@@ -672,44 +688,30 @@
 ;;(setq tuareg-use-smie nil)
 
 ;;; merlin
+;; Add opam emacs directory to the load-path
+(setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
+;; Load merlin-mode
 (require 'merlin)
 ;; (push "<SHARE_DIR>/emacs/site-lisp" load-path) ; directory containing merlin.el
-(setq merlin-command "~/.opam/system/bin/ocamlmerlin")
 (autoload 'merlin-mode "merlin" "Merlin mode" t)
-(add-hook 'tuareg-mode-hook 'merlin-mode)
-;; (setq merlin-ac-setup 'easy)
+;; Start merlin on ocaml files
+(add-hook 'tuareg-mode-hook 'merlin-mode t)
+(add-hook 'caml-mode-hook 'merlin-mode t)
+;; Enable auto-complete
 (add-hook 'merlin-mode-hook
           (lambda ()
             (setq ac-sources (append ac-sources '(merlin-ac-source)))))
+;; Use opam switch to lookup ocamlmerlin binary
+(setq merlin-command 'opam)
 
 
 
-;;; flycheck OCaml
-(with-eval-after-load 'merlin
-  ;; Disable Merlin's own error checking
-  (setq merlin-error-after-save nil)
-  ;; Enable Flycheck checker
-  (flycheck-ocaml-setup))
-
-;; ;; OCaml
-;; ;; tuareg
-;; (add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . tuareg-mode))
-;; (autoload 'tuareg-mode "tuareg" "Major mode for editing OCaml code" t)
-;; (autoload 'tuareg-run-ocaml "tuareg" "Run an inferior OCaml process." t)
-;; (autoload 'ocamldebug "ocamldebug" "Run the OCaml debugger" t)
-
-;; ;; merlin
-;; (use-package merlin :  defer t
-;;   :init
-;;   (add-hook 'tuareg-mode-hook 'merlin-mode)
-;;   (add-hook 'merlin-mode-hook
-;;             (lambda ()
-;;               (setq ac-sources (append ac-sources '(merlin-ac-source)))))
-;;   :config
+;; ;;; flycheck OCaml
+;; (with-eval-after-load 'merlin
+;;   ;; Disable Merlin's own error checking
 ;;   (setq merlin-error-after-save nil)
+;;   ;; Enable Flycheck checker
 ;;   (flycheck-ocaml-setup))
-
-
 
 ;; Markdown Mode
 (use-package markdown-mode :defer t
@@ -734,8 +736,8 @@
 
 (use-package haml-mode
   :mode
-  ("\\.haml\\'" . slim-mode)
-  ("\\.html\\.haml\\'" . slim-mode))
+  ("\\.haml\\'" . haml-mode)
+  ("\\.html\\.haml\\'" . haml-mode))
 
 ;;; Others
 

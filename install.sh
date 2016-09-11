@@ -9,4 +9,6 @@ do
 
     ln -snf $filepath $homefile
 done
-ln -s ~/dotfiles/private.xml ~/Library/Application\ Support/Karabiner
+ln -snf ~/dotfiles/private.xml ~/Library/Application\ Support/Karabiner
+ln -snf ~/dotfiles/skk-jisyo.utf8 ~/Library/Application\ Support/AquaSKK
+ln -snf ~/Dropbox/ssh ~/.ssh
