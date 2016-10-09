@@ -153,7 +153,7 @@
 
 ;; インタラクティブにウィンドウを分割
 (setq split-height-threshold nil)
-(setq split-width-threshold 100)
+(setq split-width-threshold 150)
 
 ;; volatile-highlights.el
 (use-package volatile-highlights
@@ -454,7 +454,7 @@
 ;;入力されたタグの定義元へジャンプ
 (local-set-key (kbd "M-t") 'helm-gtags-find-tag)
 ;;入力タグを参照する場所へジャンプ
-(local-set-key (kbd "M-r") 'helm-gtags-find-rtag)  
+(local-set-key (kbd "M-r") 'helm-gtags-find-rtag)
 ;;入力したシンボルを参照する場所へジャンプ
 (local-set-key (kbd "M-s") 'helm-gtags-find-symbol)
 ;;タグ一覧からタグを選択し, その定義元にジャンプする
@@ -502,18 +502,18 @@
 
 ;; Common Lisp
 ;; slime
-(use-package slime :defer t
-  :init
-  (setq inferior-lisp-program "ros -L sbcl -Q run")
-  (load (expand-file-name "~/.roswell/impls/ALL/ALL/quicklisp/slime-helper.el"))
-  (setq inferior-lisp-program "ros -L sbcl -Q run")
-  (setf slime-lisp-implementations
-        `((sbcl    ("sbcl" "--dynamic-space-size" "2000"))
-          (roswell ("ros" "dynamic-space-size=2000" "-Q" "-l" "~/.sbclrc" "run"))))
-  (setf slime-default-lisp 'roswell)
-  :config
-  ;; (setq display-buffer-function 'popwin:display-buffer)
-  )
+;; (use-package slime :defer t
+;;   :init
+;;   (setq inferior-lisp-program "ros -L sbcl -Q run")
+;;   (load (expand-file-name "~/.roswell/impls/ALL/ALL/quicklisp/slime-helper.el"))
+;;   (setq inferior-lisp-program "ros -L sbcl -Q run")
+;;   (setf slime-lisp-implementations
+;;         `((sbcl    ("sbcl" "--dynamic-space-size" "2000"))
+;;           (roswell ("ros" "dynamic-space-size=2000" "-Q" "-l" "~/.sbclrc" "run"))))
+;;   (setf slime-default-lisp 'roswell)
+;;   :config
+;;   ;; (setq display-buffer-function 'popwin:display-buffer)
+;;   )
 
 ;; Scheme
 (setq process-coding-system-alist
@@ -605,22 +605,22 @@
 
 
 ;; ac-slime
-(use-package ac-slime :defer t
-  :init
-  (add-hook 'slime-mode-hook 'set-up-slime-ac)
-  (add-hook 'slime-repl-mode-hook 'set-up-slime-ac))
+;; (use-package ac-slime :defer t
+;;   :init
+;;   (add-hook 'slime-mode-hook 'set-up-slime-ac)
+;;   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac))
 
 
-;; JavaScript
-(defun js2-mode-hooks ()
-  (font-lock-add-keywords nil
-                          '(("^[^\n]\\{80\\}\\(.*\\)$" 1 font-lock-warning-face t)))
+;; ;; JavaScript
+;; (defun js2-mode-hooks ()
+;;   (font-lock-add-keywords nil
+;;                           '(("^[^\n]\\{80\\}\\(.*\\)$" 1 font-lock-warning-face t)))
 
-  (defun underscore-require ()
-    (interactive)
-    (insert (format "var _ = require('underscore');"))
-    )
-  (local-set-key (kbd "C-x c j") 'underscore-require))
+;;   (defun underscore-require ()
+;;     (interactive)
+;;     (insert (format "var _ = require('underscore');"))
+;;     )
+;;   (local-set-key (kbd "C-x c j") 'underscore-require))
 
 ;; (use-package js2-mode
 ;;   :mode "\\.js\\'"
@@ -689,28 +689,28 @@
 
 ;;; Ocaml
 ;;; tuareg
-(add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . tuareg-mode))
-(autoload 'tuareg-mode "tuareg" "Major mode for editing OCaml code" t)
-(autoload 'tuareg-run-ocaml "tuareg" "Run an inferior OCaml process." t)
-(autoload 'ocamldebug "ocamldebug" "Run the OCaml debugger" t)
+;; (add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . tuareg-mode))
+;; (autoload 'tuareg-mode "tuareg" "Major mode for editing OCaml code" t)
+;; (autoload 'tuareg-run-ocaml "tuareg" "Run an inferior OCaml process." t)
+;; (autoload 'ocamldebug "ocamldebug" "Run the OCaml debugger" t)
 ;;(setq tuareg-use-smie nil)
 
-;;; merlin
-;; Add opam emacs directory to the load-path
-(setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
-;; Load merlin-mode
-(require 'merlin)
-;; (push "<SHARE_DIR>/emacs/site-lisp" load-path) ; directory containing merlin.el
-(autoload 'merlin-mode "merlin" "Merlin mode" t)
-;; Start merlin on ocaml files
-(add-hook 'tuareg-mode-hook 'merlin-mode t)
-(add-hook 'caml-mode-hook 'merlin-mode t)
-;; Enable auto-complete
-(add-hook 'merlin-mode-hook
-          (lambda ()
-            (setq ac-sources (append ac-sources '(merlin-ac-source)))))
-;; Use opam switch to lookup ocamlmerlin binary
-(setq merlin-command 'opam)
+;; ;;; merlin
+;; ;; Add opam emacs directory to the load-path
+;; (setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
+;; ;; Load merlin-mode
+;; (require 'merlin)
+;; ;; (push "<SHARE_DIR>/emacs/site-lisp" load-path) ; directory containing merlin.el
+;; (autoload 'merlin-mode "merlin" "Merlin mode" t)
+;; ;; Start merlin on ocaml files
+;; (add-hook 'tuareg-mode-hook 'merlin-mode t)
+;; (add-hook 'caml-mode-hook 'merlin-mode t)
+;; ;; Enable auto-complete
+;; (add-hook 'merlin-mode-hook
+;;           (lambda ()
+;;             (setq ac-sources (append ac-sources '(merlin-ac-source)))))
+;; ;; Use opam switch to lookup ocamlmerlin binary
+;; (setq merlin-command 'opam)
 
 
 ;;; Elixir
@@ -740,6 +740,12 @@
   :config
   ;;(unbind-key "`" markdown-mode-map)
   (visual-line-mode nil))
+
+;; (require 'w3m)
+;; (define-key markdown-mode-map "\C-c\C-cm"
+;;   (lambda ()
+;;     (interactive)
+;;     (w3m-find-file (buffer-file-name))))
 
 ;; Emmet-mode
 (use-package emmet-mode :defer t

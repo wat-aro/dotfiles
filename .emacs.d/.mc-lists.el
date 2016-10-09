@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         helm-M-x
+        scroll-other-window
         ))
 
 (setq mc/cmds-to-run-once

@@ -212,9 +212,9 @@
 	<key>MaxVertically</key>
 	<false/>
 	<key>NSNavLastRootDirectory</key>
-	<string>~</string>
+	<string>~/dotfiles</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
-	<string>{712, 459}</string>
+	<string>{712, 448}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -245,18 +245,14 @@
 		<key>TB Is Shown</key>
 		<integer>1</integer>
 	</dict>
-	<key>NSWindow Frame NSFontPanel</key>
-	<string>769 360 445 103 0 0 1680 1027 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>364 549 606 456 0 0 1680 1027 </string>
+	<string>269 168 606 456 0 0 1920 1177 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>2330 468 620 392 1680 -30 1920 1057 </string>
-	<key>NSWindow Frame SessionsPreferences</key>
-	<string>1949 109 606 456 1680 -30 1920 1057 </string>
+	<string>650 589 620 392 0 0 1920 1177 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>2022 96 796 473 1680 -30 1920 1057 </string>
+	<string>2224 337 918 512 1920 120 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1680 401 1920 626 1680 -30 1920 1057 </string>
+	<string>0 117 1172 707 0 0 1440 877 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -489,7 +485,7 @@
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
-			<string>Advanced</string>
+			<string>No</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Disable Printing</key>
@@ -1743,79 +1739,10 @@
 			<string>/Users/wat-aro</string>
 		</dict>
 	</array>
-	<key>NoSyncConfirmBeta</key>
-	<true/>
 	<key>NoSyncInstallationId</key>
-	<string>49E3369D-E919-4240-851B-5C8075A0B1F7</string>
-	<key>NoSyncLastTipTime</key>
-	<real>488884180.94444001</real>
-	<key>NoSyncNeverRemindPrefsChangesCopy</key>
-	<true/>
-	<key>NoSyncPermissionToShowTip</key>
-	<true/>
+	<string>239E9174-8703-4936-AE86-963FAD424EC4</string>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
-	<real>486464387.60169101</real>
-	<key>NoSyncTimeOfLastPromo</key>
-	<real>479703897.07945502</real>
-	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>486233007.97442901</real>
-	<key>NoSyncTipsDisabled</key>
-	<true/>
-	<key>NoSyncTipsToNotShow</key>
-	<array>
-		<string>000</string>
-		<string>0000</string>
-		<string>0001</string>
-		<string>0002</string>
-		<string>0003</string>
-		<string>0004</string>
-		<string>0005</string>
-		<string>0006</string>
-		<string>0007</string>
-		<string>0008</string>
-		<string>0009</string>
-		<string>0008</string>
-		<string>0010</string>
-		<string>0011</string>
-		<string>0012</string>
-		<string>0013</string>
-		<string>0014</string>
-		<string>0015</string>
-		<string>0016</string>
-		<string>0017</string>
-		<string>0018</string>
-		<string>0019</string>
-		<string>0020</string>
-		<string>0021</string>
-		<string>0022</string>
-		<string>0023</string>
-		<string>0024</string>
-		<string>0025</string>
-		<string>0026</string>
-		<string>0027</string>
-		<string>0028</string>
-		<string>0029</string>
-		<string>0030</string>
-		<string>0031</string>
-		<string>0032</string>
-		<string>0033</string>
-		<string>0034</string>
-		<string>0035</string>
-		<string>0036</string>
-		<string>0037</string>
-		<string>0038</string>
-		<string>0039</string>
-		<string>0040</string>
-		<string>0041</string>
-		<string>0042</string>
-		<string>0043</string>
-		<string>0044</string>
-		<string>0045</string>
-		<string>0046</string>
-		<string>0047</string>
-		<string>0048</string>
-		<string>0049</string>
-	</array>
+	<real>495362815.30023801</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -1866,7 +1793,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/wat-aro/dotfiles</string>
+	<string>/Users/kazutas1008/dotfiles</string>
 	<key>Print In Black And White</key>
 	<true/>
 	<key>PromptOnQuit</key>
@@ -1882,11 +1809,13 @@
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/final.xml?shard=13</string>
+	<string>https://iterm2.com/appcasts/final.xml?shard=10</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-08-31T13:58:28Z</date>
+	<date>2016-09-12T09:35:13Z</date>
+	<key>SUSendProfileInfo</key>
+	<false/>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -1930,6 +1859,6 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>3.0.7</string>
+	<string>3.0.9</string>
 </dict>
 </plist>
