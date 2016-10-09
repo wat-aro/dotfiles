@@ -41,8 +41,8 @@
 ;;; color-theme
 ;; (load-theme 'flatland t)
 ;; (load-theme 'hamburg t)
-;; (load-theme 'clues t)
-(load-theme 'gotham t)
+(load-theme 'clues t)
+;; (load-theme 'gotham t)
 ;; (load-theme 'vsc t)
 
 ;;; Environment:
@@ -215,6 +215,10 @@
   (bind-keys :map helm-map
               ("C-i" . helm-execute-persistent-action)
               ("C-h" . delete-backward-char)))
+
+(add-to-list 'helm-for-files-preferred-list 'helm-source-ghq)
+(add-to-list 'exec-path "/home/wat-aro/golang/bin")
+(define-key global-map (kbd "C-x f")     'helm-ghq)
 
 ;; Helm-ag
 (custom-set-variables '(helm-ff-file-compressed-list '("epub" "gz" "bz2" "zip" "7z")))
@@ -649,6 +653,10 @@
 ;;             (tern-mode t)))
 ;; (custom-set-variables '(js2-basic-offset 2))
 
+(add-to-list 'auto-mode-alist '( "\\.jsx\\'" . js2-jsx-mode))
+;; (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
+;; (add-hook 'js2-jsx-mode-hook 'flycheck-mode)
+
 (use-package tern
   :config
   (use-package tern-auto-complete)
@@ -705,6 +713,19 @@
 (setq merlin-command 'opam)
 
 
+;;; Elixir
+(require 'elixir-mode)
+(require 'alchemist)
+(require 'flycheck-elixir)
+(add-to-list 'elixir-mode-hook
+             (defun auto-activate-ruby-end-mode-for-elixir-mode ()
+               (set (make-variable-buffer-local 'ruby-end-expand-keywords-before-re)
+                    "\\(?:^\\|\\s-+\\)\\(?:do\\)")
+               (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
+               (ruby-end-mode +1)
+
+               (ac-alchemist-setup)
+               ))
 
 ;; ;;; flycheck OCaml
 ;; (with-eval-after-load 'merlin

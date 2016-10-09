@@ -5,6 +5,7 @@
 	editor = emacs
 	precomposeunicode = true
 	quotepath = false
+	excludesfile = /Users/wat-aro/.gitignore
 [color]
 	diff = auto
 	status = auto
@@ -21,3 +22,5 @@
   b = browse
 [rerere]
 	enabled = true
+[ghq]
+  root = ~/src
