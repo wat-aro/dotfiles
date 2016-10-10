@@ -20,6 +20,7 @@ alias ghqlist='cd $(ghq list -p | peco)'
 alias ghqhub='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 export PATH="$HOME/.exenv/bin:$PATH"
 eval "$(exenv init -)"
+source ~/src/github.com/b4b4r07/enhancd/init.sh
 # ## create emacs env file
 # perl -wle \
 #      'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
