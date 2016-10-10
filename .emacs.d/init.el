@@ -208,7 +208,8 @@
   :init
   (require 'helm-config)
   (bind-key "C-x C-f" 'helm-find-files)
-  (bind-key "M-x" 'helm-M-x)
+  (bind-key "M-x" 'helm-smex)
+  (bind-key "M-X" 'helm-smex-major-mode-commands)
   (bind-key "C-;" 'helm-mini)
   (helm-mode t)
   :config
