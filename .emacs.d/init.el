@@ -9,13 +9,7 @@
 
 (server-start)
 
-;; フレームの透明度
-(set-frame-parameter (selected-frame) 'alpha '(0.90))
 
-
-
-;; (use-package magit-find-file :defer t)
-(bind-key "M-t" 'magit-find-file-completing-read)
 
 (add-to-list 'auto-mode-alist '("/\\.gitexclude\\'" . gitignore-mode))
 
