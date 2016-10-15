@@ -1,13 +1,13 @@
 
 ;; ----- smex-history -----
 (
+ ediff
+ helm-imenu
+ helm-man-woman
+ helm-apropos
  list-buffers
  rename-file
  server-force-delete
- ediff
- package-delete
- volatile-highlights-mode
- helm-mini
 )
 
 ;; ----- smex-data -----
@@ -20,8 +20,11 @@
  (volatile-highlights-mode . 1)
  (rainbow-mode . 2)
  (package-delete . 1)
- (ediff . 1)
+ (ediff . 4)
  (server-force-delete . 1)
  (rename-file . 1)
  (list-buffers . 1)
+ (helm-apropos . 1)
+ (helm-man-woman . 1)
+ (helm-imenu . 1)
 )
