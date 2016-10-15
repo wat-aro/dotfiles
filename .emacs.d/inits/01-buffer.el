@@ -1,3 +1,9 @@
+;;; Bar
+(when window-system
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1))
+(menu-bar-mode -1)
+
 ;; Column mode
 (column-number-mode t)
 
@@ -29,32 +35,6 @@
 ;;; モードラインに時刻を表示する
 (display-time)
 
-;;; color-theme
-;; (load-theme 'flatland t)
-;; (load-theme 'hamburg t)
-(load-theme 'clues t)
-;; (load-theme 'gotham t)
-;; (load-theme 'vsc t)
-
-;;; インタラクティブにウィンドウを分割
-(setq split-height-threshold nil)
-(setq split-width-threshold 150)
-
-;;; splash screenを無効にする
-(setq inhibit-splash-screen t)
-
-;;; scratchの初期メッセージ消去
-(setq initial-scratch-message "")
-
-;;; タイトルバーにファイルのフルパス表示
-(setq frame-title-format "%f")
-
-;;; 同じ内容を履歴に記録しないようにする
-(setq history-delete-duplicates t)
-
 ;; Uniquify
 (custom-set-variables
  '(uniquify-buffer-name-style 'post-forward-angle-brackets))
-
-;; フレームの透明度
-(set-frame-parameter (selected-frame) 'alpha '(0.90))

@@ -3,19 +3,19 @@
 (setq ns-alternate-modifier 'super)
 
 ;;; Key
-(keyboard-translate ?\C-h ?\C-?)
+;;(keyboard-translate ?\C-h ?\C-?)
+(define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
 (bind-keys
- ("C-?"   . 'help-command)
- ("C-t"   . 'other-window)
- ("C-j"   . 'newline-and-indent)
- ("C-S-n" . 'make-frame)
- ("C-S-w" . 'delete-frame)
- ("C-M-y" . 'helm-show-kill-ring)
- ("C-c n" . 'multi-term-next)
- ("C-c v" . 'revert-buffer)
- ("C-s-t" . 'other-frame))
-
+ ("C-?" . help-command)
+ ("C-t" . other-window)
+ ("C-j" . newline-and-indent)
+ ("C-S-n" . make-frame)
+ ("C-S-w" . delete-frame)
+ ("C-M-y" . helm-show-kill-ring)
+ ("C-c n" . multi-term-next)
+ ("C-c v" . revert-buffer)
+ ("C-s-t" . other-frame))
 
 (custom-set-variables
  '(key-chord-two-keys-delay 0.01))

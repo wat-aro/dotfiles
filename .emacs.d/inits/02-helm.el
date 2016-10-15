@@ -3,11 +3,11 @@
   :diminish helm-mode
   :init
   (require 'helm-config)
-  (bind-key "C-x C-f" 'helm-find-files)
-  (bind-key "M-x" 'helm-smex)
-  (bind-key "M-X" 'helm-smex-major-mode-commands)
-  (bind-key "C-;" 'helm-mini)
   (helm-mode t)
+  :bind (("C-x C-f" . helm-find-files)
+         ("M-x" . helm-smex)
+         ("M-X" . helm-smex-major-mode-commands)
+         ("C-;" . helm-mini))
   :config
   (bind-keys :map helm-map
               ("C-i" . helm-execute-persistent-action)
@@ -18,7 +18,7 @@
 (define-key global-map (kbd "C-x f")     'helm-ghq)
 
 ;; Helm-ag
-(custom-set-variables '(helm-ff-file-compressed-list '("epub" "gz" "bz2" "zip" "7z")))
+(custom-set-variables '(helm-ff-file-compressed-list '("epub" "gz" "bz2" "zip" "7z" "/backup")))
 (bind-key "C-:" 'helm-ag)
 
 ;; Swoop

@@ -2,7 +2,7 @@
 	name = wat-aro
 	email = kazutas1008@gmail.com
 [core]
-	editor = emacs
+	editor = emacsclient -nw
 	precomposeunicode = true
 	quotepath = false
 	excludesfile = /Users/wat-aro/.gitignore

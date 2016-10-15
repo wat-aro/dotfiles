@@ -16,3 +16,4 @@ cache
 .tern-port
 vendor/bundle
 node_modules/
+.slime/

@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         helm-M-x
+        my-goto-line-beginning-or-indent
         paredit-forward-delete
         paredit-forward-kill-word
         scroll-other-window

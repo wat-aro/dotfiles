@@ -21,6 +21,11 @@ alias ghqhub='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 export PATH="$HOME/.exenv/bin:$PATH"
 eval "$(exenv init -)"
 source ~/src/github.com/b4b4r07/enhancd/init.sh
+export ALTERNATE_EDITOR=""
+export EDITOR="emacsclient -t"
+export VISUAL="emacsclient -c -a emacs"
+alias emax="emacsclient -t"
+alias semac="sudo emacsclient -t"
 alias e='emacsclient -nw -a ""'
 alias e-kill='emacsclient -e "(kill-emacs)"'
 # ## create emacs env file

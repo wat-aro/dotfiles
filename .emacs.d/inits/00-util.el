@@ -3,18 +3,14 @@
              (cons "." "~/.emacs.d/backups/"))
 (setq auto-save-file-name-transforms
       `((".*" ,(expand-file-name "~/.emacs.d/backups/") t)))
-(setq auto-save-list-file-prefix "~/.emacs.d/bacuups/")
+(setq auto-save-list-file-prefix "~/.emacs.d/backups/")
 (setq create-lockfiles nil)
+
+;;; 同じ内容を履歴に記録しないようにする
+(setq history-delete-duplicates t)
 
 ;;; Font
 (set-face-attribute 'default nil :family "Ricty" :height 160)
-
-;;; Bar
-(when window-system
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1))
-(menu-bar-mode -1)
-
 
 ;;; Tab
 (setq-default indent-tabs-mode nil)
@@ -46,3 +42,6 @@
   :diminish volatile-highlights-mode
   :init
   (volatile-highlights-mode t))
+
+;; 自動でバッファの再読み込み
+(global-auto-revert-mode 1)
