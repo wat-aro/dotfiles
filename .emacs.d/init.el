@@ -1,245 +1,20 @@
-;;; Package: --- Sammary
-;;; Commentary:
-;;; Code:
-;;; GC
-(setq-default gc-cons-percentage 0.5)
-
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-
-;;; Variables
-(set-language-environment 'Japanese)
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-;;(setq make-backup-files nil)
-(setq delete-auto-save-files t)
-(setq use-dialog-box nil)
-(setenv "LANG" "ja_JP.UTF-8")
-
-(set-face-font 'default "Ricty-15:nil")
-
-;;; Packages:
-(when (or (require 'cask "~/.cask/cask.el" t)
-	  (require 'cask nil t))
-  (cask-initialize))
-(package-initialize)
-
-(require 'use-package)
+(require 'cask "/usr/local/opt/cask/cask.el")
+(cask-initialize)
+(use-package "pallet")
 (pallet-mode t)
 
-;; ;;; skk
-;; (when (require 'skk nil t)
-;;   (global-set-key "\C-\\" 'skk-mode)
-;;   (setq default-input-method "japanese-skk")
-;;   (require 'skk-study))
+(init-loader-load "~/.emacs.d/inits")
 
-;; (require 'sticky)
-;; (use-sticky-key ?\; sticky-alist:ja)
+(server-start)
 
-;;; color-theme
-;; (load-theme 'flatland t)
-;; (load-theme 'hamburg t)
-(load-theme 'clues t)
-;; (load-theme 'gotham t)
-;; (load-theme 'vsc t)
-
-;;; Environment:
-(setenv "LC_ALL" "ja_JP.UTF-8")
-
-;; PATH
-(exec-path-from-shell-initialize)
-
-(let ((default-directory (locate-user-emacs-file "./elisp"))
-      (opam-directory "~/.opam/system/share/emacs/site-lisp"))
-  (add-to-list 'load-path default-directory)
-  (add-to-list 'load-path opam-directory)
-  (normal-top-level-add-subdirs-to-load-path))
 
 ;; (load-file (expand-file-name "~/.emacs.d/shellenv.el"))
 ;; (dolist (path (reverse (split-string (getenv "PATH") ":")))
 ;;   (add-to-list 'exec-path path))
 
-;;; Coding:
-(setq-default indent-tabs-mode nil)
 
 ;; フレームの透明度
 (set-frame-parameter (selected-frame) 'alpha '(0.90))
-
-;; ピープ音を鳴らさない
-(setq visible-bell t)
-(setq ring-bell-function 'ignore)
-
-
-;; White space
-(setq-default show-trailing-whitespace t)
-
-;; Uniquify
-(custom-set-variables '(uniquify-buffer-name-style 'post-forward-angle-brackets))
-
-;; Show paren
-(show-paren-mode t)
-
-;; Column mode
-(column-number-mode t)
-
-;; 行番号の表示
-(global-linum-mode)
-
-;; 行番号フォーマット
-(setq linum-format "%4d")
-
-;; モードラインの割合表示を総行数表示
-(defvar my-lines-page-mode t)
-(defvar my-mode-line-format)
-
-(when my-lines-page-mode
-  (setq my-mode-line-format "%d")
-  (if size-indication-mode
-      (setq my-mode-line-format (concat my-mode-line-format " of %%I")))
-  (cond ((and (eq line-number-mode t) (eq column-number-mode t))
-         (setq my-mode-line-format (concat my-mode-line-format " (%%l,%%c)")))
-        ((eq line-number-mode t)
-         (setq my-mode-line-format (concat my-mode-line-format " L%%l")))
-        ((eq column-number-mode t)
-         (setq my-mode-line-format (concat my-mode-line-format " C%%c"))))
-
-  (setq mode-line-position
-        '(:eval (format my-mode-line-format
-                        (count-lines (point-max) (point-min))))))
-
-;;; splash screenを無効にする
-(setq inhibit-splash-screen t)
-
-;; scratchの初期メッセージ消去
-(setq initial-scratch-message "")
-
-;; タイトルバーにファイルのフルパス表示
-(setq frame-title-format "%f")
-
-;;; 同じ内容を履歴に記録しないようにする
-(setq history-delete-duplicates t)
-
-;; C-u C-SPC C-SPC ...でどんどん過去のマークを遡る
-(setq set-mark-command-repeat-pop t)
-
-; yes or noをy or n
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;;; ファイルを開いた位置を保存する
-(use-package saveplace
-  :init
-  (setq-default save-place t)
-  (setq save-place-file (concat user-emacs-directory "places")))
-
-;;; ミニバッファ履歴を次回Emacs起動時にも保存する
-(savehist-mode 1)
-
-;;; モードラインに時刻を表示する
-(display-time)
-
-;; anzu
-(global-anzu-mode +1)
-(custom-set-variables
- '(anzu-deactivate-region t)
- '(anzu-mode-lighter "")
- '(anzu-search-threshold 1000)
- '(custom-safe-themes
-   (quote
-    ("bdaab014ec6785f64b72efbea80808b762d8971247aacf2ffc6b76a39b9ed97c" default)))
- '(rspec-use-rake-when-possible nil)
- '(tab-width 2))
-
-;; インタラクティブにウィンドウを分割
-(setq split-height-threshold nil)
-(setq split-width-threshold 150)
-
-;; volatile-highlights.el
-(use-package volatile-highlights
-  :diminish volatile-highlights-mode
-  :init
-  (volatile-highlights-mode t))
-
-;; Rainbow mode
-(use-package rainbow-mode
-  :defer t
-  :diminish rainbow-mode)
-
-;;; --- バックアップとオートセーブ ---
-;; バックアップファイルとオートセーブファイルを ~/.emacs.d/backups/ へ集める
-(add-to-list 'backup-directory-alist
-             (cons "." "~/.emacs.d/backups/"))
-(setq auto-save-file-name-transforms
-      `((".*" ,(expand-file-name "~/.emacs.d/backups/") t)))
-(setq create-lockfiles nil)
-
-
-(progn
-  (bind-key  "C-?"   'help-command)
-  (bind-key* "C-t"   'other-window)
-  (bind-key  "C-j"   'newline-and-indent)
-  (bind-key  "C-S-n" 'make-frame)
-  (bind-key  "C-S-w" 'delete-frame)
-  (bind-key  "C-M-y" 'helm-show-kill-ring)
-  (bind-key  "C-c n" 'multi-term-next)
-  (bind-key  "C-c v" 'revert-buffer)
-  (bind-key  "C-s-t" 'other-frame))
-
-(keyboard-translate ?\C-h ?\C-?)
-
-;; exchange meta-key to super-key
-(setq ns-command-modifier 'meta)
-(setq ns-alternate-modifier 'super)
-
-;; (custom-set-variables
-;;  '(key-chord-two-keys-delay 0.01))
-;; (key-chord-mode t)
-;; (key-chord-define-global "df" 'find-function)
-;; (key-chord-define-global "fh" 'describe-function)
-;; (key-chord-define-global "fv" 'find-variable)
-;; (key-chord-define-global "pk" 'package-install)
-;; (key-chord-define-global "kl" 'align-regexp)
-;; (key-chord-define-global "dv" 'describe-variable)
-
-;; Helm
-(use-package helm :defer t
-  :diminish helm-mode
-  :init
-  (require 'helm-config)
-  (bind-key "C-x C-f" 'helm-find-files)
-  (bind-key "M-x" 'helm-smex)
-  (bind-key "M-X" 'helm-smex-major-mode-commands)
-  (bind-key "C-;" 'helm-mini)
-  (helm-mode t)
-  :config
-  (bind-keys :map helm-map
-              ("C-i" . helm-execute-persistent-action)
-              ("C-h" . delete-backward-char)))
-
-(add-to-list 'helm-for-files-preferred-list 'helm-source-ghq)
-(add-to-list 'exec-path "/home/wat-aro/golang/bin")
-(define-key global-map (kbd "C-x f")     'helm-ghq)
-
-;; Helm-ag
-(custom-set-variables '(helm-ff-file-compressed-list '("epub" "gz" "bz2" "zip" "7z")))
-(bind-key "C-:" 'helm-ag)
-
-;; Auto-Complete
-(use-package auto-complete
-  :diminish auto-complete-mode
-  :config
-  (add-to-list 'ac-dictionary-directories (locate-user-emacs-file "./ac-dict"))
-  (require 'auto-complete-config)
-  (ac-config-default)
-  (global-auto-complete-mode t)
-  (bind-key "M-n" 'ac-next)
-  (bind-key "M-p" 'ac-previous)
-  (setq ac-auto-show-menu 0.5)
-  (setq ac-menu-height 20)
-  (setq ac-use-fuzzy t)
-  (robe-mode))
-
 
 ;; Magit
 ;; (use-package magit :defer t)
@@ -269,52 +44,41 @@
   (helm-projectile-on)
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
-;; Flycheck
-(use-package flycheck
-  :ensure t)
-
-;; Smartparens
-(use-package smartparens
-  :diminish
-  smartparens-mode
-  :init
-  (require 'smartparens-config)
-  (smartparens-global-mode t)
-  (sp-pair "<%" " %>"))
-
-
-
 ;; which-fund
 (which-function-mode t)
 
-(use-package popwin
-  :init
-  (setq display-buffer-function 'popwin:display-buffer)
-  :config
-  (when (fboundp 'popwin:w3m-browse-url)
-    (setq browse-url-browser-function 'popwin:w3m-browse-url))
-  (setq popwin:special-display-config
-        (append popwin:special-display-config
-                '(("*w3m*")
-                  ("*slime-apropos*")
-                  ("*slime-macroexpansion*")
-                  ("*slime-description*")
-                  ("*slime-compilation*" :noselect t)
-                  ("*slime-xref*")
-                  (slime-connection-list-mode)
-                  (sldb-mode :height 40 :stick t)
-                  slime-repl-mode
-                  slime-connection-list-mode
-                  (direx:direx-mode :position left :width 25 :dedicated t)
-                  ("*quickrun*")
-                  (dired-mode :position top)
-                  ("*Shell Command Output*")
-                  (compilation-mode :noselect t)))))
-
-;;; Language
-
 (custom-set-variables
- '(sql-product 'mysql))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(anzu-deactivate-region t)
+ '(anzu-mode-lighter "")
+ '(anzu-search-threshold 1000)
+ '(custom-safe-themes
+   (quote
+    ("bdaab014ec6785f64b72efbea80808b762d8971247aacf2ffc6b76a39b9ed97c" default)))
+ '(flycheck-display-errors-delay 0.5)
+ '(flycheck-display-errors-function nil)
+ '(flycheck-idle-change-delay 1.0)
+ '(helm-ff-file-compressed-list (quote ("epub" "gz" "bz2" "zip" "7z")))
+ '(key-chord-two-keys-delay 0.01 t)
+ '(open-junk-file-format "~/Documents/junk/%Y/%m/%Y-%m-%d-%H%M%S." t)
+ '(package-selected-packages
+   (quote
+    (init-open-recentf yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode w3m volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode scss-mode sass-mode ruby-end ruby-electric ruby-block rubocop robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magit-find-file magic-filetype key-chord init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-migemo helm-gtags helm-ghq helm-ag hamburg-theme gotham-theme gitignore-mode flycheck-elixir flycheck-cask flatland-theme flatland-black-theme expand-region exec-path-from-shell enh-ruby-mode emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k ddskk coffee-mode clues-theme beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
+ '(parens-require-spaces nil)
+ '(recentf-auto-cleanup 100)
+ '(recentf-auto-save-timer [nil 0 30 0 t recentf-save-list nil idle 0])
+ '(recentf-exclude
+   (quote
+    ("/recentf" "COMMIT_EDITMSG" "/.?TAGS" "^/sudo:" "/\\.emacs\\.d/games/*-scores")))
+ '(recentf-max-saved-items 2000)
+ '(rspec-use-rake-when-possible nil)
+ '(show-paren-delay 0)
+ '(sql-product (quote mysql))
+ '(tab-width 2)
+ '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify)))
 
 ;; Web
 (defun my/web-mode-hook ()
@@ -449,29 +213,12 @@
 (use-package ac-robe-setup :defer t
   :commands (ac-robe-setup))
 
-;;; helm-gtags
-(add-hook 'helm-gtags-mode-hook
-'(lambda ()
-;;入力されたタグの定義元へジャンプ
-(local-set-key (kbd "M-t") 'helm-gtags-find-tag)
-;;入力タグを参照する場所へジャンプ
-(local-set-key (kbd "M-r") 'helm-gtags-find-rtag)
-;;入力したシンボルを参照する場所へジャンプ
-(local-set-key (kbd "M-s") 'helm-gtags-find-symbol)
-;;タグ一覧からタグを選択し, その定義元にジャンプする
-(local-set-key (kbd "M-l") 'helm-gtags-select)
-;;ジャンプ前の場所に戻る
-(local-set-key (kbd "M-j") 'helm-gtags-pop-stack)))
-(add-hook 'php-mode-hook 'helm-gtags-mode)
-(add-hook 'ruby-mode-hook 'helm-gtags-mode)
-
 ;; Lisp
 (defvar my/emacs-lisp-ac-sources
   '(ac-source-features ac-source-functions ac-source-variables ac-source-symbols))
 
 (defun my/emacs-lisp-mode-hook ()
   "My Emacs Lisp mode."
-  (rainbow-mode t)
   (auto-complete-mode 1)
   (setq ac-sources (append ac-sources my/emacs-lisp-ac-sources))
   (set-face-foreground 'font-lock-regexp-grouping-backslash "indian red")
@@ -487,19 +234,7 @@
 ;; `Cask' is NOT emacs-lisp-mode
 (add-to-list 'auto-mode-alist '("/Cask\\'" . lisp-mode))
 
-(use-package paredit :defer t
-  :diminish paredit-mode
-  :init
-  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-  (add-hook 'lisp-interacton-mode-hook 'enable-paredit-mode)
-  (add-hook 'scheme-mode-hook 'enable-paredit-mode)
-  (add-hook 'slime-mode-hook 'enable-paredit-mode)
-  (add-hook 'inferior-scheme-mode-hook 'enable-paredit-mode)
-  (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
-  :config
-  (bind-keys :map paredit-mode-map
-             ("C-<right>" . 'right-word)
-             ("C-<left>"  . 'left-word)))
+
 
 ;; Common Lisp
 ;; slime
@@ -771,16 +506,7 @@
 
 ;;; Others
 
-;; Recentf
-(use-package recentf-ext
-  :init
-  (custom-set-variables
-   '(recentf-max-saved-items 2000)
-   '(recentf-auto-cleanup 100)
-   '(recentf-exclude '("/recentf" "COMMIT_EDITMSG" "/.?TAGS" "^/sudo:" "/\\.emacs\\.d/games/*-scores"))
-   (list 'recentf-auto-save-timer (run-with-idle-timer 30 t 'recentf-save-list)))
-  (recentf-mode t)
-  (bind-key "C-c t" 'helm-recentf))
+
 
 ;; Undo Tree
 (use-package undo-tree
@@ -842,26 +568,7 @@
 ;;   (bind-key* "<C-iso-lefttab>" 'elscreen-previous)
 ;;   (elscreen-start))
 
-;; Swoop
-(use-package helm-swoop
-  :init
-  (setq helm-swoop-move-to-line-cycle t)
-  (bind-key "M-C-;" 'helm-swoop)
-;;  (bind-key "C-;" 'helm-multi-swoop)
-  :config
-  (bind-key "C-r" 'helm-previous-line helm-swoop-map)
-  (bind-key "C-s" 'helm-next-line helm-swoop-map))
 
-;; direx
-(use-package direx :defer t
-  :init
-  (bind-key "M-C-\\" 'direx-project:jump-to-project-root-other-window))
-
-;; dired-k
-(use-package dired-k :defer t
-  :init
-  (add-hook 'dired-initial-position-hook 'dired-k)
-  (bind-key "K" 'dired-k dired-mode-map))
 
 ;; Visual
 (bind-key "M-%" 'vr/query-replace)
@@ -955,3 +662,9 @@
 
 
 ;;; init.el ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

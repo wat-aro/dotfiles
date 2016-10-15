@@ -85,3 +85,4 @@ source $ZSH/oh-my-zsh.sh
 # eval `opam config env`
 # export PATH="$HOME/.rbenv/bin:$PATH"
 # eval "$(rbenv init - zsh)"
+source my-custom.zsh

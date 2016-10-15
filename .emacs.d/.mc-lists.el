@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         helm-M-x
+        paredit-forward-kill-word
         scroll-other-window
         ))
 

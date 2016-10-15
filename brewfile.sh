@@ -86,4 +86,4 @@ brew install zeromq
 brew install --without-etcdir zsh
 brew install brew install zsh-completions
 
-brew cask install iterm2 %% brew cask cleanup
+brew cask install iterm2 google-chrome && brew cask cleanup

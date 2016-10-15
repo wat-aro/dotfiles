@@ -1,16 +1,27 @@
 
 ;; ----- smex-history -----
 (
- ag
- cd
- ri
- 5x5
- arp
- dbx
- dig
+ list-buffers
+ rename-file
+ server-force-delete
+ ediff
+ package-delete
+ volatile-highlights-mode
+ helm-mini
 )
 
 ;; ----- smex-data -----
 (
- 
+ (package-install . 2)
+ (version . 1)
+ (eval-buffer . 3)
+ (delete-trailing-whitespace . 1)
+ (helm-mini . 1)
+ (volatile-highlights-mode . 1)
+ (rainbow-mode . 2)
+ (package-delete . 1)
+ (ediff . 1)
+ (server-force-delete . 1)
+ (rename-file . 1)
+ (list-buffers . 1)
 )
