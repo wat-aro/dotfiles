@@ -46,27 +46,6 @@
 	<real>1</real>
 	<key>GlobalKeyMap</key>
 	<dict>
-		<key>0x27-0x40000</key>
-		<dict>
-			<key>Action</key>
-			<integer>22</integer>
-			<key>Text</key>
-			<string></string>
-		</dict>
-		<key>0x3b-0x40000</key>
-		<dict>
-			<key>Action</key>
-			<integer>22</integer>
-			<key>Text</key>
-			<string></string>
-		</dict>
-		<key>0x79-0x40000</key>
-		<dict>
-			<key>Action</key>
-			<integer>25</integer>
-			<key>Text</key>
-			<string>Paste</string>
-		</dict>
 		<key>0x9-0x100000</key>
 		<dict>
 			<key>Action</key>
@@ -233,7 +212,7 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>1949 109 606 456 1680 -30 1920 1057 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>2093 54 937 465 1680 -30 1920 1057 </string>
+	<string>2093 26 796 473 1680 -30 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>1680 -30 1920 1080 1680 -30 1920 1057 </string>
 	<key>New Bookmarks</key>
