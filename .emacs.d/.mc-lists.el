@@ -5,6 +5,8 @@
       '(
         helm-M-x
         my-goto-line-beginning-or-indent
+        paredit-backward
+        paredit-forward
         paredit-forward-delete
         paredit-forward-kill-word
         scroll-other-window
