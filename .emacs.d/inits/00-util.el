@@ -45,3 +45,5 @@
 
 ;; 自動でバッファの再読み込み
 (global-auto-revert-mode 1)
+
+(smart-newline-mode 1)

@@ -7,15 +7,17 @@
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
 (bind-keys
- ("C-?" . help-command)
- ("C-t" . other-window)
- ("C-j" . newline-and-indent)
+ ("C-?"   . help-command)
+ ("C-t"   . other-window)
+ ("C-j"   . smart-newline)
  ("C-S-n" . make-frame)
  ("C-S-w" . delete-frame)
  ("C-M-y" . helm-show-kill-ring)
  ("C-c n" . multi-term-next)
  ("C-c v" . revert-buffer)
  ("C-s-t" . other-frame))
+
+(global-unset-key "C-m")
 
 (custom-set-variables
  '(key-chord-two-keys-delay 0.01))

@@ -80,6 +80,7 @@
 (depends-on "scss-mode")
 (depends-on "slim-mode")
 (depends-on "slime")
+(depends-on "smart-newline")
 (depends-on "smartparens")
 (depends-on "smartrep")
 (depends-on "smex")

@@ -6,7 +6,6 @@
 alias ll='ls -al'
 alias be='bundle exec'
 export PATH="$PATH:$HOME/.rbenv/bin"
-export GTAGSLABEL=pygments
 eval "$(rbenv init - zsh)"
 alias onkeyboard="sudo kextload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
 alias offkeyboard="sudo kextunload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
