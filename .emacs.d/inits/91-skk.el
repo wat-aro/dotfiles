@@ -1,10 +1,10 @@
 (require 'skk)
-;(require 'skk-dcomp)
+(require 'skk-dcomp)
 
 ;; key
 (define-key global-map (kbd "C-x C-o") 'skk-mode)
 (setq skk-kakutei-key (kbd "C-o"))
-;; (setq mac-pass-control-to-system nil)
+(setq mac-pass-control-to-system nil)
 
 ;; user dic
 (setq skk-jisyo-code 'utf-8)
@@ -26,22 +26,4 @@
 (define-globalized-minor-mode global-skk-latin-mode skk-latin-mode skk-latin-mode-on)
 (global-skk-latin-mode 1)
 
-;; Tip 描画に popup-tip を利用してみる
-;; (setq skk-tooltip-function
-;;   #'(lambda (tooltip-str)
-;;       (popup-menu* tooltip-str)))
-
-;; (setq skk-show-tooltip t)
-
-
-;; 変換候補をinline（縦）で表示
-;; (setq skk-show-inline 'vertical)
-
-;; (when skk-show-inline
-;;   ;; 変数 `skk-treat-candidate-appearance-function' を利用して自前で候補に
-;;   ;; 色を付ける場合はこの変数を nil に設定する。
-;;   (setq skk-inline-show-face nil)
-;;   (setq skk-inline-show-background-color "Black"))
-
-(require 'sticky)
-(use-sticky-key ?\; sticky-alist:en)
+(setq skk-show-inline 'vertical)
