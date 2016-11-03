@@ -8,7 +8,8 @@
         <appendix>Use semicolon to Sticky Shift_L</appendix>
         <identifier>private.semicolon_to_sticky_shift_l</identifier>
         <autogen>
-          --KeyToKey-- KeyCode::SEMICOLON, ModifierFlag::NONE,
+          --KeyToKey--
+          KeyCode::SEMICOLON, ModifierFlag::NONE,
           KeyCode::VK_STICKY_SHIFT_L
         </autogen>
       </item>
@@ -16,7 +17,11 @@
         <name>Change Shift_R2Semicoron</name>
         <appendix>Use Shift_R to Semicolon</appendix>
         <identifier>private.dhift_r_to_semicolon</identifier>
-        <autogen>--KeyToKey-- KeyCode::SHIFT_R, KeyCode::SEMICOLON</autogen>
+        <autogen>
+          --KeyToKey--
+          KeyCode::SHIFT_R,
+          KeyCode::SEMICOLON
+        </autogen>
       </item>
     </item>
     <item>
