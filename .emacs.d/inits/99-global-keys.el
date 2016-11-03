@@ -10,7 +10,7 @@
  ("C-?"   . help-command)
  ("C-t"   . other-window)
  ("C-j"   . smart-newline)
- ("C-x j" . open-junk-filek)
+ ("C-x j" . open-junk-file)
  ("C-S-n" . make-frame)
  ("C-S-w" . delete-frame)
  ("C-M-y" . helm-show-kill-ring)
