@@ -28,6 +28,7 @@ alias semac="sudo emacsclient -t"
 alias e='emacsclient -nw -a ""'
 alias e-kill='emacsclient -e "(kill-emacs)"'
 alias psg='ps aux | grep -v grep | grep'
+eval `opam config env`
 # ## create emacs env file
 # perl -wle \
 #      'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
