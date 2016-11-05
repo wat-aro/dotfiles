@@ -6,7 +6,6 @@
 	precomposeunicode = true
 	quotepath = false
 	excludesfile = /Users/wat-aro/.gitignore
-	excludesfile = /Users/kazutas1008/.gitignore
 [color]
 	diff = auto
 	status = auto

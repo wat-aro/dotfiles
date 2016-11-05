@@ -15,9 +15,9 @@
  ("C-M-y" . helm-show-kill-ring)
  ("C-c n" . multi-term-next)
  ("C-c v" . revert-buffer)
- ("C-s-t" . other-frame))
+ ("C-S-t" . other-frame))
 
-(global-unset-key "C-m")
+;; (global-unset-key (kbd "C-m"))
 
 (custom-set-variables
  '(key-chord-two-keys-delay 0.01))
