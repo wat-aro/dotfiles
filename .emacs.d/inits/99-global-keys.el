@@ -10,14 +10,13 @@
  ("C-?"   . help-command)
  ("C-t"   . other-window)
  ("C-j"   . smart-newline)
+ ("C-x j" . open-junk-file)
  ("C-S-n" . make-frame)
  ("C-S-w" . delete-frame)
  ("C-M-y" . helm-show-kill-ring)
  ("C-c n" . multi-term-next)
  ("C-c v" . revert-buffer)
  ("C-S-t" . other-frame))
-
-;; (global-unset-key (kbd "C-m"))
 
 (custom-set-variables
  '(key-chord-two-keys-delay 0.01))
