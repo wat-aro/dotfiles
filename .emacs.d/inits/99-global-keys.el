@@ -16,7 +16,7 @@
  ("C-M-y" . helm-show-kill-ring)
  ("C-c n" . multi-term-next)
  ("C-c v" . revert-buffer)
- ("C-s-t" . other-frame))
+ ("C-S-t" . other-frame))
 
 (custom-set-variables
  '(key-chord-two-keys-delay 0.01))
