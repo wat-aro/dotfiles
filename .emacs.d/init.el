@@ -28,10 +28,11 @@
  '(inf-ruby-default-implementation "pry")
  '(inf-ruby-eval-binding "Pry.toplevel_binding" t)
  '(key-chord-two-keys-delay 0.01 t)
+ '(open-junk-file-directory "~/Documents/junk/%Y/%m/%Y-%m-%d-%H%M%S." t)
  '(open-junk-file-format "~/Documents/junk/%Y/%m/%Y-%m-%d-%H%M%S." t)
  '(package-selected-packages
    (quote
-    (smart-newline yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode w3m volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode scss-mode sass-mode ruby-end ruby-electric ruby-block rubocop robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magit-find-file magic-filetype key-chord init-open-recentf init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-migemo helm-gtags helm-ghq helm-ag hamburg-theme gotham-theme gitignore-mode flycheck-ocaml flycheck-elixir flycheck-cask flatland-theme flatland-black-theme expand-region exec-path-from-shell enh-ruby-mode emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k ddskk coffee-mode clues-theme beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
+    (smart-newline yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode w3m volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode scss-mode sass-mode ruby-end ruby-electric ruby-block rubocop robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magit-find-file magic-filetype key-chord init-open-recentf init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-migemo helm-gtags helm-ghq helm-ag hamburg-theme gotham-theme gitignore-mode flycheck-ocaml flycheck-elixir flycheck-cask flatland-theme flatland-black-theme expand-region exec-path-from-shell enh-ruby-mode emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k coffee-mode clues-theme beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
  '(parens-require-spaces nil)
  '(recentf-auto-cleanup 600)
  '(recentf-auto-save-timer [nil 0 30 0 t recentf-save-list nil idle 0])

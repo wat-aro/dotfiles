@@ -15,7 +15,6 @@
 (depends-on "clues-theme")
 (depends-on "coffee-mode")
 (depends-on "dash")
-(depends-on "ddskk")
 (depends-on "dired-k")
 (depends-on "direx")
 (depends-on "drag-stuff")

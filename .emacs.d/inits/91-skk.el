@@ -1,6 +1,13 @@
-(require 'skk)
-(require 'skk-dcomp)
+(require 'sticky)
+(use-sticky-key ?\; sticky-alist:en)
 
+(defun skk-mode-hook--unset-key ()
+  (define-key skk-j-mode-map ";" nil))
+(add-hook 'skk-mode-hook 'skk-mode-hook--unset-key)
+
+(setq skk-user-directory "~/.emacs.d/ddskk/")
+(setq skk-tut-file "~/.emacs.d/share/skk/SKK.tut") ;;チュートリアルファイルの場所
+(require 'skk-autoloads)
 ;; key
 (define-key global-map (kbd "C-x C-o") 'skk-mode)
 (setq skk-kakutei-key (kbd "C-o"))
@@ -11,6 +18,8 @@
 (setq skk-jisyo (concat (getenv "HOME") "/Dropbox/skk/skk-jisyo-emacs.utf8"))
 (setq skk-share-private-jisyo t)
 (setq skk-save-jisyo-instantly t)
+
+(setq skk-isearch-start-mode 'latin)
 
 ;;; カナモードのときにC-oしてもひらがなモードにもどる
 (defun my:skk-kakutei-key (arg)
@@ -27,3 +36,4 @@
 (global-skk-latin-mode 1)
 
 (setq skk-show-inline 'vertical)
+(skk-show-mode)
