@@ -18,3 +18,6 @@ vendor/bundle
 node_modules/
 .slime/
 smex-items
+jisyo.bak
+*.elc
+*emacs-id

@@ -1,4 +1,4 @@
-(setq skk-sticky-key ";")
+;;(setq skk-sticky-key ";")
 
 
 ;; 辞書の設定
