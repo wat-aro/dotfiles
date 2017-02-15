@@ -20,7 +20,12 @@
 	ci = commit
   puf = push --force-with-lease
   b = browse
+  oneline = log --oneline --graph
+  dc = diff --cached
 [rerere]
 	enabled = true
 [ghq]
   root = ~/src
+[url "github:"]
+    InsteadOf = https://github.com/
+    InsteadOf = git@github.com:

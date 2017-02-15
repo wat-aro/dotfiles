@@ -21,3 +21,5 @@ smex-items
 jisyo.bak
 *.elc
 *emacs-id
+tags
+.byebug_history
