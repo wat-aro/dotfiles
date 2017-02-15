@@ -1,6 +1,6 @@
 (use-package coffee-mode :defer t
   :mode (("\\.js\\.coffee\\'" . coffee-mode)
-         ("\\.coffee\\'" . coffee))
+         ("\\.coffee\\'" . coffee-mode))
   :config
   (custom-set-variables
    '(coffee-tab-width 2)

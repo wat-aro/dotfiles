@@ -29,6 +29,7 @@
 ;; (load-theme 'gotham t)
 ;; (load-theme 'vsc t)
 
+
 ;;; インタラクティブにウィンドウを分割
 (setq split-height-threshold nil)
 (setq split-width-threshold 150)

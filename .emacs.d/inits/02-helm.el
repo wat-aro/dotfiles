@@ -19,7 +19,9 @@
 
 ;; Helm-ag
 (custom-set-variables '(helm-ff-file-compressed-list '("epub" "gz" "bz2" "zip" "7z" "/backup")))
-(bind-key "C-:" 'helm-ag)
+(bind-key "C-M-:" 'helm-ag)
+
+(bind-key "C-:" 'helm-git-grep)
 
 ;; Swoop
 (use-package helm-swoop
