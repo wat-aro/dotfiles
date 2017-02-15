@@ -14,10 +14,10 @@ export XDG_CONFIG_HOME=$HOME/.config
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 export GOPATH=$HOME/golang
-export PATH=$GOPATH/bin:$PATH
+export PATH=$PATH:$GOPATH/bin
 alias ghqlist='cd $(ghq list -p | peco)'
 alias ghqhub='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
-export PATH="$HOME/.exenv/bin:$PATH"
+export PATH=$PATH:$HOME/.exenv/bin
 eval "$(exenv init -)"
 source ~/src/github.com/b4b4r07/enhancd/init.sh
 export ALTERNATE_EDITOR=""
@@ -28,7 +28,11 @@ alias semac="sudo emacsclient -t"
 alias e='emacsclient -nw -a ""'
 alias e-kill='emacsclient -e "(kill-emacs)"'
 alias psg='ps aux | grep -v grep | grep'
+alias g='git'
 eval `opam config env`
+# export PATH=$PATH:/Users/wat-aro/mongodb/bin
+export PATH=$PATH:/Users/wat-aro/.local/bin
+eval "$(direnv hook zsh)"
 # ## create emacs env file
 # perl -wle \
 #      'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
