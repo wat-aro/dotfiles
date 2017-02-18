@@ -40,3 +40,4 @@ eval "$(direnv hook zsh)"
 
 # cdしたあとで、自動的に ls する
 # function chpwd() { ll }
+exec fish

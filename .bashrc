@@ -1,4 +1,4 @@
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 alias be='bundle exec'
 alias ls='ls -G'
 alias ll='ls -alG'
@@ -14,3 +14,4 @@ export HOMEBREW_EDITOR='emacs -nw'
 # perl -wle \
 #      'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
 #      PATH > ~/.emacs.d/shellenv.el
+exec fish
