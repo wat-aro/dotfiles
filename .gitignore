@@ -26,6 +26,10 @@ tags
 .config/direnv
 hub
 .config/fish/functions/__*
+await.fish
+get.fish
+getopts.fish
+last_job_id.fish
 .config/fisherman/
 .config/fish/completions/
 .config/fish/conf.d/
