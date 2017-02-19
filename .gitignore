@@ -25,3 +25,7 @@ tags
 .byebug_history
 .config/direnv
 hub
+.config/fish/functions/__*
+.config/fisherman/
+.config/fish/completions/
+.config/fish/conf.d/
