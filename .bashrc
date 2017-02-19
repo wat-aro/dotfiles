@@ -14,4 +14,3 @@ export HOMEBREW_EDITOR='emacs -nw'
 # perl -wle \
 #      'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
 #      PATH > ~/.emacs.d/shellenv.el
-exec fish
