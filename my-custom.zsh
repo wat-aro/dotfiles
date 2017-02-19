@@ -39,5 +39,4 @@ eval "$(direnv hook zsh)"
 #      PATH > ~/.emacs.d/shellenv.el
 
 # cdしたあとで、自動的に ls する
-# function chpwd() { ll }
-exec fish
+function chpwd() { ll }
