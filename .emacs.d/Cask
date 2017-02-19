@@ -2,6 +2,7 @@
 (source melpa)
 
 (depends-on "ac-alchemist")
+(depends-on "ac-haskell-process")
 (depends-on "ac-js2")
 (depends-on "ac-slime")
 (depends-on "ag")
