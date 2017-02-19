@@ -8,3 +8,6 @@
    '(flycheck-display-errors-function nil))
   (bind-keys :map flycheck-command-map
              ("M-g l" . flycheck-list-errors)))
+
+(with-eval-after-load 'flycheck
+  (flycheck-pos-tip-mode))
