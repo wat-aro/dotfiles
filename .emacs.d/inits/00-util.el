@@ -10,7 +10,7 @@
 (setq history-delete-duplicates t)
 
 ;;; Font
-(set-face-attribute 'default nil :family "Ricty" :height 160)
+(set-face-attribute 'default nil :family "Ricty for Powerline" :height 160)
 
 ;;; Tab
 (setq-default indent-tabs-mode nil)
