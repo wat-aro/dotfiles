@@ -1,4 +1,6 @@
 ;;; Ocaml
+
+(require 'opam-user-setup "~/.emacs.d/elisp/opam-user-setup.el")
 ;;; tuareg
 (add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . tuareg-mode))
 (autoload 'tuareg-mode "tuareg" "Major mode for editing OCaml code" t)

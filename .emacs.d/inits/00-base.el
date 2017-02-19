@@ -2,8 +2,13 @@
 (setq-default gc-cons-percentage 0.5)
 
 ;; PATH
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
+;; fish
+(let ((path-from-shell (shell-command-to-string "/usr/local/bin/fish -i -c \"echo -n \\$PATH[1]; for val in \\$PATH[2..-1];echo -n \\\":\\$val\\\";end\"")))
+  (setenv "PATH" path-from-shell)
+  (setq exec-path (split-string path-from-shell ":")))
+;; zsh
+;; (when (memq window-system '(mac ns))
+;;   (exec-path-from-shell-initialize))
 
 (let ((default-directory (locate-user-emacs-file "./elisp"))
       (opam-directory "~/.opam/system/share/emacs/site-lisp"))
