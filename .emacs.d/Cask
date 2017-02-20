@@ -75,7 +75,6 @@
 (depends-on "projectile-rails")
 (depends-on "recentf-ext")
 (depends-on "robe")
-(depends-on "rubocop")
 (depends-on "ruby-block")
 (depends-on "ruby-electric")
 (depends-on "ruby-end")
