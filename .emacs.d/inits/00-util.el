@@ -40,7 +40,7 @@
 ;; volatile-highlights.el
 (use-package volatile-highlights
   :diminish volatile-highlights-mode
-  :init
+  :config
   (volatile-highlights-mode t))
 
 ;; 自動でバッファの再読み込み
