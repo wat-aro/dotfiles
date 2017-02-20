@@ -16,8 +16,8 @@
 (setq haskell-program-name "/usr/local/bin/stack ghci")
 
 (defadvice inferior-haskell-load-file (after change-focus-after-load)
-"Change focus to GHCi window after C-c C-l command"
-(other-window 1))
+  "Change focus to GHCi window after C-c C-l command"
+  (other-window 1))
 (ad-activate 'inferior-haskell-load-file)
 
 (autoload 'ghc-init "ghc" nil t)
