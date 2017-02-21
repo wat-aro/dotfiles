@@ -26,3 +26,8 @@
   (bind-keys :map paredit-mode-map
              ("C-<right>" . 'right-word)
              ("C-<left>"  . 'left-word)))
+
+(require 'expand-region)
+;; 真っ先に入れておかないとすぐに括弧に対応してくれない…
+(push 'er/mark-outside-pairs er/try-expand-list)
+(global-set-key (kbd "C-M-SPC") 'er/expand-region)
