@@ -25,6 +25,7 @@
 (depends-on "emmet-mode")
 (depends-on "enh-ruby-mode")
 (depends-on "exec-path-from-shell")
+(depends-on "expand-line")
 (depends-on "expand-region")
 (depends-on "f")
 (depends-on "flatland-black-theme")

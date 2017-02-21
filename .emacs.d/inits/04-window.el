@@ -23,12 +23,12 @@
                   (compilation-mode :noselect t)))))
 
 ;;; Color Theme
-;; (load-theme 'flatland t)
+(load-theme 'flatland t)
 ;; (load-theme 'hamburg t)
-(load-theme 'clues t)
+;; (load-theme 'clues t)
 ;; (load-theme 'gotham t)
-;; (load-theme 'vsc t)
-
+(require 'powerline)
+(powerline-center-theme)
 
 ;;; インタラクティブにウィンドウを分割
 (setq split-height-threshold nil)
