@@ -35,3 +35,5 @@ source ~/src/github.com/b4b4r07/enhancd/init.sh
 function chpwd() { ll }
 
 function git(){hub "$@"}
+
+bindkey -r '^O'
