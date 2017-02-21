@@ -27,6 +27,7 @@
 (depends-on "exec-path-from-shell")
 (depends-on "expand-line")
 (depends-on "expand-region")
+(depends-on "ez-query-replace")
 (depends-on "f")
 (depends-on "flatland-black-theme")
 (depends-on "flatland-theme")
