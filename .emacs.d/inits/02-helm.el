@@ -20,12 +20,16 @@
 
 (add-to-list 'helm-for-files-preferred-list 'helm-source-ghq)
 (add-to-list 'exec-path "/home/wat-aro/golang/bin")
-(define-key global-map (kbd "C-x f")     'helm-ghq)
 
-;; Helm-ag
+(use-package helm-ghq
+  :bind
+  ("C-x f" . helm-ghq))
+
+;; Helm-Ag
 (custom-set-variables '(helm-ff-file-compressed-list '("epub" "gz" "bz2" "zip" "7z" "/backup")))
 (bind-key "C-M-:" 'helm-ag)
 
+;; Helm-Git-Grep
 (bind-key "C-:" 'helm-git-grep)
 
 ;; Swoop
