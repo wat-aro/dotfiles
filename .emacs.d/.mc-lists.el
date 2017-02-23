@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         helm-M-x
+        helm-maybe-exit-minibuffer
         indent-for-tab-command
         my-goto-line-beginning-or-indent
         paredit-backward
