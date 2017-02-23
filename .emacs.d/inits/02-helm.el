@@ -35,9 +35,11 @@
 ;; Swoop
 (use-package helm-swoop
   :init
-  (setq helm-swoop-move-to-line-cycle t)
-  (bind-key "M-C-;" 'helm-swoop)
-  ;; (bind-key "C-;" 'helm-multi-swoop)
+  ;; (setq helm-swoop-move-to-line-cycle t)
+  :bind
+  ("C-M-;" . helm-swoop)
+  ;; ("C-x C-M-;" . helm-multi-swoop)
   :config
-  (bind-key "C-r" 'helm-previous-line helm-swoop-map)
-  (bind-key "C-s" 'helm-next-line helm-swoop-map))
+  (bind-keys :map helm-swoop-map
+             ("C-r" . helm-previous-line)
+             ("C-s" . helm-next-line)))
