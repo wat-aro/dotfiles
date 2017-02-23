@@ -44,7 +44,7 @@
 (setq frame-title-format "%f")
 
 ;; フレームの透明度
-(set-frame-parameter (selected-frame) 'alpha '(0.90))
+(set-frame-parameter (selected-frame) 'alpha '(1.0))
 
 ;; スクリーンの最大化
 (set-frame-parameter nil 'fullscreen 'maximized)
