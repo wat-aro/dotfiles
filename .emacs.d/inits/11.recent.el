@@ -8,4 +8,5 @@
                        "COMMIT_EDITMSG" "/.?TAGS" "^/sudo:" "/\\.emacs\\.d/games/*-scores"))
    (list 'recentf-auto-save-timer (run-with-idle-timer 30 t 'recentf-save-list)))
   (recentf-mode t)
-  (bind-key "C-c t" 'helm-recentf))
+  :bind
+  ("C-c t" . helm-recentf))
