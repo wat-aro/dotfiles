@@ -22,6 +22,7 @@
   b = browse
   oneline = log --oneline --graph
   dc = diff --cached
+  lp = log -p
 [rerere]
 	enabled = true
 [ghq]
