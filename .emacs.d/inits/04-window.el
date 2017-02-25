@@ -27,8 +27,6 @@
 ;; (load-theme 'hamburg t)
 ;; (load-theme 'clues t)
 ;; (load-theme 'gotham t)
-(require 'powerline)
-(powerline-center-theme)
 
 ;;; インタラクティブにウィンドウを分割
 (setq split-height-threshold nil)
