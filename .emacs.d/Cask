@@ -87,6 +87,7 @@
 (depends-on "s")
 (depends-on "sass-mode")
 (depends-on "scss-mode")
+(depends-on "selected")
 (depends-on "slim-mode")
 (depends-on "slime")
 (depends-on "smart-newline")

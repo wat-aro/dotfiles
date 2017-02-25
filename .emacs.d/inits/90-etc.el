@@ -58,14 +58,6 @@
 ;; (custom-set-variables '(nyan-bar-length 16))
 ;; (nyan-mode t)
 
-(defun sicp ()
-  (interactive)
-  (info "~/.emacs.d/info/sicp.info"))
-
-(defun onlisp ()
-  (interactive)
-  (info "~/.emacs.d/info/onlisp.info"))
-
 ;; ;;; init.el ends here
 ;; (custom-set-faces
 ;;  ;; custom-set-faces was added by Custom.
@@ -73,3 +65,17 @@
 ;;  ;; Your init file should contain only one such instance.
 ;;  ;; If there is more than one, they won't work right.
 ;;  )
+
+(use-package selected
+  :init
+  (setq selected-minor-mode-override t)
+  (selected-global-mode 1)
+  :config
+  (setq selected-org-mode-map (make-sparse-keymap))
+  (bind-key "t" 'org-table-convert-region selected-org-mode-map)
+  (bind-keys :map selected-keymap
+             ("q" . selected-off)
+             ("u" . upcase-region)
+             ("d" . downcase-region)
+             ("w" . count-words-region)
+             ("m" . apply-macro-to-region-lines)))
