@@ -18,7 +18,7 @@
  ("C-c v" . revert-buffer)
  ("C-S-t" . other-frame)
  ("C-M-%" . ez-query-replace)
- ("C-u C-M-%" . ez-query-replace-repeat))
+ ("C-x C-M-%" . ez-query-replace-repeat))
 
 (custom-set-variables
  '(key-chord-two-keys-delay 0.01))

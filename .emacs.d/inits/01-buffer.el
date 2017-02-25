@@ -2,7 +2,6 @@
 (when window-system
   (tool-bar-mode -1)
   (scroll-bar-mode -1))
-(menu-bar-mode -1)
 
 ;; Column mode
 (column-number-mode t)
