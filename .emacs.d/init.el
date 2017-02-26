@@ -46,7 +46,7 @@
  '(open-junk-file-format "~/Documents/junk/%Y/%m/%Y-%m-%d-%H%M%S." t)
  '(package-selected-packages
    (quote
-    (selected tuareg magit-find-file magit package-utils helm-descbinds ez-query-replace helm-themes expand-line flycheck-pos-tip terraform-mode ac-haskell-process flycheck-haskell haskell-mode helm-git-grep smart-newline yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode w3m volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode scss-mode sass-mode ruby-end ruby-electric ruby-block robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magic-filetype key-chord init-open-recentf init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-migemo helm-gtags helm-ghq helm-ag hamburg-theme gotham-theme gitignore-mode flycheck-ocaml flycheck-elixir flycheck-cask flatland-theme flatland-black-theme expand-region exec-path-from-shell enh-ruby-mode emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k coffee-mode clues-theme beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
+    (sudo-edit selected tuareg magit-find-file magit package-utils helm-descbinds ez-query-replace helm-themes expand-line flycheck-pos-tip terraform-mode ac-haskell-process flycheck-haskell haskell-mode helm-git-grep smart-newline yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode w3m volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode scss-mode sass-mode ruby-block robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magic-filetype key-chord init-open-recentf init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-migemo helm-gtags helm-ghq helm-ag hamburg-theme gotham-theme gitignore-mode flycheck-ocaml flycheck-elixir flycheck-cask flatland-theme flatland-black-theme expand-region exec-path-from-shell enh-ruby-mode emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k coffee-mode clues-theme beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
  '(parens-require-spaces nil)
  '(powerline-color1 "#222232")
  '(powerline-color2 "#333343")
@@ -85,3 +85,9 @@
      (360 . "#dc8cc3"))))
  '(vc-annotate-very-old-color "#dc8cc3")
  '(view-read-only t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(whitespace-trailing ((t (:foreground "magenta" :underline t :background nil)))))
