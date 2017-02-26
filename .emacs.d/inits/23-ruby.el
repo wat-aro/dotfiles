@@ -1,22 +1,17 @@
 (use-package ruby-mode
   :interpreter (("ruby" . ruby-mode))
-  :config
+  :init
   (add-hook 'ruby-mode-hook
             '(lambda ()
-               (setq ruby-deep-indent-paren nil)))
-    (use-package ruby-block
-      :config
-      (ruby-block-mode t))
+               (setq ruby-deep-indent-paren nil)
+               (setq flycheck-checker 'ruby-rubocop)
+               (flycheck-mode 1)))
+  :config
   (use-package rcodetools
     :config
     (bind-key "C-c d" 'xmp ruby-mode-map)))
 
 (setq ruby-deep-indent-paren nil)
-
-(add-hook 'ruby-mode-hook
-          '(lambda ()
-             (setq flycheck-checker 'ruby-rubocop)
-             (flycheck-mode 1)))
 
 (setq ruby-insert-encoding-magic-comment nil)
 

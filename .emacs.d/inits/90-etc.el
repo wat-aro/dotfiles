@@ -79,3 +79,5 @@
              ("d" . downcase-region)
              ("w" . count-words-region)
              ("m" . apply-macro-to-region-lines)))
+
+(use-package generic-x)
