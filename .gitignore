@@ -26,3 +26,5 @@ tags
 .config/direnv
 hub
 .mc-lists.el
+.bundle/
+vendor/
