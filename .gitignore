@@ -28,3 +28,4 @@ hub
 .mc-lists.el
 .bundle/
 vendor/
+.stack-work/
