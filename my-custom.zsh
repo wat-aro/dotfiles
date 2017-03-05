@@ -12,6 +12,10 @@ alias ghc="stack ghc --"
 alias ghci="stack ghci"
 alias runghc="stack runghc --"
 alias runhaskell="stack runghc --"
+alias s="stack"
+alias sb="stack build"
+alias si="stack install"
+alias se="stack exec"
 
 export PATH="$PATH:$HOME/.rbenv/bin"
 export XDG_CONFIG_HOME=$HOME/.config
