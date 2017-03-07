@@ -41,3 +41,10 @@ function chpwd() { ll }
 function git(){hub "$@"}
 
 bindkey -r '^O'
+
+function cd_up() {
+    cd ../
+    zle reset-prompt
+ }
+zle -N cd_up
+bindkey '^U' cd_up
