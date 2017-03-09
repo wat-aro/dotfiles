@@ -28,6 +28,12 @@
 ;; (load-theme 'clues t)
 ;; (load-theme 'gotham t)
 
+(custom-set-faces
+ '(linum ((t (:inherit (shadow default) :foreground "Gray")))))
+
+(set-face-foreground 'region "Black")
+(set-face-background 'region "Green")
+
 ;;; インタラクティブにウィンドウを分割
 (setq split-height-threshold nil)
 (setq split-width-threshold 150)
