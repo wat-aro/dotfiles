@@ -43,3 +43,7 @@
   (bind-keys :map helm-swoop-map
              ("C-r" . helm-previous-line)
              ("C-s" . helm-next-line)))
+
+(use-package helm-tramp
+  :bind
+  ("C-x M-f" . helm-tramp))

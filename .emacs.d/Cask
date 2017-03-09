@@ -51,6 +51,7 @@
 (depends-on "helm-smex")
 (depends-on "helm-swoop")
 (depends-on "helm-themes")
+(depends-on "helm-tramp")
 (depends-on "htmlize")
 (depends-on "idle-highlight-mode")
 (depends-on "inf-ruby")
