@@ -6,16 +6,9 @@
 ;;(keyboard-translate ?\C-h ?\C-?)
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
-(defun other-window-or-split ()
-  (interactive)
-  (when (one-window-p)
-    (split-window-horizontally))
-  (other-window 1))
-
 (bind-keys
  ("C-?"   . help-command)
- ("C-t"   . other-window-or-split)
- ("C-j"   . smart-newline)
+ ("C-t"   . other-window)
  ("C-x j" . open-junk-file)
  ("C-S-n" . make-frame)
  ("C-S-w" . delete-frame)
