@@ -36,7 +36,7 @@ source ~/src/github.com/b4b4r07/enhancd/init.sh
 # export PATH=$PATH:/Users/wat-aro/mongodb/bin
 
 # cdしたあとで、自動的に ls する
-function chpwd() { ll }
+# function chpwd() { ll }
 
 function git(){hub "$@"}
 
