@@ -52,3 +52,10 @@
 
 ;; スクリーンの最大化
 (set-frame-parameter nil 'fullscreen 'maximized)
+
+(setq
+ ;; ホイールでスクロールする行数を設定
+ mouse-wheel-scroll-amount '(1 ((shift) . 2) ((control)))
+ ;; スクロール中のカーソルの位置を固定する
+ scroll-preserve-screen-position 'always
+ )
