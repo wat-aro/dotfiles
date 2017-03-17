@@ -9,6 +9,7 @@
 (bind-keys
  ("C-?"   . help-command)
  ("C-t"   . other-window)
+ ("C-j"   . newline-and-indent)
  ("C-x j" . open-junk-file)
  ("C-S-n" . make-frame)
  ("C-S-w" . delete-frame)
