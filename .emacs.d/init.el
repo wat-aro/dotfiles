@@ -32,6 +32,7 @@
  '(flycheck-idle-change-delay 1.0)
  '(flycheck-pos-tip-mode t)
  '(fringe-mode 10 nil (fringe))
+ '(haskell-indent-thenelse 2)
  '(helm-ff-file-compressed-list (quote ("epub" "gz" "bz2" "zip" "7z" "/backup")))
  '(inf-ruby-console-rails-default-implementation "pry")
  '(inf-ruby-default-implementation "pry")
@@ -59,6 +60,10 @@
     ("/recentf" "/elpa/" "/elisps/" "\\'/tmp/" "/\\.git/" "/\\.cask/" "COMMIT_EDITMSG" "/.?TAGS" "^/sudo:" "/\\.emacs\\.d/games/*-scores")))
  '(recentf-max-saved-items 2000)
  '(rspec-use-rake-when-possible nil)
+ '(safe-local-variable-values
+   (quote
+    ((haskell-process-use-ghci . t)
+     (haskell-indent-spaces . 4))))
  '(show-paren-delay 0)
  '(tab-width 2)
  '(terraform-indent-level 4)

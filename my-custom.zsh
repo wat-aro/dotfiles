@@ -48,3 +48,4 @@ function cd_up() {
  }
 zle -N cd_up
 bindkey '^U' cd_up
+export PATH="/usr/local/opt/libxml2/bin:$PATH"
