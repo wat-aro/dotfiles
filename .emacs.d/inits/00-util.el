@@ -38,10 +38,10 @@
 (savehist-mode 1)
 
 ;; volatile-highlights.el
-(use-package volatile-highlights
-  :diminish volatile-highlights-mode
-  :config
-  (volatile-highlights-mode t))
+;; (use-package volatile-highlights
+;;   :diminish volatile-highlights-mode
+;;   :config
+;;   (volatile-highlights-mode nil))
 
 ;; 自動でバッファの再読み込み
 (global-auto-revert-mode 1)

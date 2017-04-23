@@ -14,7 +14,14 @@ Style/Encoding:
   Enabled: true
 
 Style/FrozenStringLiteralComment:
-  EnforcedStyle: always
+  Enabled: false
+
+# Missing top level class documentation comment.
+Style/Documentation:
+  Enabled: false
+
+Metrix/LineLength:
+  Enabled: false
 
 Style/IndentHeredoc:
   EnforcedStyle: powerpack

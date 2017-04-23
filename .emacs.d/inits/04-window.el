@@ -48,7 +48,7 @@
 (setq frame-title-format "%f")
 
 ;; フレームの透明度
-(set-frame-parameter (selected-frame) 'alpha '(1.0))
+(set-frame-parameter (selected-frame) 'alpha '(0.95))
 
 ;; スクリーンの最大化
 (set-frame-parameter nil 'fullscreen 'maximized)
@@ -59,3 +59,16 @@
  ;; スクロール中のカーソルの位置を固定する
  scroll-preserve-screen-position 'always
  )
+
+(defface hlline-face
+  '((((class color)
+      (background dark))
+     (:background "dark slate gray"))
+    (((class color)
+      (background light))
+     (:background "OliveDrab1"))
+    (t
+     ()))
+  "*Face used by hl-line.")
+(setq hl-line-face 'hlline-face)
+(global-hl-line-mode)

@@ -16,6 +16,7 @@ alias s="stack"
 alias sb="stack build"
 alias si="stack install"
 alias se="stack exec"
+alias reload='exec zsh -l'
 
 export PATH="$PATH:$HOME/.rbenv/bin"
 export XDG_CONFIG_HOME=$HOME/.config
@@ -26,6 +27,8 @@ export ALTERNATE_EDITOR=""
 export EDITOR="emacsclient -t"
 export VISUAL="emacsclient -c -a emacs"
 export PATH=$PATH:/Users/wat-aro/.local/bin
+export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
+export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
 
 eval "$(rbenv init - zsh)"
 eval "$(exenv init -)"

@@ -48,7 +48,7 @@
  '(open-junk-file-format "~/Documents/junk/%Y/%m/%Y-%m-%d-%H%M%S." t)
  '(package-selected-packages
    (quote
-    (elm-mode helm-tramp sudo-edit selected tuareg magit-find-file magit package-utils helm-descbinds ez-query-replace helm-themes expand-line flycheck-pos-tip terraform-mode ac-haskell-process flycheck-haskell haskell-mode helm-git-grep yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode w3m volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode scss-mode sass-mode ruby-block robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magic-filetype key-chord init-open-recentf init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-migemo helm-gtags helm-ghq helm-ag hamburg-theme gotham-theme gitignore-mode flycheck-ocaml flycheck-elixir flycheck-cask flatland-theme flatland-black-theme exec-path-from-shell emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k coffee-mode clues-theme beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
+    (crosshairs elm-mode helm-tramp sudo-edit selected tuareg magit-find-file magit package-utils helm-descbinds ez-query-replace helm-themes expand-line flycheck-pos-tip terraform-mode ac-haskell-process flycheck-haskell haskell-mode helm-git-grep yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode w3m volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode scss-mode sass-mode ruby-block robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magic-filetype key-chord init-open-recentf init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-migemo helm-gtags helm-ghq helm-ag hamburg-theme gotham-theme gitignore-mode flycheck-ocaml flycheck-elixir flycheck-cask flatland-theme flatland-black-theme exec-path-from-shell emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k coffee-mode clues-theme beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
  '(parens-require-spaces nil)
  '(powerline-color1 "#222232")
  '(powerline-color2 "#333343")
@@ -90,7 +90,8 @@
      (340 . "#cfe2f2")
      (360 . "#dc8cc3"))))
  '(vc-annotate-very-old-color "#dc8cc3")
- '(view-read-only t))
+ '(view-read-only t)
+ '(web-mode-enable-auto-pairing nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

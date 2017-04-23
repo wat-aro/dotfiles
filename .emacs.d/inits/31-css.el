@@ -8,8 +8,8 @@
   (bind-key "C-j" nil emmet-mode-keymap))
 
 (use-package scss-mode
-  :init (add-hook 'scss-mode-hook
-                  '(lambda() (scss-custom)))
+  ;; :init (add-hook 'scss-mode-hook
+  ;;                 '(lambda() (scss-custom)))
   :mode ("\\.scss$" . scss-mode)
   :config
   (set (make-local-variable 'css-indent-offset) 2)
