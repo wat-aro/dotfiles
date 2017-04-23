@@ -1,5 +1,3 @@
-set -x PATH $HOME/.rbenv/bin $PATH
-set -x PATH $HOME/.exenv/bin $PATH
 set -x PATH $HOME/.local/bin $PATH
 set -x PATH /usr/local/opt/libxml2/bin $PATH
 set -x XDG_CONFIG_HOME $HOME/.config $XDG_CONFIG_HOME
