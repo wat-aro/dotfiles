@@ -1,1 +1,1 @@
-/Users/wat-aro/.config/fisherman/clearance/fish_prompt.fish
+/Users/wat-aro/.config/fisherman/lambda/fish_prompt.fish
