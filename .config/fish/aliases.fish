@@ -1,6 +1,7 @@
 balias git hub
 balias g git
 balias be 'bundle exec'
+balias r "bin/rails"
 alias e 'emacsclient -nw -a ""'
 alias e-kill 'emacsclient -e "(kill-emacs)"'
 alias psg 'ps aux | grep -v grep | grep'
@@ -15,3 +16,4 @@ alias s "stack"
 alias sb "stack build"
 alias si "stack install"
 alias se "stack exec"
+balias less  "less -r"

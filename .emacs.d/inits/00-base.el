@@ -11,7 +11,8 @@
   (exec-path-from-shell-initialize))
 
 (let ((default-directory (locate-user-emacs-file "./elisp"))
-      (opam-directory "~/.opam/system/share/emacs/site-lisp"))
+      (opam-directory "~/.opam/system/share/emacs/site-lisp")
+      (rbenv-directory "~/.rbenv/shims"))
   (add-to-list 'load-path default-directory)
   (add-to-list 'load-path opam-directory)
   (normal-top-level-add-subdirs-to-load-path))

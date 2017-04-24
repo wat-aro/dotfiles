@@ -5,6 +5,7 @@ if status --is-login
 end
 
 eval (opam config env)
+eval (direnv hook fish)
 
 function fish_user_key_bindings
   bind \cr 'peco_select_history (commandline -b)'
