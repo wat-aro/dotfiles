@@ -19,7 +19,6 @@
              ("C-z" . helm-select-action)))
 
 (add-to-list 'helm-for-files-preferred-list 'helm-source-ghq)
-(add-to-list 'exec-path "/home/wat-aro/golang/bin")
 
 (use-package helm-ghq
   :bind

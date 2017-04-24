@@ -16,3 +16,8 @@ end
 function dired
   emacsclient -e "(dired \"$PWD\")"
 end
+
+## create emacs env file
+perl -wle \
+    'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
+    PATH > ~/.emacs.d/shellenv.el

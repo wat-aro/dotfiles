@@ -46,7 +46,7 @@
 ;; 自動でバッファの再読み込み
 (global-auto-revert-mode 1)
 
-(smart-newline-mode 1)
+;; (smart-newline-mode 1)
 
 ;; ファイルの読み込み位置を保存する
 (save-place-mode 1)

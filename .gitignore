@@ -30,3 +30,4 @@ hub
 vendor/
 .stack-work/
 fisherman/
+shellenv.el
