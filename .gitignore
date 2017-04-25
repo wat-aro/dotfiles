@@ -31,3 +31,4 @@ vendor/
 .stack-work/
 fisherman/
 shellenv.el
+fishd*
