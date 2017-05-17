@@ -7,3 +7,6 @@ set -x EDITOR "emacsclient -t"
 set -x VISUAL "emacsclient -c -a emacs"
 set -x GHQ_SELECTOR peco
 set -U Z_DATA "$HOME/.z_data"
+
+set -x PATH ~/.opam/system/bin $PATH
+set -x MANPATH "$MANPATH" ~/.opam/system/man

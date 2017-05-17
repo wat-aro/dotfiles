@@ -21,3 +21,5 @@ end
 perl -wle \
     'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
     PATH > ~/.emacs.d/shellenv.el
+
+source ~/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
