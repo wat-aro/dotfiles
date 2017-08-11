@@ -9,6 +9,7 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'font-lock-mode)
 (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
+(add-hook 'haskell-mode-hook 'hindent-mode)
 
 (add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))
 (add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode))
@@ -30,6 +31,7 @@
 (require 'ac-haskell-process) ; if not installed via package.el
 (add-hook 'interactive-haskell-mode-hook 'ac-haskell-process-setup)
 (add-hook 'haskell-interactive-mode-hook 'ac-haskell-process-setup)
+(add-hook 'inferior-haskell-mode-hook 'ac-haskell-process-setup)
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'haskell-interactive-mode))
 
@@ -50,6 +52,7 @@
 
 (bind-keys :map haskell-mode-map
            ("C-c C-l" . inferior-haskell-load-file)
-           ("C-j"     . haskell-indentation-newline-and-indent))
+           ("C-j"     . haskell-indentation-newline-and-indent)
+           ("M-."     . haskell-mode-jump-to-def))
 
 (custom-set-variables '(haskell-indent-thenelse 2))

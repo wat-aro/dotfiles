@@ -1,1 +1,1 @@
-(load-file "/usr/local/share/emacs/site-lisp/proof-general/generic/proof-site.el")
+(load-file "~/.emacs.d/elisp/PG/generic/proof-site.el")

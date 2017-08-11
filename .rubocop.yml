@@ -1,5 +1,8 @@
 # This is the configuration used to check the rubocop source code.
 
+# inherit_gem:
+#   deka_eiwakun: 'config/rubocop.yml'
+
 inherit_from: .rubocop_todo.yml
 
 AllCops:

@@ -4,7 +4,8 @@ if status --is-login
   . ~/.config/fish/env.fish
 end
 
-eval (opam config env)
+source ~/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+# eval (opam config env)
 eval (direnv hook fish)
 
 function fish_user_key_bindings
@@ -21,5 +22,3 @@ end
 perl -wle \
     'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
     PATH > ~/.emacs.d/shellenv.el
-
-source ~/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true

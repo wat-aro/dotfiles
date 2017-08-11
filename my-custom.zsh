@@ -29,7 +29,7 @@ export VISUAL="emacsclient -c -a emacs"
 export PATH=$PATH:/Users/wat-aro/.local/bin
 export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
 export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
-
+export PATH=/usr/local/opt/mysql@5.6/bin:$PATH
 eval "$(rbenv init - zsh)"
 eval "$(exenv init -)"
 eval "$(direnv hook zsh)"
