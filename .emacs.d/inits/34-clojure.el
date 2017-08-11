@@ -10,9 +10,11 @@
   (add-hook 'cider-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-mode-hook #'paredit-mode)
+  (add-hook 'cider-mode-hook #'helm-cider-mode)
   (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
+  (add-hook 'cider-repl-mode-hook #'helm-cider-mode)
   :diminish subword-mode
   :config
   (setq nrepl-log-messages t
