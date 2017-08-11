@@ -2,10 +2,16 @@
 
 (require 'cask "/usr/local/opt/cask/cask.el")
 (cask-initialize)
-(use-package "pallet")
-(pallet-mode t)
 
-(init-loader-load "~/.emacs.d/inits")
+(use-package pallet
+  :init
+  (pallet-mode t))
+
+
+(use-package init-loader
+  :init
+  (init-loader-load "~/.emacs.d/inits"))
+
 
 (server-start)
 (init-open-recentf)
