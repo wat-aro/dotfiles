@@ -25,4 +25,6 @@
   :config
   (bind-keys :map paredit-mode-map
              ("C-<right>" . 'right-word)
-             ("C-<left>"  . 'left-word)))
+             ("C-<left>"  . 'left-word)
+             (";;"        . 'paredit-semicolon)
+             (";"         . nil)))      ; for sticky
