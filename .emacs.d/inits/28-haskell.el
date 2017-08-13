@@ -53,6 +53,7 @@
 (bind-keys :map haskell-mode-map
            ("C-c C-l" . inferior-haskell-load-file)
            ("C-j"     . haskell-indentation-newline-and-indent)
-           ("M-."     . haskell-mode-jump-to-def))
+           ("M-."     . haskell-mode-jump-to-def)
+           ("C-c C-?" . haskell-hoogle))
 
 (custom-set-variables '(haskell-indent-thenelse 2))

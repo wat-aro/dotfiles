@@ -6,7 +6,6 @@
 
 (defun my/emacs-lisp-mode-hook ()
   "My Emacs Lisp mode."
-  (auto-complete-mode 1)
   (setq ac-sources (append ac-sources my/emacs-lisp-ac-sources))
   (set-face-foreground 'font-lock-regexp-grouping-backslash "indian red")
   (set-face-foreground 'font-lock-regexp-grouping-construct "peru"))
@@ -17,4 +16,5 @@
 (--each my/emacs-lisp-modes
   (add-hook it 'turn-on-eldoc-mode)
   (add-hook it 'elisp-slime-nav-mode)
-  (add-hook it 'my/emacs-lisp-mode-hook))
+  (add-hook it 'my/emacs-lisp-mode-hook)
+  (add-hook it 'auto-complete-mode))
