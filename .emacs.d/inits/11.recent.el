@@ -9,4 +9,4 @@
    (list 'recentf-auto-save-timer (run-with-idle-timer 30 t 'recentf-save-list)))
   (recentf-mode t)
   :bind
-  ("C-c t" . helm-recentf))
+  ("C-c r" . helm-recentf))

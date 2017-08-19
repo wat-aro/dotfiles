@@ -45,6 +45,7 @@
 (depends-on "flycheck-pos-tip")
 (depends-on "flycheck-scala-sbt")
 (depends-on "gitignore-mode")
+(depends-on "google-translate")
 (depends-on "gotham-theme")
 (depends-on "hamburg-theme")
 (depends-on "haskell-mode")
