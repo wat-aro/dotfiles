@@ -30,6 +30,7 @@
  '(clojure-align-forms-automatically t)
  '(coffee-indent-like-python-mode t)
  '(coffee-tab-width 2)
+ '(css-indent-offset 2)
  '(custom-safe-themes
    (quote
     ("dd6e52a5b1180f5c8bf408764a32867e2fa86594ded78a29040cafce6a4ea808" "946e871c780b159c4bb9f580537e5d2f7dba1411143194447604ecbaf01bd90c" "3eb93cd9a0da0f3e86b5d932ac0e3b5f0f50de7a0b805d4eb1f67782e9eb67a4" "962dacd99e5a99801ca7257f25be7be0cebc333ad07be97efd6ff59755e6148f" "bdaab014ec6785f64b72efbea80808b762d8971247aacf2ffc6b76a39b9ed97c" default)))
@@ -56,7 +57,7 @@
  '(open-junk-file-format "~/Documents/junk/%Y/%m/%Y-%m-%d-%H%M%S." t)
  '(package-selected-packages
    (quote
-    (google-translate helm-cider clj-refactor cider clojure-mode flycheck-scala-sbt ensime vue-mode hindent fish-mode crosshairs elm-mode helm-tramp sudo-edit selected tuareg magit-find-file magit package-utils helm-descbinds ez-query-replace helm-themes expand-line flycheck-pos-tip terraform-mode ac-haskell-process flycheck-haskell haskell-mode helm-git-grep yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode scss-mode sass-mode ruby-block robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magic-filetype key-chord init-open-recentf init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-migemo helm-gtags helm-ghq helm-ag hamburg-theme gotham-theme gitignore-mode flycheck-ocaml flycheck-elixir flycheck-cask flatland-theme flatland-black-theme exec-path-from-shell emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k coffee-mode clues-theme beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
+    (editor-config google-translate helm-cider clj-refactor cider clojure-mode flycheck-scala-sbt ensime vue-mode hindent fish-mode crosshairs elm-mode helm-tramp sudo-edit selected tuareg magit-find-file magit package-utils helm-descbinds ez-query-replace helm-themes expand-line flycheck-pos-tip terraform-mode ac-haskell-process flycheck-haskell haskell-mode helm-git-grep yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode scss-mode sass-mode ruby-block robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magic-filetype key-chord init-open-recentf init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-migemo helm-gtags helm-ghq helm-ag hamburg-theme gotham-theme gitignore-mode flycheck-ocaml flycheck-elixir flycheck-cask flatland-theme flatland-black-theme exec-path-from-shell emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k coffee-mode clues-theme beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
  '(parens-require-spaces nil)
  '(powerline-color1 "#222232")
  '(powerline-color2 "#333343")
@@ -72,6 +73,7 @@
    (quote
     ((haskell-process-use-ghci . t)
      (haskell-indent-spaces . 4))))
+ '(scss-compile-at-save nil)
  '(show-paren-delay 0)
  '(tab-width 2)
  '(terraform-indent-level 4)

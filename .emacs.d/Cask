@@ -24,6 +24,7 @@
 (depends-on "dired-k")
 (depends-on "direx")
 (depends-on "drag-stuff")
+(depends-on "editorconfig")
 (depends-on "elisp-slime-nav")
 (depends-on "elixir-mode")
 (depends-on "elm-mode")
