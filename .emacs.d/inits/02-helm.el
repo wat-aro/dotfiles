@@ -1,3 +1,15 @@
+;;; migemo
+(use-package migemo
+  :init
+  (custom-set-variables '(migemo-command "cmigemo")
+                        '(migemo-options '("-q" "--emacs"))
+                        '(migemo-dictionary "/usr/local/Cellar/cmigemo/20110227/share/migemo/utf-8/migemo-dict")
+                        '(migemo-user-dictionary nil)
+                        '(migemo-regex-dictionary nil)
+                        '(migemo-coding-system 'utf-8))
+  (load-library "migemo")
+  (migemo-init))
+
 ;; Helm
 (use-package helm :defer t
   :diminish helm-mode
