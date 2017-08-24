@@ -58,7 +58,6 @@
 (depends-on "helm-ghq")
 (depends-on "helm-git-grep")
 (depends-on "helm-gtags")
-(depends-on "helm-migemo")
 (depends-on "helm-projectile")
 (depends-on "helm-smex")
 (depends-on "helm-swoop")

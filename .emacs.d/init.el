@@ -53,11 +53,18 @@
  '(main-line-color2 "#333343")
  '(markdown-indent-on-enter nil)
  '(markdown-make-gfm-checkboxes-buttons nil)
+ '(migemo-coding-system (quote utf-8))
+ '(migemo-command "cmigemo")
+ '(migemo-dictionary
+   "/usr/local/Cellar/cmigemo/20110227/share/migemo/utf-8/migemo-dict")
+ '(migemo-options (quote ("-q" "--emacs")))
+ '(migemo-regex-dictionary nil)
+ '(migemo-user-dictionary nil)
  '(open-junk-file-directory "~/Documents/junk/%Y/%m/%Y-%m-%d-%H%M%S." t)
  '(open-junk-file-format "~/Documents/junk/%Y/%m/%Y-%m-%d-%H%M%S." t)
  '(package-selected-packages
    (quote
-    (editor-config google-translate helm-cider clj-refactor cider clojure-mode flycheck-scala-sbt ensime vue-mode hindent fish-mode crosshairs elm-mode helm-tramp sudo-edit selected tuareg magit-find-file magit package-utils helm-descbinds ez-query-replace helm-themes expand-line flycheck-pos-tip terraform-mode ac-haskell-process flycheck-haskell haskell-mode helm-git-grep yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode scss-mode sass-mode ruby-block robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magic-filetype key-chord init-open-recentf init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-migemo helm-gtags helm-ghq helm-ag hamburg-theme gotham-theme gitignore-mode flycheck-ocaml flycheck-elixir flycheck-cask flatland-theme flatland-black-theme exec-path-from-shell emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k coffee-mode clues-theme beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
+    (editor-config google-translate helm-cider clj-refactor cider clojure-mode flycheck-scala-sbt ensime vue-mode hindent fish-mode crosshairs elm-mode helm-tramp sudo-edit selected tuareg magit-find-file magit package-utils helm-descbinds ez-query-replace helm-themes expand-line flycheck-pos-tip terraform-mode ac-haskell-process flycheck-haskell haskell-mode helm-git-grep yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode scss-mode sass-mode ruby-block robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magic-filetype key-chord init-open-recentf init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-gtags helm-ghq helm-ag hamburg-theme gotham-theme gitignore-mode flycheck-ocaml flycheck-elixir flycheck-cask flatland-theme flatland-black-theme exec-path-from-shell emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k coffee-mode clues-theme beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
  '(parens-require-spaces nil)
  '(powerline-color1 "#222232")
  '(powerline-color2 "#333343")
