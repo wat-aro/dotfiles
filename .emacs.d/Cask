@@ -31,6 +31,7 @@
 (depends-on "elscreen")
 (depends-on "emmet-mode")
 (depends-on "ensime")
+(depends-on "esa")
 (depends-on "exec-path-from-shell")
 (depends-on "expand-line")
 (depends-on "ez-query-replace")
