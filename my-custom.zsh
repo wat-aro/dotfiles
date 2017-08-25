@@ -34,7 +34,8 @@ eval "$(rbenv init - zsh)"
 eval "$(exenv init -)"
 eval "$(direnv hook zsh)"
 eval `opam config env`
-source ~/src/github.com/b4b4r07/enhancd/init.sh
+export ENHANCD_FILTER=peco
+# source ~/src/github.com/b4b4r07/enhancd/init.sh
 
 # export PATH=$PATH:/Users/wat-aro/mongodb/bin
 
