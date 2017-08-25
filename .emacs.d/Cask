@@ -93,6 +93,7 @@
 (depends-on "projectile-rails")
 (depends-on "recentf-ext")
 (depends-on "robe")
+(depends-on "rspec-mode")
 (depends-on "ruby-block")
 (depends-on "s")
 (depends-on "sass-mode")
