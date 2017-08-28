@@ -18,3 +18,6 @@
   (add-hook it 'elisp-slime-nav-mode)
   (add-hook it 'my/emacs-lisp-mode-hook)
   (add-hook it 'auto-complete-mode))
+
+(set-face-foreground 'font-lock-regexp-grouping-backslash "green3")
+(set-face-foreground 'font-lock-regexp-grouping-construct "green")

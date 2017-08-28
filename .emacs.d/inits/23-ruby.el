@@ -52,5 +52,7 @@
       (when (> offset 0) (forward-char offset)))))
 
 (use-package rspec-mode
+  :init
+  (add-hook 'after-init-hook 'inf-ruby-switch-setup)
   :config
   (rspec-install-snippets))
