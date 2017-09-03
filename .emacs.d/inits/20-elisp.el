@@ -21,3 +21,5 @@
 
 (set-face-foreground 'font-lock-regexp-grouping-backslash "green3")
 (set-face-foreground 'font-lock-regexp-grouping-construct "green")
+
+(use-package lispxmp)

@@ -30,12 +30,19 @@ export PATH=$PATH:/Users/wat-aro/.local/bin
 export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
 export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
 export PATH=/usr/local/opt/mysql@5.6/bin:$PATH
+export PATH=$HOME/.roswell/bin:$PATH
 eval "$(rbenv init - zsh)"
 eval "$(exenv init -)"
 eval "$(direnv hook zsh)"
 eval `opam config env`
 export ENHANCD_FILTER=peco
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+
+# for agda
+export AGDA_DIR=${HOME}/.agda
+alias agda='agda -i . -l standard-library'
+alias agdai='agda -I -i . -l standard-library'
+
 # source ~/src/github.com/b4b4r07/enhancd/init.sh
 
 # export PATH=$PATH:/Users/wat-aro/mongodb/bin
