@@ -56,3 +56,5 @@
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
   :config
   (rspec-install-snippets))
+
+(add-hook 'after-init-hook 'inf-ruby-switch-setup)

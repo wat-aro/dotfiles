@@ -11,3 +11,4 @@ set -U Z_DATA "$HOME/.z_data"
 set -x PATH ~/.opam/system/bin $PATH
 set -x MANPATH "$MANPATH" ~/.opam/system/man
 set -x SBT_OPTS "-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
+set -x PATH ~/.cargo/bin $PATH

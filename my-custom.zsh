@@ -35,6 +35,7 @@ eval "$(exenv init -)"
 eval "$(direnv hook zsh)"
 eval `opam config env`
 export ENHANCD_FILTER=peco
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 # source ~/src/github.com/b4b4r07/enhancd/init.sh
 
 # export PATH=$PATH:/Users/wat-aro/mongodb/bin
@@ -53,3 +54,5 @@ function cd_up() {
 zle -N cd_up
 bindkey '^U' cd_up
 export PATH="/usr/local/opt/libxml2/bin:$PATH"
+
+source $HOME/.cargo/env
