@@ -73,6 +73,7 @@
 (depends-on "init-loader")
 (depends-on "init-open-recentf")
 (depends-on "js2-mode")
+(depends-on "json-mode")
 (depends-on "key-chord")
 (depends-on "lispxmp")
 (depends-on "magic-filetype")
