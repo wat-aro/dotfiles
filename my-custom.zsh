@@ -36,7 +36,7 @@ eval "$(exenv init -)"
 eval "$(direnv hook zsh)"
 eval `opam config env`
 export ENHANCD_FILTER=peco
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+# export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # for agda
 export AGDA_DIR=${HOME}/.agda
@@ -61,5 +61,6 @@ function cd_up() {
 zle -N cd_up
 bindkey '^U' cd_up
 export PATH="/usr/local/opt/libxml2/bin:$PATH"
+export PATH="/usr/local/opt/yarn/bin:$PATH"
 
-source $HOME/.cargo/env
+# source $HOME/.cargo/env
