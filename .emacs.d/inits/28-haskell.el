@@ -56,4 +56,7 @@
            ("M-."     . haskell-mode-jump-to-def)
            ("C-c C-?" . haskell-hoogle))
 
-(custom-set-variables '(haskell-indent-thenelse 2))
+(bind-keys :map haskell-indentation-mode-map
+           (";" . nil))
+
+(custom-set-variables '(haskell-indent-thenelse 4))
