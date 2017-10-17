@@ -59,4 +59,5 @@
 (bind-keys :map haskell-indentation-mode-map
            (";" . nil))
 
-(custom-set-variables '(haskell-indent-thenelse 4))
+(custom-set-variables '(haskell-indent-thenelse 4)
+                      '(haskell-stylish-on-save t))

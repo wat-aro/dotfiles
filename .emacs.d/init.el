@@ -44,6 +44,9 @@
  '(fringe-mode 10 nil (fringe))
  '(haskell-indent-thenelse 2)
  '(helm-ff-file-compressed-list (quote ("epub" "gz" "bz2" "zip" "7z" "/backup")))
+ '(helm-for-files-preferred-list
+   (quote
+    (helm-source-buffers-list helm-source-recentf helm-source-bookmarks helm-source-file-cache helm-source-files-in-current-dir helm-source-locate helm-source-ghq)))
  '(inf-ruby-console-rails-default-implementation "pry")
  '(inf-ruby-default-implementation "pry")
  '(inf-ruby-eval-binding "Pry.toplevel_binding" t)
