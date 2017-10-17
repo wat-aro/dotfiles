@@ -54,10 +54,17 @@
            ("C-c C-l" . inferior-haskell-load-file)
            ("C-j"     . haskell-indentation-newline-and-indent)
            ("M-."     . haskell-mode-jump-to-def)
-           ("C-c C-?" . haskell-hoogle))
+           ("C-c C-?" . haskell-hoogle)
+           ("C-c C-c" . haskell-compile))
 
 (bind-keys :map haskell-indentation-mode-map
            (";" . nil))
 
 (custom-set-variables '(haskell-indent-thenelse 4)
                       '(haskell-stylish-on-save t))
+
+;;; Unicode
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-unicode-input-method)
+(add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
+(add-hook 'haskell-mode-hook 'haskell-decl-scan-mode)
+(setq haskell-compile-cabal-build-command "stack build")
