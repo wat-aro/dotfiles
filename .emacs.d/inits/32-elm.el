@@ -1,3 +1,3 @@
 (use-package elm
   :init
-  (custom-set-variables '(elm-indent-offset 2)))
+  (custom-set-variables '(elm-indent-offset 4)))

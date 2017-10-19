@@ -31,3 +31,4 @@ hub
 fisherman/
 shellenv.el
 fishd*
+.DS_Store
