@@ -6,7 +6,8 @@
   (custom-set-variables
    '(flycheck-display-errors-delay 0.5)
    '(flycheck-idle-change-delay 1.0)
-   '(flycheck-display-errors-function nil)))
+   '(flycheck-display-errors-function nil)
+   '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
 (with-eval-after-load 'flycheck
   (flycheck-pos-tip-mode))

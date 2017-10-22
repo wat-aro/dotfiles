@@ -1,19 +1,19 @@
 (use-package ruby-mode
   :interpreter (("ruby" . ruby-mode))
   :init
+  (custom-set-variables '(ruby-deep-indent-paren nil)
+                        '(ruby-insert-encoding-magic-comment nil))
   (add-hook 'ruby-mode-hook
             '(lambda ()
-               (setq ruby-deep-indent-paren nil)
                (setq flycheck-checker 'ruby-rubocop)
                (flycheck-mode 1)))
   :config
+  (setq flycheck-command-wrapper-function
+      (lambda (command)
+        (append '("bundle" "exec") command)))
   (use-package rcodetools
     :config
     (bind-key "C-c d" 'xmp ruby-mode-map)))
-
-(setq ruby-deep-indent-paren nil)
-
-(setq ruby-insert-encoding-magic-comment nil)
 
 ;; inf-ruby
 (use-package inf-ruby :defer t
@@ -36,6 +36,17 @@
   (add-hook 'robe-mode-hook 'ac-robe-setup)
   :commands (ac-robe-setup))
 
+(use-package rspec-mode
+  :init
+  (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+  :config
+  (rspec-install-snippets))
+
+(use-package rbenv
+  :init
+  (custom-set-variables '(rbenv-show-active-ruby-in-modeline nil))
+  (global-rbenv-mode))
+
 (defadvice ruby-indent-line (after unindent-closing-paren activate)
   (let ((column (current-column))
         indent offset)
@@ -51,14 +62,4 @@
       (indent-line-to indent)
       (when (> offset 0) (forward-char offset)))))
 
-(use-package rspec-mode
-  :init
-  (add-hook 'after-init-hook 'inf-ruby-switch-setup)
-  :config
-  (rspec-install-snippets))
-
 (add-hook 'after-init-hook 'inf-ruby-switch-setup)
-
-(use-package rbenv
-  :init
-  (global-rbenv-mode))
