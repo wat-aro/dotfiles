@@ -61,6 +61,4 @@
 
 (use-package rbenv
   :init
-  (global-rbenv-mode)
-  (custom-set-variables
-   '(rbenv-installation-dir "~/.rbenv")))
+  (global-rbenv-mode))
