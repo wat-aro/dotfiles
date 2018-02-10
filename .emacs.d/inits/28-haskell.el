@@ -16,7 +16,12 @@
                         '(haskell-stylish-on-save t)
                         '(haskell-process-suggest-remove-import-lines t)
                         '(haskell-process-auto-import-loaded-modules t)
-                        '(haskell-process-log t))
+                        '(haskell-process-log t)
+                         '(haskell-indentation-layout-offset 4)
+                         '(haskell-indentation-starter-offset 4)
+                         '(haskell-indentation-left-offset 4)
+                         '(hasKell-indentation-where-pre-offset 2)
+                         '(haskell-indentation-where-post-offset 2))
   :bind (:map haskell-mode-map
               ("C-c C-l" . haskell-process-load-or-reload)
               ("C-j"     . haskell-indentation-newline-and-indent)
@@ -24,7 +29,7 @@
               ("C-c C-c" . haskell-compile)
               ("C-c C-d" . ac-haskell-process-popup-doc)
               :map haskell-indentation-mode-map
-             (";" . nil)))
+              (";" . nil)))
 
 (use-package haskell-interactive-mode
   :bind (:map haskell-interactive-mode-map

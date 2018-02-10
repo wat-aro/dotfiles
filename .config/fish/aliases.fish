@@ -13,7 +13,7 @@ alias ghci "stack ghci"
 alias runghc "stack runghc --"
 alias runhaskell "stack runghc --"
 alias s "stack"
-alias sb 'stack build --ghc-options="-Wall"'
+alias sb "stack build"
 alias si "stack install"
 alias se "stack exec"
 balias less "less -r"
