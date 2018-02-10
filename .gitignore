@@ -33,3 +33,4 @@ shellenv.el
 fishd*
 .DS_Store
 elm-stuff
+.envrc

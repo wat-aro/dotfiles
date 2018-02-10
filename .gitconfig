@@ -23,6 +23,8 @@
   oneline = log --oneline --graph
   dc = diff --cached
   lp = log -p
+  delete-merged-branch = "!f () { git checkout $1; git branch --merged|egrep -v '\\*|develop|master'|xargs git branch -d; };f"
+  dmb = delete-merged-branch
 [rerere]
 	enabled = true
 [ghq]
