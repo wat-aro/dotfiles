@@ -1,4 +1,4 @@
-(use-package elm
+(use-package elm-mode
   :init
   (custom-set-variables '(elm-indent-offset 4))
   (add-hook 'flycheck-mode-hook #'flycheck-elm-setup)
