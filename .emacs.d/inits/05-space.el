@@ -13,8 +13,6 @@
 (setq whitespace-display-mappings
       '((tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t])))
 
-(global-whitespace-mode 1)
-
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
