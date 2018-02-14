@@ -11,6 +11,8 @@
 (depends-on "alchemist")
 (depends-on "annotate")
 (depends-on "anzu")
+(depends-on "atom-dark-theme")
+(depends-on "atom-one-dark-theme")
 (depends-on "auto-complete")
 (depends-on "beacon")
 (depends-on "bind-key")

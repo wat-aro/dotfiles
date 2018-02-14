@@ -24,7 +24,8 @@
                   (compilation-mode :noselect t)))))
 
 ;;; Color Theme
-(load-theme 'flatland t)
+(load-theme 'atom-one-dark t)
+;; (load-theme 'flatland t)
 ;; (load-theme 'hamburg t)
 ;; (load-theme 'clues t)
 ;; (load-theme 'gotham t)
@@ -33,7 +34,7 @@
  '(linum ((t (:inherit (shadow default) :foreground "Gray")))))
 
 (set-face-foreground 'region "Black")
-(set-face-background 'region "Green")
+(set-face-background 'region "MediumPurple4")
 
 ;;; インタラクティブにウィンドウを分割
 (setq split-height-threshold nil)
@@ -61,6 +62,7 @@
  scroll-preserve-screen-position 'always
  )
 
+;; カーソルの行をハイライト
 (defface hlline-face
   '((((class color)
       (background dark))
