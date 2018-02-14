@@ -50,7 +50,6 @@
 (depends-on "flycheck-haskell")
 (depends-on "flycheck-ocaml")
 (depends-on "flycheck-pos-tip")
-(depends-on "flycheck-rust")
 (depends-on "ghc")
 (depends-on "gitignore-mode")
 (depends-on "google-translate")

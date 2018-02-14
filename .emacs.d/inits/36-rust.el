@@ -2,8 +2,7 @@
   :init
   (add-hook 'rust-mode-hook
             (lambda ()
-              (racer-mode)
-              (flycheck-rust-setup)))
+              (racer-mode)))
   (add-hook 'racer-mode-hook 'eldoc-mode)
   (add-hook 'racer-mode-hook
             (lambda ()

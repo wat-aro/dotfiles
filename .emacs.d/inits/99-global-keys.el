@@ -23,7 +23,8 @@
  ("C-c C-n"   . windmove-down)
  ("C-c C-p"   . windmove-up)
  ("C-c C-f"   . windmove-right)
- ("C-c |"     . org-store-link))
+ ("C-c |"     . org-store-link)
+ ("C-c C-z"   . window-resizer))
 
 (setq windmove-wrap-around t)
 
