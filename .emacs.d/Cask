@@ -87,6 +87,7 @@
 (depends-on "migemo")
 (depends-on "multi-term")
 (depends-on "multiple-cursors")
+(depends-on "neotree")
 (depends-on "nodejs-repl")
 (depends-on "nyan-mode")
 (depends-on "open-junk-file")

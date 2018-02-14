@@ -13,3 +13,7 @@
   (add-hook 'dired-initial-position-hook 'dired-k)
   :config
   (bind-key "K" 'dired-k dired-mode-map))
+
+(use-package neotree
+  :init
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
