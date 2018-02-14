@@ -25,15 +25,11 @@
 
 ;;; Color Theme
 (load-theme 'atom-one-dark t)
-;; (load-theme 'flatland t)
-;; (load-theme 'hamburg t)
-;; (load-theme 'clues t)
-;; (load-theme 'gotham t)
 
 (custom-set-faces
  '(linum ((t (:inherit (shadow default) :foreground "Gray")))))
 
-(set-face-foreground 'region "Black")
+;; 選択中の色
 (set-face-background 'region "MediumPurple4")
 
 ;;; インタラクティブにウィンドウを分割
