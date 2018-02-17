@@ -37,6 +37,35 @@
    (quote
     ("82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "44c566df0e1dfddc60621711155b1be4665dd3520b290cb354f8270ca57f8788" "dd6e52a5b1180f5c8bf408764a32867e2fa86594ded78a29040cafce6a4ea808" "946e871c780b159c4bb9f580537e5d2f7dba1411143194447604ecbaf01bd90c" "3eb93cd9a0da0f3e86b5d932ac0e3b5f0f50de7a0b805d4eb1f67782e9eb67a4" "962dacd99e5a99801ca7257f25be7be0cebc333ad07be97efd6ff59755e6148f" "bdaab014ec6785f64b72efbea80808b762d8971247aacf2ffc6b76a39b9ed97c" default)))
  '(elm-indent-offset 4)
+ '(elscreen-buffer-to-nickname-alist
+   (quote
+    (("^Projectile"
+      (lambda nil
+        (format "%s"
+                (projectile-project-name))))
+     ("^dired-mode$" lambda nil
+      (format "Dired(%s)" dired-directory))
+     ("^Info-mode$" lambda nil
+      (format "Info(%s)"
+              (file-name-nondirectory Info-current-file)))
+     ("^mew-draft-mode$" lambda nil
+      (format "Mew(%s)"
+              (buffer-name
+               (current-buffer))))
+     ("^mew-" . "Mew")
+     ("^irchat-" . "IRChat")
+     ("^liece-" . "Liece")
+     ("^lookup-" . "Lookup"))))
+ '(elscreen-mode-to-nickname-alist
+   (quote
+    (("[Ss]hell" . "shell")
+     ("compilation" . "compile")
+     ("-telnet" . "telnet")
+     ("dict" . "OnlineDict")
+     ("*WL:Message*" . "Wanderlust"))))
+ '(elscreen-prefix-key (kbd "C-z"))
+ '(elscreen-tab-display-control nil)
+ '(elscreen-tab-display-kill-screen nil)
  '(fci-rule-color "#202325")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(flycheck-display-errors-delay 0.5)
