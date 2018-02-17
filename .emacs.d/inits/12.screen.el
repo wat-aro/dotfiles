@@ -8,11 +8,8 @@
    ;; header-lineの先頭に[<->]を表示しない
    '(elscreen-tab-display-control nil)
    ;; バッファ名・モード名からタブに表示させる内容を決定する(デフォルト設定)
-   '(elscreen-buffer-to-nickname-alist
-     '(("^Projectile"
-        (lambda ()
-          (format "%s" (projectile-project-name))))
-       ("^dired-mode$" .
+   '(elscreen-mode-to-nickname-alist
+     '(("^dired-mode$" .
         (lambda ()
           (format "Dired(%s)" dired-directory)))
        ("^Info-mode$" .
@@ -25,12 +22,16 @@
        ("^irchat-" . "IRChat")
        ("^liece-" . "Liece")
        ("^lookup-" . "Lookup")))
-   '(elscreen-mode-to-nickname-alist
+   '(elscreen-buffer-to-nickname-alist
      '(("[Ss]hell" . "shell")
        ("compilation" . "compile")
        ("-telnet" . "telnet")
        ("dict" . "OnlineDict")
-       ("*WL:Message*" . "Wanderlust"))))
+       ("*WL:Message*" . "Wanderlust")))
+   ;; タブの幅
+   '(elscreen-display-tab 20)
+   ;; モードラインにスクリーンナンバーを表示するか
+   '(elscreen-display-screen-number nil))
   (elscreen-start)
   :bind
   ("C-<tab>"   . elscreen-next)

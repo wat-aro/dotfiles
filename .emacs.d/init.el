@@ -56,6 +56,8 @@
      ("^irchat-" . "IRChat")
      ("^liece-" . "Liece")
      ("^lookup-" . "Lookup"))))
+ '(elscreen-display-screen-number nil)
+ '(elscreen-display-tab 20)
  '(elscreen-mode-to-nickname-alist
    (quote
     (("[Ss]hell" . "shell")
