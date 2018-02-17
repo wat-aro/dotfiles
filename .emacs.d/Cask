@@ -9,6 +9,7 @@
 (depends-on "ac-slime")
 (depends-on "ag")
 (depends-on "alchemist")
+(depends-on "all-the-icons")
 (depends-on "annotate")
 (depends-on "anzu")
 (depends-on "atom-dark-theme")
