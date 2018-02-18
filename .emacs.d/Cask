@@ -25,6 +25,7 @@
 (depends-on "coffee-mode")
 (depends-on "color-theme-sanityinc-tomorrow")
 (depends-on "dash")
+(depends-on "ddskk")
 (depends-on "dired-k")
 (depends-on "direnv")
 (depends-on "direx")

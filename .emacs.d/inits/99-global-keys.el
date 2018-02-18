@@ -26,7 +26,8 @@
  ("C-c |"     . org-store-link)
  ("C-c C-z"   . window-resizer)
  ("<f8>"      . neotree-toggle)
- ("M-\\"      . dired))
+ ("M-\\"      . dired)
+ ("C-x C-j"   . skk-mode))
 
 (setq windmove-wrap-around t)
 
