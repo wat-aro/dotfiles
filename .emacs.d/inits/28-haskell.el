@@ -7,7 +7,8 @@
   ;;                                (haskell-doc-mode)
   ;;                                (haskell-auto-insert-module-template)
   ;;                                (ghc-init)
-  ;;                                (flycheck-mode t)))
+  ;;                                (flycheck-mode t)
+  ;;                                ))
   (custom-set-variables '(haskell-compile-cabal-build-command "stack build")
                         '(haskell-process-type 'stack-ghci)
                         '(haskell-process-path-ghci "stack")
@@ -22,16 +23,21 @@
                         '(haskell-indentation-left-offset 4)
                         '(hasKell-indentation-where-pre-offset 2)
                         '(haskell-indentation-where-post-offset 2))
-  ;; (eval-after-load 'flycheck
-  ;;   '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
+  (eval-after-load 'flycheck
+    '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
   :bind (:map haskell-mode-map
-              ;; ("C-c C-l" . haskell-process-load-or-reload)
-              ;; ("C-j"     . haskell-indentation-newline-and-indent)
-              ;; ("C-c C-?" . haskell-hoogle)
-              ;; ("C-c C-c" . haskell-compile)
-              ;; ("C-c C-d" . ac-haskell-process-popup-doc)
+  ;;             ("C-c C-l" . haskell-process-load-or-reload)
+              ("C-j"     . haskell-indentation-newline-and-indent)
+              ("C-c C-?" . haskell-hoogle)
+  ;;             ("C-c C-c" . haskell-compile)
+              ("C-c C-d" . ac-haskell-process-popup-doc)
+              ("C-i"     . indent-for-tab-command)
               :map haskell-indentation-mode-map
-              (";" . nil)))
+              (";" . nil)
+              :map company-mode
+              ("?\t"     . nil)
+              ("C-M-i"   . company-complete))
+  )
 
 ;; (use-package haskell-interactive-mode
 ;;   :bind (:map haskell-interactive-mode-map
@@ -56,17 +62,7 @@
 ;;   (add-hook 'haskell-interactive-mode-hook 'set-auto-complete-as-completion-at-point-function)
 ;;   (add-hook 'haskell-mode-hook 'set-auto-complete-as-completion-at-point-function))
 
-;; If you don't have MELPA in your package archives:
-(require 'package)
-(add-to-list
-  'package-archives
-  '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
-(package-refresh-contents)
 
-;; Install Intero
-(package-install 'intero)
 (add-hook 'haskell-mode-hook 'intero-mode)
-
-(with-eval-after-load 'intero
-  (flycheck-add-next-checker 'intero '(warning . haskell-hlint)))
+;; (with-eval-after-load 'intero
+;;   (flycheck-add-next-checker 'intero '(warning . haskell-hlint))))
