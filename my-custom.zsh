@@ -17,6 +17,7 @@ alias sb="stack build"
 alias si="stack install"
 alias se="stack exec"
 alias reload='exec zsh -l'
+alias r="bin/rails"
 
 export PATH="$PATH:$HOME/.rbenv/bin"
 export XDG_CONFIG_HOME=$HOME/.config
