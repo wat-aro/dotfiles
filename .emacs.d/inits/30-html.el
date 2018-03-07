@@ -29,7 +29,7 @@
   (add-hook 'web-mode-hook 'my/web-mode-hook)
   (add-hook 'web-mode-hook 'emmet-mode)
   (--each '("\\.html?\\'" "\\.tpl\\'" "\\.tpl\\.xhtml\\'" "\\.ejs\\'" "\\.hbs\\'"
-            "\\.html\\.erb\\'" "\\.html\\+smartphone\\.erb\\'" "\\.html\\.slim\\'" "\\.css?\\'"
+            "\\.html\\.erb\\'" "\\.html\\+smartphone\\.erb\\'" "\\.css?\\'"
             "\\.js\\.coffee\\.erb\\'" "\\.js\\.erb\\'" "\\.mustache\\'")
     (add-to-list 'auto-mode-alist (cons it 'web-mode)))
   (sp-local-pair 'web-mode "<" nil :when '(sp-web-mode-is-code-context))
@@ -42,6 +42,10 @@
   (flycheck-add-mode 'css-csslint 'web-mode))
 
 (use-package slim-mode
+  :init
+  (add-hook 'slim-mode-hook
+            '(lambda ()
+               (flycheck-mode t)))
   :mode
   ("\\.slim\\'" . slim-mode)
   ("\\.html\\.slim\\'" . slim-mode))
