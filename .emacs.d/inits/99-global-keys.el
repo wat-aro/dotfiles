@@ -6,6 +6,8 @@
 ;;(keyboard-translate ?\C-h ?\C-?)
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
+(require 'misc)
+
 (bind-keys
  ("C-?"       . help-command)
  ("C-t"       . other-window)
@@ -27,7 +29,9 @@
  ("C-c C-z"   . window-resizer)
  ("<f8>"      . neotree-toggle)
  ("M-\\"      . dired)
- ("C-x C-j"   . skk-mode))
+ ("C-x C-j"   . skk-mode)
+ ("M-f"       . forward-to-word)
+ ("M-b"       . backward-to-word))
 
 (setq windmove-wrap-around t)
 
