@@ -11,6 +11,7 @@
 (bind-keys
  ("C-?"       . help-command)
  ("C-t"       . other-window)
+ ("M-t"       . ace-window)
  ("C-j"       . newline-and-indent)
  ("C-x j"     . open-junk-file)
  ("C-S-n"     . make-frame)
@@ -29,14 +30,13 @@
  ("C-c C-z"   . window-resizer)
  ("<f8>"      . neotree-toggle)
  ("M-\\"      . dired)
- ("C-x C-j"   . skk-mode)
- ("M-f"       . forward-to-word)
- ("M-b"       . backward-to-word))
+ ("C-x C-j"   . skk-mode))
 
 (setq windmove-wrap-around t)
 
 (custom-set-variables
- '(key-chord-two-keys-delay 0.01))
+ '(key-chord-two-keys-delay 0.01)
+ '(aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 (key-chord-mode t)
 (key-chord-define-global "df" 'find-function)
 (key-chord-define-global "fh" 'describe-function)

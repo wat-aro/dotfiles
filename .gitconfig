@@ -25,6 +25,7 @@
   lp = log -p
   delete-merged-branch = "!f () { git checkout $1; git branch --merged|egrep -v '\\*|develop|master'|xargs git branch -d; };f"
   dmb = delete-merged-branch
+  showpr = !"f() { git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1; }; f"
 [rerere]
 	enabled = true
 [ghq]
