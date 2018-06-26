@@ -1,30 +1,28 @@
-(setq skk-sticky-key ";")
-
-
-;; 辞書の設定
-(setq skk-large-jisyo "~/.emacs.d/share/skk/SKK-JISYO.L")
-(setq skk-extra-jisyo-file-list
-      (list '("~/.emacs.d/share/skk/SKK-JISYO.geo"
-              "~/.emacs.d/share/skk/SKK-JISYO.jinmei"
-              "~/.emacs.d/share/skk/SKK-JISYO.propernoun"
-              "~/.emacs.d/share/skk/SKK-JISYO.station")))
+;; skk-rver Aqua SKK
+(setq skk-server-portnum 1178)
+(setq skk-server-host "localhost")
 
 ;;送り仮名が厳密に正しい候補を優先して表示
 (setq skk-henkan-strict-okuri-precedence t)
+
 ;;漢字登録畤、送り仮名が厳密に正しいかをチェック
 (setq skk-check-okurigana-on-touroku t)
+
 ;; 各種メッセージを日本語で通知する
 (setq skk-japanese-message-and-error t)
+
 ;; 変換の学習
 (require 'skk-study)
+
 ;;変換時に注釈(annotation)を表示する
 (setq skk-show-annotation t)
+
 ;; 注釈を表示するまでの遅延を秒で指定する
 (setq skk-annotation-delay 0.5)     ;デフォルトは1.0秒
 
 ;; カーソル付近にモード切り替えを表示する
 (setq skk-show-mode-show t)		; M-x skk-show-mode でトグル可。
-(setq skk-show-mode-style 'tooltip)	;デフォルトは 'inline
+(setq skk-show-mode-style 'inline)	;デフォルトは 'inline
 (set-face-background 'skk-show-mode-inline-face "DodgerBlue")
 
 ;; ;; 対応する閉括弧を自動的に挿入する

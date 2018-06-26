@@ -1,5 +1,5 @@
-(require 'sticky)
-(use-sticky-key ?\; sticky-alist:en)
+;; (require 'sticky)
+;; (use-sticky-key ?\; sticky-alist:en)
 
 ;; (defun skk-mode-hook--unset-key ()
 ;;   (define-key skk-j-mode-map ";" nil))
