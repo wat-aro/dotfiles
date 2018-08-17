@@ -41,9 +41,9 @@
 ;; (add-to-list 'skk-rom-kana-rule-list
 ;;              '(skk-kakutei-key nil my:skk-kakutei-key))
 
-;; ;; skk-latin-mode for all buffers
-;; (define-globalized-minor-mode global-skk-latin-mode skk-latin-mode skk-latin-mode-on)
-;; ;;(global-skk-latin-mode 1)
+;; skk-latin-mode for all buffers
+(define-globalized-minor-mode global-skk-latin-mode skk-latin-mode skk-latin-mode-on)
+(global-skk-latin-mode 1)
 
 ;; (setq skk-show-inline 'vertical)
 ;; (skk-show-mode)
