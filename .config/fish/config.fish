@@ -4,7 +4,7 @@ if status --is-login
   . ~/.config/fish/env.fish
 end
 
-source ~/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+# source ~/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true;
 # eval (opam config env)
 eval (direnv hook fish)
 
