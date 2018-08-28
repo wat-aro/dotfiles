@@ -6,8 +6,8 @@
   (require 'auto-complete-config)
   (ac-config-default)
   (setq ac-use-menu-map t)
-  (bind-key "C-n" 'ac-next ac-menu-map)
-  (bind-key "C-p" 'ac-previous ac-menu-map)
+  (bind-key "M-n" 'ac-next ac-menu-map)
+  (bind-key "M-p" 'ac-previous ac-menu-map)
   (setq ac-auto-show-menu 0.5)
   (setq ac-menu-height 20)
   (setq ac-use-fuzzy t))
@@ -21,9 +21,9 @@
   (bind-keys :map company-mode-map
              ("M-i" . company-complete))
   (bind-keys :map company-active-map
-             ("C-n" . company-select-next)
-             ("C-p" . company-select-previous)
-             ("C-s" . company-search-words-regexp))
+             ("M-n" . company-select-next)
+             ("M-p" . company-select-previous)
+             ("M-s" . company-search-words-regexp))
   (bind-keys :map company-search-map
-             ("C-n" . company-select-next)
-             ("C-p" . company-select-previous)))
+             ("M-n" . company-select-next)
+             ("M-p" . company-select-previous)))

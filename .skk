@@ -1,4 +1,4 @@
-;; skk-rver Aqua SKK
+;; skk-server Aqua SKK
 (setq skk-server-portnum 1178)
 (setq skk-server-host "localhost")
 ;; (setq skk-sticky-key ";")
