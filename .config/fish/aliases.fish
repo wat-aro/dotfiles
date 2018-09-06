@@ -1,26 +1,27 @@
-balias git hub
-balias g git
-balias be 'bundle exec'
-balias r "bin/rails"
+abbr --add git hub
+abbr --add g "git"
+abbr --add be 'bundle exec'
+abbr --add r "bin/rails"
 alias e 'emacsclient -nw -a ""'
 alias e-kill 'emacsclient -e "(kill-emacs)"'
-alias psg 'ps aux | grep -v grep | grep'
+abbr --add psg 'ps aux | grep -v grep | grep'
 alias gh 'hub browse (ghq list | peco | cut -d "/" -f 2,3)'
 alias onkeyboard "sudo kextload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
 alias offkeyboard "sudo kextunload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
-alias ghc "stack ghc --"
-alias ghci "stack ghci"
-alias runghc "stack runghc --"
-alias runhaskell "stack runghc --"
-alias s "stack"
-alias sb "stack build"
-alias si "stack install"
-alias se "stack exec"
+abbr --add ghc "stack ghc --"
+abbr --add ghci "stack ghci"
+abbr --add runghc "stack runghc --"
+abbr --add runhaskell "stack runghc --"
+abbr --add s "stack"
+abbr --add sb "stack build"
+abbr --add si "stack install"
+abbr --add se "stack exec"
+abbr --add cat "bat"
 balias less "less -r"
 alias chrome "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
-alias dc "docker-compose"
-alias dcr "docker-comopse run --rm"
-alias dcra "docker-compose run --rm app"
-alias dcrar "docker-compose run --rm app bin/rails"
-alias dcrae "docker-compose run --rm app bundle exec"
-alias dcras "docker-compose run --rm app bundle exec rspec"
+abbr --add dc "docker-compose"
+abbr --add dcr "docker-comopse run --rm"
+abbr --add dcra "docker-compose run --rm app"
+abbr --add dcrar "docker-compose run --rm app bin/rails"
+abbr --add dcrae "docker-compose run --rm app bundle exec"
+abbr --add dcras "docker-compose run --rm app bundle exec rspec"
