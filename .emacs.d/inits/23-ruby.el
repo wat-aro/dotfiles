@@ -1,3 +1,4 @@
+
 (use-package ruby-mode
   :interpreter (("ruby" . ruby-mode))
   :init
@@ -5,15 +6,13 @@
                         '(ruby-insert-encoding-magic-comment nil))
   (add-hook 'ruby-mode-hook
             '(lambda ()
-               (setq flycheck-checker 'ruby-rubocop)
-               (flycheck-mode 1)))
+               (flycheck-mode 1)
+               ))
   :config
-  (setq flycheck-command-wrapper-function
-      (lambda (command)
-        (append '("bundle" "exec") command)))
-  (use-package rcodetools
-    :config
-    (bind-key "C-c d" 'xmp ruby-mode-map)))
+  ;; (setq flycheck-command-wrapper-function
+  ;;     (lambda (command)
+  ;;       (append '("bundle" "exec") command)))
+  )
 
 ;; inf-ruby
 (use-package inf-ruby :defer t
@@ -26,7 +25,7 @@
 
 
 ;; robe
-;; (autoload 'ac-robe-setup "ac-robe" "auto-complete robe" nil nil)
+(autoload 'ac-robe-setup "ac-robe" "auto-complete robe" nil nil)
 (use-package robe :defer t
   :init
   (add-hook 'ruby-mode-hook 'robe-mode))
@@ -36,10 +35,12 @@
   (add-hook 'robe-mode-hook 'ac-robe-setup)
   :commands (ac-robe-setup))
 
+;; RSpec
 (use-package rspec-mode
   :init
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
   :config
+  (setq compilation-scroll-output t)
   (rspec-install-snippets))
 
 (use-package rbenv

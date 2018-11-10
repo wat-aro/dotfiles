@@ -5,7 +5,6 @@
                              (flycheck-mode t)))
   (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode))
   :mode (("\\.js\\'" . rjsx-mode)
-         ("\\.json\\'" . rjsx-mode)
          ("\\.jsx\\'" . js2-jsx-mode)
          ("\\.eslintrc.*$" . json-mode)
          ("\\.babelrc$" . json-mode))

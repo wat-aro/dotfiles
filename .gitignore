@@ -34,3 +34,5 @@ fishd*
 .DS_Store
 elm-stuff
 .envrc
+.pryrc
+.dir-locals.el

@@ -1,4 +1,3 @@
-abbr --add git hub
 abbr --add g "git"
 abbr --add be 'bundle exec'
 abbr --add r "bin/rails"
@@ -20,8 +19,9 @@ abbr --add cat "bat"
 balias less "less -r"
 alias chrome "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 abbr --add dc "docker-compose"
-abbr --add dcr "docker-comopse run --rm"
+abbr --add dcr "docker-compose run --rm"
 abbr --add dcra "docker-compose run --rm app"
 abbr --add dcrar "docker-compose run --rm app bin/rails"
 abbr --add dcrae "docker-compose run --rm app bundle exec"
 abbr --add dcras "docker-compose run --rm app bundle exec rspec"
+abbr --add dce "docker-compose exec"

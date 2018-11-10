@@ -9,9 +9,9 @@ set -x GHQ_SELECTOR peco
 set -U Z_DATA "$HOME/.z_data"
 
 set -x PATH ~/.opam/system/bin $PATH
-set -x PATH ~/.roswell/bin $PATH
+# set -x PATH ~/.roswell/bin $PATH
 set -x MANPATH "$MANPATH" ~/.opam/system/man
 set -x SBT_OPTS "-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
 # set -x PATH ~/.cargo/bin $PATH
 set -g fish_user_paths "/usr/local/opt/ncurses/bin" $fish_user_paths
-set -x PATH /usr/local/opt/yarn/bin $PATH
+# set -x PATH /usr/local/opt/yarn/bin $PATH
