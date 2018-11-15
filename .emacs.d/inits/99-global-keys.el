@@ -27,7 +27,13 @@
  ("C-c C-z"   . window-resizer)
  ("<f8>"      . neotree-toggle)
  ("M-\\"      . dired)
- ("C-x C-j"   . skk-mode))
+ ("C-x C-j"   . skk-mode)
+ ("C-c h"     . helm-command-prefix)
+ ("C-c h o"   . helm-occur)
+ ("C-c h SPC" . helm-all-mark-rings)
+ ("C-c h g"   . helm-google-suggest)
+ ("C-c h s"   . helm-swoop)
+ ("C-x b"     . helm-mini))
 
 (setq windmove-wrap-around t)
 
