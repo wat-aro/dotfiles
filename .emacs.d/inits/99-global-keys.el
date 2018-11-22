@@ -31,9 +31,9 @@
  ("C-c h"     . helm-command-prefix)
  ("C-c h o"   . helm-occur)
  ("C-c h SPC" . helm-all-mark-rings)
- ("C-c h g"   . helm-google-suggest)
+ ("C-c h g"   . helm-git-grep)
  ("C-c h s"   . helm-swoop)
- ("C-x b"     . helm-mini))
+ ("C-x C-b"   . helm-mini))
 
 (setq windmove-wrap-around t)
 

@@ -1,6 +1,6 @@
 (use-package popwin
   :init
-  (setq display-buffer-function 'popwin:display-buffer)
+  ;; (setq display-buffer-function 'popwin:display-buffer)
   :config
   (when (fboundp 'popwin:w3m-browse-url)
     (setq browse-url-browser-function 'popwin:w3m-browse-url))

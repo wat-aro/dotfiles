@@ -22,8 +22,6 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#26292c" "#ff4a52" "#40b83e" "#f6f080" "#afc4db" "#dc8cc3" "#93e0e3" "#f8f8f8"])
  '(anzu-deactivate-region t)
  '(anzu-mode-lighter "")
  '(anzu-search-threshold 1000)
@@ -33,10 +31,11 @@
  '(clojure-align-forms-automatically t)
  '(coffee-indent-like-python-mode t)
  '(coffee-tab-width 2)
+ '(compilation-message-face (quote default))
  '(css-indent-offset 2)
  '(custom-safe-themes
    (quote
-    ("c90fd1c669f260120d32ddd20168343f5c717ca69e95d2f805e42e88430c340e" "e9460a84d876da407d9e6accf9ceba453e2f86f8b86076f37c08ad155de8223c" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "44c566df0e1dfddc60621711155b1be4665dd3520b290cb354f8270ca57f8788" "dd6e52a5b1180f5c8bf408764a32867e2fa86594ded78a29040cafce6a4ea808" "946e871c780b159c4bb9f580537e5d2f7dba1411143194447604ecbaf01bd90c" "3eb93cd9a0da0f3e86b5d932ac0e3b5f0f50de7a0b805d4eb1f67782e9eb67a4" "962dacd99e5a99801ca7257f25be7be0cebc333ad07be97efd6ff59755e6148f" "bdaab014ec6785f64b72efbea80808b762d8971247aacf2ffc6b76a39b9ed97c" default)))
+    ("f66ffeadda7b52d40c8d698967ae9e9836f54324445af95610d257fa5e3e1e21" "c90fd1c669f260120d32ddd20168343f5c717ca69e95d2f805e42e88430c340e" "e9460a84d876da407d9e6accf9ceba453e2f86f8b86076f37c08ad155de8223c" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "44c566df0e1dfddc60621711155b1be4665dd3520b290cb354f8270ca57f8788" "dd6e52a5b1180f5c8bf408764a32867e2fa86594ded78a29040cafce6a4ea808" "946e871c780b159c4bb9f580537e5d2f7dba1411143194447604ecbaf01bd90c" "3eb93cd9a0da0f3e86b5d932ac0e3b5f0f50de7a0b805d4eb1f67782e9eb67a4" "962dacd99e5a99801ca7257f25be7be0cebc333ad07be97efd6ff59755e6148f" "bdaab014ec6785f64b72efbea80808b762d8971247aacf2ffc6b76a39b9ed97c" default)))
  '(elm-compile-command ("elm" "make"))
  '(elm-indent-offset 4)
  '(elm-interactive-command ("elm" "repl"))
@@ -75,7 +74,6 @@
  '(elscreen-prefix-key (kbd "C-z"))
  '(elscreen-tab-display-control nil)
  '(elscreen-tab-display-kill-screen nil)
- '(fci-rule-color "#202325")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(flycheck-disabled-checkers ruby-rubocop)
  '(flycheck-display-errors-delay 0.5)
@@ -101,12 +99,25 @@
  '(helm-for-files-preferred-list
    (quote
     (helm-source-buffers-list helm-source-recentf helm-source-bookmarks helm-source-file-cache helm-source-files-in-current-dir helm-source-locate helm-source-ghq)))
+ '(highlight-changes-colors (quote ("#FD5FF0" "#AE81FF")))
+ '(highlight-tail-colors
+   (quote
+    (("#3C3D37" . 0)
+     ("#679A01" . 20)
+     ("#4BBEAE" . 30)
+     ("#1DB4D0" . 50)
+     ("#9A8F21" . 60)
+     ("#A75B00" . 70)
+     ("#F309DF" . 85)
+     ("#3C3D37" . 100))))
+ '(hl-sexp-background-color "#121212")
  '(inf-ruby-console-rails-default-implementation "pry")
  '(inf-ruby-default-implementation "pry")
  '(inf-ruby-eval-binding "Pry.toplevel_binding" t)
  '(js-indent-level 2)
  '(key-chord-two-keys-delay 0.01 t)
  '(linum-format " %6d ")
+ '(magit-diff-use-overlays nil)
  '(main-line-color1 "#222232")
  '(main-line-color2 "#333343")
  '(markdown-indent-on-enter nil)
@@ -122,11 +133,13 @@
  '(open-junk-file-format "~/Documents/junk/%Y/%m/%Y-%m-%d-%H%M%S." t)
  '(package-selected-packages
    (quote
-    (lsp-haskell lsp-mode lsp-ui flycheck plantuml-mode add-node-modules-path typescript-mode ace-window rjsx-mode all-the-icons neotree atom-one-dark-theme atom-dark-theme intero flycheck-haskell ghc direnv pug-mode rbenv flycheck-elm json-mode lispxmp racer rust-mode rspec-mode editor-config google-translate helm-cider clj-refactor cider clojure-mode flycheck-scala-sbt ensime vue-mode hindent fish-mode crosshairs elm-mode helm-tramp sudo-edit selected tuareg magit-find-file magit package-utils helm-descbinds ez-query-replace helm-themes expand-line flycheck-pos-tip terraform-mode ac-haskell-process helm-git-grep yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode sass-mode ruby-block robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magic-filetype key-chord init-open-recentf init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-gtags helm-ghq helm-ag hamburg-theme gotham-theme gitignore-mode flycheck-ocaml flycheck-elixir flycheck-cask flatland-theme flatland-black-theme exec-path-from-shell emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k coffee-mode clues-theme beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
+    (swap-buffers lsp-haskell lsp-mode lsp-ui flycheck plantuml-mode add-node-modules-path typescript-mode ace-window rjsx-mode all-the-icons neotree atom-one-dark-theme intero flycheck-haskell ghc direnv pug-mode rbenv flycheck-elm json-mode lispxmp racer rust-mode rspec-mode editor-config google-translate helm-cider clj-refactor cider clojure-mode flycheck-scala-sbt ensime vue-mode hindent fish-mode crosshairs elm-mode helm-tramp sudo-edit selected tuareg magit-find-file magit package-utils helm-descbinds ez-query-replace helm-themes expand-line flycheck-pos-tip terraform-mode ac-haskell-process helm-git-grep yasnippet yard-mode yaml-mode which-key wgrep-ag web-mode volatile-highlights visual-regexp use-package undo-tree tern-auto-complete sticky smartrep smartparens slim-mode sass-mode ruby-block robe recentf-ext projectile-rails prodigy popwin php-mode paredit pallet open-junk-file nyan-prompt nyan-mode nodejs-repl multiple-cursors multi-term markdown-mode magic-filetype key-chord init-open-recentf init-loader idle-highlight-mode htmlize helm-swoop helm-smex helm-projectile helm-gtags helm-ghq helm-ag gitignore-mode flycheck-ocaml flycheck-elixir flycheck-cask exec-path-from-shell emmet-mode elscreen elisp-slime-nav drag-stuff direx dired-k coffee-mode beacon anzu annotate ag ac-slime ac-js2 ac-alchemist)))
  '(parens-require-spaces nil)
  '(plantuml-jar-path "/usr/local/Cellar/plantuml/1.2018.11/libexec/plantuml.jar")
  '(plantuml-java-options "")
  '(plantuml-options "-charset UTF-8")
+ '(pos-tip-background-color "#FFFACE")
+ '(pos-tip-foreground-color "#272822")
  '(powerline-color1 "#222232")
  '(powerline-color2 "#333343")
  '(projectile-completion-system (quote helm))
@@ -372,6 +385,14 @@
  '(show-paren-delay 0)
  '(tab-width 2)
  '(terraform-indent-level 4)
+ '(tetris-x-colors
+   [[229 192 123]
+    [97 175 239]
+    [209 154 102]
+    [224 108 117]
+    [152 195 121]
+    [198 120 221]
+    [86 182 194]])
  '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
  '(vc-annotate-background "#1f2124")
  '(vc-annotate-color-map
@@ -396,7 +417,10 @@
      (360 . "#dc8cc3"))))
  '(vc-annotate-very-old-color "#dc8cc3")
  '(view-read-only t)
- '(web-mode-enable-auto-pairing nil))
+ '(web-mode-enable-auto-pairing nil)
+ '(weechat-color-list
+   (quote
+    (unspecified "#272822" "#3C3D37" "#F70057" "#F92672" "#86C30D" "#A6E22E" "#BEB244" "#E6DB74" "#40CAE4" "#66D9EF" "#FB35EA" "#FD5FF0" "#74DBCD" "#A1EFE4" "#F8F8F2" "#F8F8F0"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -2,7 +2,7 @@
   :init
   (custom-set-variables
    ;; プレフィクスキーはC-z
-   '(elscreen-prefix-key (kbd "C-z"))
+   '(elscreen-prefix-key (kbd "C-q"))
    ;; タブの先頭に[X]を表示しない
    '(elscreen-tab-display-kill-screen nil)
    ;; header-lineの先頭に[<->]を表示しない
