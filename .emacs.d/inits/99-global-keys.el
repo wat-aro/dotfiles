@@ -35,7 +35,8 @@
  ("C-c h s"   . helm-swoop)
  ("C-x C-b"   . helm-mini)
  ("C-x 3"     . split-window-right-and-balance)
- ("C-x 2"     . split-window-below-and-balance))
+ ("C-x 2"     . split-window-below-and-balance)
+ ("C-x 0"     . delete-window-and-balance))
 
 (setq windmove-wrap-around t)
 

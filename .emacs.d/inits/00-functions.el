@@ -31,3 +31,9 @@
   (interactive)
   (split-window-below)
   (balance-windows))
+
+(defun delete-window-and-balance ()
+  "Delete window and balance windows."
+  (interactive)
+  (delete-window)
+  (balance-windows))
