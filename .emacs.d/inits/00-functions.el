@@ -19,3 +19,15 @@
 	   :hline (concat alignment "|")
            :lstart "| " :lend " |" :sep " | ")))
     (orgtbl-to-generic table (org-combine-plists params2 params))))
+
+(defun split-window-right-and-balance ()
+  "Split window horizontaly and balance windows."
+  (interactive)
+  (split-window-right)
+  (balance-windows))
+
+(defun split-window-below-and-balance ()
+  "Split window vertically and balance windows."
+  (interactive)
+  (split-window-below)
+  (balance-windows))
