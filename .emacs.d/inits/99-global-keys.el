@@ -10,8 +10,7 @@
 
 (bind-keys
  ("C-?"       . help-command)
- ("C-t"       . other-window)
- ("M-t"       . ace-window)
+ ("C-t"       . ace-window)
  ("C-m"       . newline-and-indent)
  ("C-M-m"     . newline)
  ("C-x j"     . open-junk-file)
