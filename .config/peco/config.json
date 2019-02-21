@@ -7,13 +7,3 @@
         "Matched": ["red", "on_blue"]
     }
 }
-
-// {
-//     "Style": {
-//         "Basic": ["on_default", "default"],
-//         "SavedSelection": ["bold", "on_yellow", "white"],
-//         "Selected": ["underline", "on_white", "black"],
-//         "Query": ["yellow", "bold"],
-//         "Matched": ["blue", "on_black"]
-//     }
-// }
