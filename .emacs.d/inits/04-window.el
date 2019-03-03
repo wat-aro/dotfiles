@@ -24,7 +24,30 @@
                   (compilation-mode :noselect t)))))
 
 ;;; Color Theme
-(load-theme 'atom-one-dark t)
+;; (load-theme 'atom-one-dark t)
+
+(use-package doom-themes
+  :custom
+  (doom-themes-enable-italic t)
+  (doom-themes-enable-bold t)
+  :custom-face
+  (doom-modeline-bar ((t (:background "#6272a4"))))
+  :config
+  (load-theme 'doom-dracula t)
+  (doom-themes-neotree-config)
+  (doom-themes-org-config))
+
+(use-package doom-modeline
+  :custom
+  (doom-modeline-buffer-file-name-style 'truncate-with-project)
+  (doom-modeline-icon t)
+  (doom-modeline-major-mode-icon nil)
+  (doom-modeline-minor-modes nil)
+  :hook
+  (after-init . doom-modeline-mode)
+  :config
+  (line-number-mode 0)
+  (column-number-mode 0))
 
 (custom-set-faces
  '(linum ((t (:inherit (shadow default) :foreground "Gray")))))
