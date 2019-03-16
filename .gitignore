@@ -36,3 +36,13 @@ elm-stuff
 .envrc
 .pryrc
 .dir-locals.el
+elmjutsu-config.json
+.lsp-session*
+automatic_backups
+annotations
+bookmarks
+image-dired
+semanticdb
+transient
+brittany
+configstore

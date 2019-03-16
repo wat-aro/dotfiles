@@ -1,10 +1,7 @@
 (use-package popwin
-  :init
-  ;; (setq display-buffer-function 'popwin:display-buffer)
+  :custom
+  (popwin:popup-window-height 0.4)
   :config
-  (when (fboundp 'popwin:w3m-browse-url)
-    (setq browse-url-browser-function 'popwin:w3m-browse-url))
-  (setq popwin:popup-window-height 0.4)
   (setq popwin:special-display-config
         (append popwin:special-display-config
                 '(("*w3m*")
@@ -24,8 +21,6 @@
                   (compilation-mode :noselect t)))))
 
 ;;; Color Theme
-;; (load-theme 'atom-one-dark t)
-
 (use-package doom-themes
   :custom
   (doom-themes-enable-italic t)
@@ -49,8 +44,8 @@
   (line-number-mode 0)
   (column-number-mode 0))
 
-(custom-set-faces
- '(linum ((t (:inherit (shadow default) :foreground "Gray")))))
+;; (custom-set-faces
+;;  '(linum ((t (:inherit (shadow default) :foreground "Gray")))))
 
 ;; 選択中の色
 (set-face-background 'region "MediumPurple4")
@@ -69,7 +64,7 @@
 (setq frame-title-format "%f")
 
 ;; フレームの透明度
-(set-frame-parameter (selected-frame) 'alpha '(0.95))
+(set-frame-parameter (selected-frame) 'alpha '(1.0))
 
 ;; スクリーンの最大化
 (set-frame-parameter nil 'fullscreen 'maximized)

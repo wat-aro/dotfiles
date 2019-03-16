@@ -3,8 +3,6 @@
   :init
   (require 'smartrep)
   (declare-function smartrep-define-key "smartrep")
-  (bind-key "C-M-c" 'mc/edit-lines)
-  (bind-key "C-M-r" 'mc/mark-all-in-region)
   (global-unset-key (kbd "C-."))
   (smartrep-define-key global-map "C-."
     '(("C-'" . 'mc/mark-next-like-this)
@@ -19,4 +17,6 @@
       ("d"   . 'mc/mark-all-like-this-dwim)
       ("i"   . 'mc/insert-numbers)
       ("o"   . 'mc/sort-regions)
-      ("O"   . 'mc/reverse-regions))))
+      ("O"   . 'mc/reverse-regions)))
+  :bind  (("C-M-c" . mc/edit-lines)
+          ("C-M-r" . mc/mark-all-in-region)))

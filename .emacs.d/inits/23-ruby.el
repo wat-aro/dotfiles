@@ -1,52 +1,45 @@
 
 (use-package ruby-mode
   :interpreter (("ruby" . ruby-mode))
-  :init
-  (custom-set-variables '(ruby-deep-indent-paren nil)
-                        '(ruby-insert-encoding-magic-comment nil))
-  (add-hook 'ruby-mode-hook
-            '(lambda ()
-               (flycheck-mode 1)
-               ))
-  :config
-  ;; (setq flycheck-command-wrapper-function
-  ;;     (lambda (command)
-  ;;       (append '("bundle" "exec") command)))
-  )
+  :custom
+  (ruby-deep-indent-paren nil)
+  (ruby-insert-encoding-magic-comment nil))
 
 ;; inf-ruby
 (use-package inf-ruby :defer t
-  :init
-  (add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on)
-  :config
-  (custom-set-variables
-   '(inf-ruby-default-implementation "pry")
-   '(inf-ruby-eval-binding "Pry.toplevel_binding")))
-
+  :hook
+  (inf-ruby-mode . ansi-color-for-comint-mode-on)
+  :custom
+  (inf-ruby-default-implementation "pry")
+  (inf-ruby-eval-binding "Pry.toplevel_binding"))
 
 ;; robe
-(autoload 'ac-robe-setup "ac-robe" "auto-complete robe" nil nil)
 (use-package robe :defer t
   :init
-  (add-hook 'ruby-mode-hook 'robe-mode))
+  :config
+  (ac-robe-setup)
+  :hook
+  (ruby-mode . robe-mode))
 
 (use-package ac-robe-setup :defer t
-  :init
-  (add-hook 'robe-mode-hook 'ac-robe-setup)
+  :hook
+  (robe-mode . ac-robe-setup)
   :commands (ac-robe-setup))
 
 ;; RSpec
 (use-package rspec-mode
-  :init
-  (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+  :hook
+  (after-init . inf-ruby-switch-setup)
+  :custom
+  (compilation-scroll-output t)
   :config
-  (setq compilation-scroll-output t)
   (rspec-install-snippets))
 
 (use-package rbenv
   :init
-  (custom-set-variables '(rbenv-show-active-ruby-in-modeline nil))
-  (global-rbenv-mode))
+  (global-rbenv-mode)
+  :custom
+  (rbenv-show-active-ruby-in-modeline nil))
 
 (defadvice ruby-indent-line (after unindent-closing-paren activate)
   (let ((column (current-column))

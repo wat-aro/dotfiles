@@ -1,19 +1,37 @@
-;; direx
-(use-package direx :defer t
-  :init
-  ;; diredを2つのウィンドウで開いている時に、デフォルトの移動orコピー先をもう一方のdiredで開いているディレクトリにする
-  (setq dired-dwim-target t)
-  ;; ディレクトリを再帰的にコピーする
-  (setq dired-recursive-copies 'always)
-  (bind-key "M-C-\\" 'direx-project:jump-to-project-root-other-window))
-
-;; dired-k
+;; ;; dired-k
 (use-package dired-k :defer t
-  :init
-  (add-hook 'dired-initial-position-hook 'dired-k)
-  :config
-  (bind-key "K" 'dired-k dired-mode-map))
+  :hook
+  (dired-initial-position . dired-k)
+  :bind
+  (:map dired-mode-map ("K" . dired-k)))
 
 (use-package neotree
-  :init
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+  :after
+  projectile
+  :commands
+  (neotree-show neotree-hide neotree-dir neotree-find)
+  :custom
+  (neo-theme 'nerd2)
+  (neo-show-hidden-files t)
+  :bind
+  ("C-M-\\" . neotree-projectile-toggle)
+  :preface
+  (defun neotree-projectile-toggle ()
+    (interactive)
+    (let ((project-dir
+           (ignore-errors
+             ;; Pick one: projectile or find-file-in-project
+             (projectile-project-root)))
+          (file-name (buffer-file-name))
+          (neo-smart-open t))
+      (if (and (fboundp 'neo-global--window-exists-p)
+               (neo-global--window-exists-p))
+          (neotree-hide)
+        (progn
+          (neotree-show)
+          (if project-dir
+              (neotree-dir project-dir))
+          (if file-name
+              (neotree-find file-name)))))))
+
+(put 'dired-find-alternate-file 'disabled nil)

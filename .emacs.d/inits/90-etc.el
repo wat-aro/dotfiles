@@ -6,9 +6,10 @@
   :diminish undo-tree-mode
   :init
   (global-undo-tree-mode)
-  (bind-keys :map undo-tree-map
-             ("C-/" . undo-tree-undo)
-             ("C-'" . undo-tree-redo)))
+  :bind
+  (:map undo-tree-map
+   ("C-/" . undo-tree-undo)
+   ("C-'" . undo-tree-redo)))
 
 ;; expand-region.el
 (use-package expand-region :defer t
@@ -26,18 +27,19 @@
   (which-key-mode t))
 
 (use-package ag-mode :defer t
-  :init
-  (add-hook 'ag-mode-hook '(lambda ()
-                             (use-package wgrep-ag)
-                             (setq wgrep-auto-save-buffer t)  ; 編集完了と同時に保存
-                             (setq wgrep-enable-key "r")      ; "r" キーで編集モードに
-                             (wgrep-ag-setup)))
+  :custom
+  (wgrep-auto-save-buffer t)  ; 編集完了と同時に保存
+  (wgrep-enable-key "r")      ; "r" キーで編集モードに
+  (ag-highlight-search t)
+  (ag-reuse-buffers t)
+  (wgrep-auto-save-buffer t)
+  (wgrep-enable-key "r")
+  :hook
+  (ag-mode . (lambda ()
+               (use-package wgrep-ag)
+               (wgrep-ag-setup)))
   :config
-  (setq ag-highlight-search t)
-  (setq ag-reuse-buffers t)
   (use-package wgrep-ag)
-  (setq wgrep-auto-save-buffer t)
-  (setq wgrep-enable-key "r")
   (wgrep-ag-setup))
 
 ;; C-a で行の先頭に。もう一度 C-aで文字の始まる位置に移動
@@ -55,16 +57,8 @@
 (beacon-mode 1)
 
 ;; nyan-mode
-;; (custom-set-variables '(nyan-bar-length 16))
-;; (nyan-mode t)
-
-;; ;;; init.el ends here
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  )
+(custom-set-variables '(nyan-bar-length 16))
+(nyan-mode t)
 
 (use-package selected
   :init
@@ -72,12 +66,14 @@
   (selected-global-mode 1)
   :config
   (setq selected-org-mode-map (make-sparse-keymap))
-  (bind-key "t" 'org-table-convert-region selected-org-mode-map)
-  (bind-keys :map selected-keymap
-             ("q" . selected-off)
-             ("u" . upcase-region)
-             ("d" . downcase-region)
-             ("w" . count-words-region)
-             ("m" . apply-macro-to-region-lines)))
+  :bind
+  (:map selected-org-mode-map
+   ("t" . org-table-convert-region)
+   :map selected-keymap
+   ("q" . selected-off)
+   ("u" . upcase-region)
+   ("d" . downcase-region)
+   ("w" . count-words-region)
+   ("m" . apply-macro-to-region-lines)))
 
 (use-package generic-x)

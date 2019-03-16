@@ -15,16 +15,15 @@
 
 (use-package paredit :defer t
   :diminish paredit-mode
-  :init
-  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-  (add-hook 'lisp-interacton-mode-hook 'enable-paredit-mode)
-  (add-hook 'scheme-mode-hook 'enable-paredit-mode)
-  (add-hook 'slime-mode-hook 'enable-paredit-mode)
-  (add-hook 'inferior-scheme-mode-hook 'enable-paredit-mode)
-  (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
-  :config
-  (bind-keys :map paredit-mode-map
-             ("C-<right>" . 'right-word)
-             ("C-<left>"  . 'left-word)
-             (";;"        . 'paredit-semicolon)
-             (";"         . nil)))      ; for sticky
+  :hook
+  (emacs-lisp-mode      . enable-paredit-mode)
+  (lisp-interacton-mode . enable-paredit-mode)
+  (scheme-mode          . enable-paredit-mode)
+  (slime-mode           . enable-paredit-mode)
+  (inferior-scheme-mode . enable-paredit-mode)
+  (slime-repl-mode      . enable-paredit-mode)
+  :bind (:map paredit-mode-map
+         ("C-<right>" . 'right-word)
+         ("C-<left>"  . 'left-word)
+         (";;"        . 'paredit-semicolon)
+         (";"         . nil)))

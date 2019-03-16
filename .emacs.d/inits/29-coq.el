@@ -2,3 +2,4 @@
 (autoload 'coq-mode "coq" "Major mode for editing Coq vernacular." t)
 
 (load "/usr/local/share/emacs/site-lisp/proof-general/generic/proof-site.el")
+(add-hook 'coq-mode-hook #'company-coq-mode)

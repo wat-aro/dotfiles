@@ -6,13 +6,10 @@
   (setf slime-lisp-implementations
         `((sbcl    ("sbcl" "--dynamic-space-size" "2000"))
           (roswell ("ros" "-Q" "run"))))
-  (setf slime-default-lisp 'roswell)
-  :config
-  ;; (setq display-buffer-function 'popwin:display-buffer)
-  )
+  (setf slime-default-lisp 'roswell))
 
 ;; ac-slime
 (use-package ac-slime :defer t
-  :init
-  (add-hook 'slime-mode-hook 'set-up-slime-ac)
-  (add-hook 'slime-repl-mode-hook 'set-up-slime-ac))
+  :hook
+  (slime-mode . set-up-slime-ac)
+  (slime-repl-mode . set-up-slime-ac))

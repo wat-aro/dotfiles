@@ -1,8 +1,8 @@
 ;; Emmet-mode
 (use-package emmet-mode :defer t
-  :init
-  (add-hook 'web-mode-hook  'emmet-mode)
-  (add-hook 'css-mode-hook  'emmet-mode)
-  :config
-  (bind-key "C-c j" 'emmet-expand-line emmet-mode-keymap)
-  (bind-key "C-j" nil emmet-mode-keymap))
+  :hook
+  (web-mode . emmet-mode)
+  (css-mode . emmet-mode)
+  :bind (:map emmet-mode-keymap
+         ("C-c j" . emmet-expand-line)
+         ("C-c j  . nil")))

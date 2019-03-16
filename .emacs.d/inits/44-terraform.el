@@ -1,1 +1,3 @@
-(custom-set-variables '(terraform-indent-level 4))
+(use-package terraform-mode
+  :custom
+  (terraform-indent-level 4))

@@ -18,7 +18,7 @@
      (get-buffer-create buf-name))))
 
 (use-package scheme-mode
-  :bind ("C-c g" . scheme-other-window)
+  :bind (:map shceme-mode-map ("C-c g" . scheme-other-window))
   :config
   (put 'and-let* 'scheme-indent-function 1)
   (put 'begin0 'scheme-indent-function 0)
@@ -85,5 +85,4 @@
   (put 'with-time-counter 'scheme-indent-function 1)
   (put 'with-signal-handlers 'scheme-indent-function 1)
   (put 'with-locking-mutex 'scheme-indent-funcion 1)
-  (put 'guard 'scheme-indent-function 1)
-  )
+  (put 'guard 'scheme-indent-function 1))

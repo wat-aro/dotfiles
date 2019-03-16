@@ -10,7 +10,7 @@
   (lsp-response-timeout 5)
   (lsp-enable-completion-at-point nil)
   :hook
-  ((haskell-mode) . lsp)
+  (haskell-mode . lsp)
   :bind
   (:map lsp-mode-map
   ("C-c r"   . lsp-rename))

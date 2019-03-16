@@ -1,4 +1,21 @@
 (require 'multi-term)
+(use-package multi-term
+  :custom
+  (multi-term-program shell-file-name)
+  :bind
+  (("C-c C-t . multi-term")
+   :map term-raw-map
+   ("C-c C-p" . multi-term-prev)
+   ("C-c C-n" . multi-term-next)
+   ("C-c C-j" . toggle-term-mode)
+   ("C-t"     . other-window)
+   ("C-p"     . term-send-up)
+   ("C-n"     . term-send-down)
+   :map term-mode-map
+   ("C-c C-p" . multi-term-prev)
+   ("C-c C-n" . multi-term-next)
+   ("C-c C-j" . toggle-term-mode)
+   ("C-t"     . other-window)))
 
 (defun toggle-term-mode()
   "Toggles term mode(line <--> char)"
@@ -6,27 +23,3 @@
   (if (term-in-line-mode)
       (term-char-mode)
     (term-line-mode)))
-
-(setq multi-term-program shell-file-name)
-
-(global-set-key "\C-c\C-t" 'multi-term)
-
-;; keybinds for multi-term
-(defun term-mode-hooks ()
-  ;term-char
-  (define-key term-raw-map (kbd "C-c C-p") 'multi-term-prev)
-  (define-key term-raw-map (kbd "C-c C-n") 'multi-term-next)
-  (define-key term-raw-map (kbd "C-c C-j") 'toggle-term-mode)
-  (define-key term-raw-map (kbd "C-t") 'other-window)
-
-  (define-key term-raw-map (kbd "C-p") 'term-send-up)
-  (define-key term-raw-map (kbd "C-n") 'term-send-down)
-
-  ;term-line
-  (define-key term-mode-map (kbd "C-c C-p") 'multi-term-prev)
-  (define-key term-mode-map (kbd "C-c C-n") 'multi-term-next)
-  (define-key term-mode-map (kbd "C-c C-j") 'toggle-term-mode)
-  (define-key term-mode-map (kbd "C-t") 'other-window))
-
-
-(add-hook 'term-mode-hook 'term-mode-hooks)

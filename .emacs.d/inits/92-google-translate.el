@@ -27,4 +27,4 @@
      (if asciip "en" "ja")
      (if asciip "ja" "en")
      string)))
-(global-set-key (kbd "C-c t") 'google-translate-enja-or-jaen)
+(bind-key "C-c t" 'google-translate-enja-or-jaen)
