@@ -15,7 +15,7 @@
                 },
                 "rules": [
                     {
-                        "description": "sticky shift",
+                        "description": "sticky",
                         "manipulators": [
                             {
                                 "conditions": [
