@@ -9,6 +9,7 @@
   (lsp-document-sync-method 'incremental) ;; always send incremental document
   (lsp-response-timeout 5)
   (lsp-enable-completion-at-point nil)
+  (lsp-prefer-flymake nil)
   :hook
   (haskell-mode . lsp)
   :bind
