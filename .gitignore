@@ -28,7 +28,7 @@ hub
 .mc-lists.el
 .bundle/
 .stack-work/
-fisherman/
+fisherman
 shellenv.el
 fishd*
 .DS_Store
