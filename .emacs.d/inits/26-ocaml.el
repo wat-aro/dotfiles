@@ -12,8 +12,7 @@
   :init
   (setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
   :hook
-  (tuareg-mode . merlin-mode)
-  (caml-mode . merlin-mode)
+  ((tuareg-mode caml-mode) . merlin-mode)
   (merlin-mode . (lambda ()
                    (setq ac-sources (append ac-sources '(merlin-ac-source)))))
   :config

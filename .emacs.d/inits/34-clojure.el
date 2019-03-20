@@ -7,13 +7,10 @@
 (use-package cider
   :hook
   (cider-mode . clj-refactor-mode)
-  (cider-mode . company-mode)
-  (cider-mode . eldoc-mode)
-  (cider-mode . paredit-mode)
+  ((cider-mode cider-repl-mode) . company-mode)
+  ((cider-mode cider-repl-mode) . eldoc-mode)
+  ((cider-mode cider-repl-mode) . paredit-mode)
   (cider-mode . helm-cider-mode)
-  (cider-repl-mode . company-mode)
-  (cider-repl-mode . eldoc-mode)
-  (cider-repl-mode . paredit-mode)
   (cider-repl-mode . helm-cider-mode)
   :diminish subword-mode
   :custom

@@ -8,7 +8,6 @@
   (elm-mode . (lambda ()
                 (company-mode)
                 (setq company-backends '(company-elm))))
-  (elm-mode . elm-oracle-setup-completion)
   (flycheck-mode . flycheck-elm-setup)
   (company . (lambda () (add-to-list 'company-backends 'company-elm)))
   (before-save . my-elm-mode-before-save-hook)

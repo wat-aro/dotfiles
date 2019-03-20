@@ -11,5 +11,4 @@
 ;; ac-slime
 (use-package ac-slime :defer t
   :hook
-  (slime-mode . set-up-slime-ac)
-  (slime-repl-mode . set-up-slime-ac))
+  ((slime-mode slime-repl-mode) . set-up-slime-ac))

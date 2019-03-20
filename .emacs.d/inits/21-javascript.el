@@ -20,17 +20,9 @@
    ("C-c C-e" . nodejs-repl-send-last-sexp)
    ("C-c C-l" . nodejs-repl-load-file)
    ("C-c C-b" . nodejs-repl-send-buffer)
-   ("C-c C-g" . nodejs-repl-send-region))
-  :hook
-  (rjsx-mode . (lambda ()
-                      (tern-mode t)
-                      (flycheck-mode t))))
+   ("C-c C-g" . nodejs-repl-send-region)))
 
 (use-package tern
   :config
   (use-package tern-auto-complete)
   (tern-ac-setup))
-
-(use-package nodejs-repl
-  :hook
-  (rjsx-mode . (lambda () (tern-mode t))))
