@@ -11,7 +11,7 @@
   (lsp-enable-completion-at-point nil)
   (lsp-prefer-flymake nil)
   :hook
-  (haskell-mode . lsp)
+  ((haskell-mode vue-mode) . lsp)
   :bind
   (:map lsp-mode-map
   ("C-c r"   . lsp-rename))
