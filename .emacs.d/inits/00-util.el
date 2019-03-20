@@ -36,3 +36,6 @@
 
 ;; 自動でバッファの再読み込み
 (global-auto-revert-mode 1)
+
+(add-to-list 'safe-local-variable-values
+             '(rspec-docker-command . "docker-compose run --rm"))
