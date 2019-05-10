@@ -33,3 +33,5 @@
 [url "github:"]
     InsteadOf = https://github.com/
     InsteadOf = git@github.com:
+[merge]
+	conflictstyle = diff3

@@ -33,6 +33,7 @@ shellenv.el
 fishd*
 .DS_Store
 elm-stuff
+.env
 .envrc
 .pryrc
 .dir-locals.el
