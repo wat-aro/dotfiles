@@ -14,7 +14,7 @@
   ((haskell-mode vue-mode) . lsp)
   :bind
   (:map lsp-mode-map
-  ("C-c r"   . lsp-rename))
+  ("C-c r" . lsp-rename))
   :config
   (require 'lsp-clients)
   ;; LSP UI tools
