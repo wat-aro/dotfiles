@@ -21,4 +21,5 @@
          ("C-<right>" . 'right-word)
          ("C-<left>"  . 'left-word)
          (";;"        . 'paredit-semicolon)
-         (";"         . nil)))
+         (";"         . nil)
+         ("C-j"       . nil)))
