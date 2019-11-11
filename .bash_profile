@@ -4,6 +4,6 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/work/scripts:$PATH"
 export PATH="/usr/local/kahua/bin:$PATH"
 export PATH="~/bin:$PATH"
-test -r ~/.bashrc && . ~/.bashrc
-
 export PATH="$HOME/.cargo/bin:$PATH"
+
+test -r ~/.bashrc && . ~/.bashrc
