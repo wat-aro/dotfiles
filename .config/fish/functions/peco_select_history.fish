@@ -1,1 +1,1 @@
-/Users/wat-aro/.config/fisherman/peco/functions/peco_select_history.fish
+/home/wat-aro/.config/fisherman/peco/functions/peco_select_history.fish

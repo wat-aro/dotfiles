@@ -10,8 +10,7 @@ eval (direnv hook fish)
 
 function fish_user_key_bindings
   bind \cr 'peco_select_history (commandline -b)'
-  bind \cx\cf peco_recentd
-  bind \cg __ghq_crtl_g
+  bind \cg __ghq_repository_search
 end
 
 function dired

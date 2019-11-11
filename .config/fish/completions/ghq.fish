@@ -1,1 +1,1 @@
-/Users/wat-aro/.config/fisherman/ghq/completions/ghq.fish
+/home/wat-aro/.config/fisherman/ghq/completions/ghq.fish

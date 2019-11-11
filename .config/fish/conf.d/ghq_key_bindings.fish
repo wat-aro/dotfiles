@@ -1,0 +1,1 @@
+/home/wat-aro/.config/fisherman/ghq/conf.d/ghq_key_bindings.fish
