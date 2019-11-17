@@ -11,6 +11,7 @@ eval (direnv hook fish)
 function fish_user_key_bindings
   bind \cr 'peco_select_history (commandline -b)'
   bind \cg __ghq_repository_search
+  bind \eg __ghq_browse_github
 end
 
 function dired

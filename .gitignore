@@ -47,3 +47,12 @@ semanticdb
 transient
 brittany
 configstore
+.config/fcitx
+.config/dconf
+.config/gconf
+.config/google-chrome
+.config/monitors.xml
+.config/pulse
+.config/systemd
+.config/autostart
+.devcontainer

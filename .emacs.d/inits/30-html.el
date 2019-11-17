@@ -11,9 +11,9 @@
   (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
   (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
   (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil))
-  (setq web-mode-ac-sources-alist
-        '(("css" . (ac-source-css-property))
-          ("html" . (ac-source-words-in-buffer ac-source-abbrev))))
+  ;; (setq web-mode-ac-sources-alist
+  ;;       '(("css" . (ac-source-css-property))
+  ;;         ("html" . (ac-source-words-in-buffer ac-source-abbrev))))
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-current-column-highlight t))
 

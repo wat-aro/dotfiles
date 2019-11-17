@@ -13,8 +13,8 @@
   (setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
   :hook
   ((tuareg-mode caml-mode) . merlin-mode)
-  (merlin-mode . (lambda ()
-                   (setq ac-sources (append ac-sources '(merlin-ac-source)))))
+  ;; (merlin-mode . (lambda ()
+  ;;                  (setq ac-sources (append ac-sources '(merlin-ac-source)))))
   :config
   (setq merlin-command 'opam)
   (setq merlin-error-after-save nil)

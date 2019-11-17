@@ -8,15 +8,19 @@
 
 (require 'misc)
 
+(use-package ace-window
+  :bind
+  ("C-t" . ace-window)
+  :init
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+
 (bind-keys
  ("C-?"       . help-command)
- ("C-t"       . ace-window)
  ("C-m"       . newline-and-indent)
  ("C-M-m"     . newline)
  ("C-x j"     . open-junk-file)
  ("C-S-n"     . make-frame)
  ("C-S-w"     . delete-frame)
- ("C-M-y"     . helm-show-kill-ring)
  ("C-c n"     . multi-term-next)
  ("C-c v"     . revert-buffer)
  ("C-S-t"     . other-frame)
@@ -27,25 +31,8 @@
  ("<f8>"      . neotree-toggle)
  ("M-\\"      . dired)
  ("C-x C-j"   . skk-mode)
- ("C-c h"     . helm-command-prefix)
- ("C-c h o"   . helm-occur)
- ("C-c h SPC" . helm-all-mark-rings)
- ("C-c h g"   . helm-git-grep)
- ("C-c h s"   . helm-swoop)
- ("C-x C-b"   . helm-mini)
  ("C-x 3"     . split-window-right-and-balance)
  ("C-x 2"     . split-window-below-and-balance)
  ("C-x 0"     . delete-window-and-balance))
 
 (setq windmove-wrap-around t)
-
-(custom-set-variables
- '(key-chord-two-keys-delay 0.01)
- '(aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
-(key-chord-mode t)
-(key-chord-define-global "df" 'find-function)
-(key-chord-define-global "fh" 'describe-function)
-(key-chord-define-global "fv" 'find-variable)
-(key-chord-define-global "pk" 'package-install)
-(key-chord-define-global "kl" 'align-regexp)
-(key-chord-define-global "dv" 'describe-variable)

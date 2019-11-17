@@ -1,5 +1,5 @@
-(setq auto-mode-alist (cons '("\\.v$" . coq-mode) auto-mode-alist))
-(autoload 'coq-mode "coq" "Major mode for editing Coq vernacular." t)
+(use-package proof-general)
 
-(load "/usr/local/share/emacs/site-lisp/proof-general/generic/proof-site.el")
-(add-hook 'coq-mode-hook #'company-coq-mode)
+(use-package company-coq
+  :hook
+  (coq . company-coq-mode))

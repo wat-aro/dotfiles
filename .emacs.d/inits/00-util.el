@@ -39,3 +39,6 @@
 
 (add-to-list 'safe-local-variable-values
              '(rspec-docker-command . "docker-compose run --rm"))
+
+(use-package sudo-edit)
+(use-package dumb-diff)

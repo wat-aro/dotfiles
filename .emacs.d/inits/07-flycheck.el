@@ -8,5 +8,4 @@
   (flycheck-display-errors-function nil)
   (flycheck-display-errors-function #'flycheck-pos-tip-error-messages)
   :hook
-  (ruby-mode . flycheck-mode)
   (flycheck . flycheck-pos-tip-mode))

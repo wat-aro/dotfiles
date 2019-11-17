@@ -1,6 +1,7 @@
 
 (use-package ruby-mode
   :interpreter (("ruby" . ruby-mode))
+
   :custom
   (ruby-deep-indent-paren nil)
   (ruby-insert-encoding-magic-comment nil))
@@ -13,19 +14,6 @@
   (inf-ruby-default-implementation "pry")
   (inf-ruby-eval-binding "Pry.toplevel_binding"))
 
-;; robe
-(use-package robe :defer t
-  :init
-  :config
-  (ac-robe-setup)
-  :hook
-  (ruby-mode . robe-mode))
-
-(use-package ac-robe-setup :defer t
-  :hook
-  (robe-mode . ac-robe-setup)
-  :commands (ac-robe-setup))
-
 ;; RSpec
 (use-package rspec-mode
   :hook
@@ -34,12 +22,6 @@
   (compilation-scroll-output t)
   :config
   (rspec-install-snippets))
-
-(use-package rbenv
-  :init
-  (global-rbenv-mode)
-  :custom
-  (rbenv-show-active-ruby-in-modeline nil))
 
 (defadvice ruby-indent-line (after unindent-closing-paren activate)
   (let ((column (current-column))
@@ -57,3 +39,15 @@
       (when (> offset 0) (forward-char offset)))))
 
 (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+
+(use-package projectile-rails
+  :init
+  (projectile-rails-global-mode))
+
+(use-package rinari
+  :hook
+  (ruby-mode . rinari-minor-mode))
+
+(use-package rubocop
+  :hook
+  (ruby-mode . rubocop-mode))

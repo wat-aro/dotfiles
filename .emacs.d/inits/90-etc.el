@@ -17,7 +17,9 @@
          ("C-`" . er/contract-region)))
 
 ;; Visual
-(bind-key "M-%" 'vr/query-replace)
+(use-package visual-regexp
+  :bind
+  ("M-%" . vr/query-replace))
 
 ;; which-key
 (use-package which-key
@@ -26,7 +28,7 @@
   (which-key-setup-side-window-right-bottom)
   (which-key-mode t))
 
-(use-package ag-mode :defer t
+(use-package ag :defer t
   :custom
   (wgrep-auto-save-buffer t)  ; 編集完了と同時に保存
   (wgrep-enable-key "r")      ; "r" キーで編集モードに
@@ -54,11 +56,17 @@
 (bind-key "C-a" 'my-goto-line-beginning-or-indent)
 
 ;; Beacon — Never lose your cursor again
-(beacon-mode 1)
+(use-package beacon
+  :init
+  (beacon-mode 1))
+
 
 ;; nyan-mode
-(custom-set-variables '(nyan-bar-length 16))
-(nyan-mode t)
+(use-package nyan-mode
+  :custom
+  (nyan-bar-length 16)
+  :init
+  (nyan-mode t))
 
 (use-package selected
   :init
@@ -75,5 +83,3 @@
    ("d" . downcase-region)
    ("w" . count-words-region)
    ("m" . apply-macro-to-region-lines)))
-
-(use-package generic-x)

@@ -1,4 +1,3 @@
-(require 'multi-term)
 (use-package multi-term
   :custom
   (multi-term-program shell-file-name)

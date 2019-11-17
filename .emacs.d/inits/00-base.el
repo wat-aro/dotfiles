@@ -9,11 +9,7 @@
   (add-to-list 'load-path default-directory)
   (normal-top-level-add-subdirs-to-load-path))
 
-(let ((opam-directory "~/.opam/system/share/emacs/site-lisp")
-      (rbenv-directory "~/.rbenv/shims")
-      (local-bin "~/.local/bin"))
-  (add-to-list 'load-path opam-directory)
-  (add-to-list 'load-path rbenv-directory)
+(let ((local-bin "~/.local/bin"))
   (add-to-list 'load-path local-bin)
   (add-to-list 'exec-path local-bin))
 
@@ -26,3 +22,6 @@
 
 ;;; Environment:
 (setenv "LC_ALL" "ja_JP.UTF-8")
+
+(require 'uim)
+(uim-mode)

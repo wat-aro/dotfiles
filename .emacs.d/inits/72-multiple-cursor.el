@@ -1,7 +1,7 @@
 ;; multiple-cursors
 (use-package multiple-cursors
   :init
-  (require 'smartrep)
+  (use-package smartrep)
   (declare-function smartrep-define-key "smartrep")
   (global-unset-key (kbd "C-."))
   (smartrep-define-key global-map "C-."

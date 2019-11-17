@@ -97,7 +97,6 @@
     (eldoc-mode . "")
     (abbrev-mode . "")
     (undo-tree-mode . " Ut")
-    (elisp-slime-nav-mode . " EN")
     (helm-gtags-mode . " HG")
     (flymake-mode . " Fm")
     (editorconfig . " Ec")
