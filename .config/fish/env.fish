@@ -9,7 +9,8 @@ set -U Z_DATA "$HOME/.z_data"
 set -x TERMINAL "gnome-terminal"
 set -Ux BROWSER "google-chrome-stable"
 
-set -x PATH ~/.opam/system/bin $PATH
-set -x MANPATH "$MANPATH" ~/.opam/system/man
+set -x MANPATH /usr/share/man $MANPATH
+set -x MANPATH ~/.opam/system/man $MANPATH
+set -x MANPATH ~/.opam/default/man $MANPATH
 set -x SBT_OPTS "-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
-# set -x PATH ~/.cargo/bin $PATH
+set -x PATH ~/.cargo/bin $PATH
