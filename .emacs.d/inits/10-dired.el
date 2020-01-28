@@ -3,7 +3,9 @@
   :hook
   (dired-initial-position . dired-k)
   :bind
-  (:map dired-mode-map ("K" . dired-k)))
+  (:map dired-mode-map
+   ("K" . dired-k)
+   ("C-t" . other-window)))
 
 (use-package neotree
   :after

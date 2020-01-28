@@ -1,10 +1,12 @@
-
 (use-package ruby-mode
   :interpreter (("ruby" . ruby-mode))
-
   :custom
   (ruby-deep-indent-paren nil)
   (ruby-insert-encoding-magic-comment nil))
+
+(use-package ruby-electric
+  :hook
+  (ruby-mode . (lambda () (ruby-electric-mode t))))
 
 ;; inf-ruby
 (use-package inf-ruby :defer t
@@ -50,4 +52,6 @@
 
 (use-package rubocop
   :hook
-  (ruby-mode . rubocop-mode))
+  (ruby-mode . rubocop-mode)
+  :custom
+  (rubocop-keymap-prefix (kbd "C-c .")))

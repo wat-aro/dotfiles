@@ -17,7 +17,9 @@
   ("C-c j" . counsel-git-grep)
   ("C-c k" . counsel-ag)
   ("C-c o" . counsel-locate)
-  ("C-s-o" . counsel-rhythmbox))
+  ("C-s-o" . counsel-rhythmbox)
+  ("C-;"   . counsel-switch-buffer)
+  ("C-:"   . counsel-switch-buffer-other-window))
 
 
 (use-package swiper
@@ -32,4 +34,6 @@
   :bind
   ("C-x f" . ivy-ghq-open))
 
-(use-package counsel-tramp)
+(use-package counsel-tramp
+  :bind
+  ("C-x M-f" . counsel-tramp))

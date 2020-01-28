@@ -1,6 +1,6 @@
 ;; Magit
-;; (use-package magit :defer t)
 (use-package magit
+  :defer t
   :custom
   (magit-auto-revert-mode nil)
   (vc-handled-backends '())

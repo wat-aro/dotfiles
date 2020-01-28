@@ -56,3 +56,5 @@ configstore
 .config/systemd
 .config/autostart
 .devcontainer
+.vscode
+docker-compose.override.yml

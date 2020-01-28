@@ -24,9 +24,9 @@
   :bind (:map company-mode-map
          ("M-i" . company-complete)
          :map company-active-map
-         ("M-n" . company-select-next)
-         ("M-p" . company-select-previous)
-         ("M-s" . company-search-words-regexp)
+         ("C-n" . company-select-next)
+         ("C-p" . company-select-previous)
+         ("C-s" . company-search-words-regexp)
          :map company-search-map
-         ("M-n" . company-select-next)
-         ("M-p" . company-select-previous)))
+         ("C-n" . company-select-next)
+         ("C-p" . company-select-previous)))

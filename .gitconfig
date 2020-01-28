@@ -5,12 +5,16 @@
 	editor = emacsclient -nw
 	precomposeunicode = true
 	quotepath = false
-	excludesfile = /Users/wat-aro/.gitignore
+	excludesfile = ~/.gitignore
 [color]
 	diff = auto
 	status = auto
 	branch = auto
 	interactive = auto
+[pager]
+  log = diff-highlight | less
+  show = diff-highlight | less
+  diff = diff-highlight | less
 [push]
 	default = matching
 [alias]
