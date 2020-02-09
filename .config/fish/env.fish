@@ -12,5 +12,7 @@ set -Ux BROWSER "google-chrome-stable"
 set -x MANPATH /usr/share/man $MANPATH
 set -x MANPATH ~/.opam/system/man $MANPATH
 set -x MANPATH ~/.opam/default/man $MANPATH
+set -x PATH ~/.opam/system/bin $PATH
+set -x PATH ~/.screenlayout $PATH
 set -x SBT_OPTS "-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
 set -x PATH ~/.cargo/bin $PATH
