@@ -1,6 +1,7 @@
 import XMonad
 import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog
+import XMonad.Util.EZConfig -- removeKeys, addtionalKeys
 
 main = do
   xmobar myConfig >>= xmonad
@@ -14,7 +15,13 @@ myConfig = desktopConfig
   , focusedBorderColor = myFocusedBorderColor
   , focusFollowsMouse = myFocusFollowsMouse
   , workspaces = myWorkspaces
-  }
+  } `additionalKeys`
+  [ ((0, 0x1008ff13), spawn "amixer -D default set PCM 5%+ && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
+  , ((0, 0x1008ff11), spawn "amixer -D default set PCM 5%- && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
+  , ((0, 0x1008ff12), spawn "amixer -D default set PCM toggle")
+  , ((0, 0x1008FF02), spawn "xbacklight + 10")
+  , ((0, 0x1008FF03), spawn "xbacklight - 10")
+  ]
 
 myTerminal = "urxvt"
 myFocusFollowsMouse = False
