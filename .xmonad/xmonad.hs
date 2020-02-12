@@ -37,7 +37,7 @@ colorNormalbg  = "#1a1e1b"
 myNormalBorderColor  = "#000000"
 myFocusedBorderColor = "#dddddd"
 
-myWorkspaces = ["  terminal  ", "  chat  ", "  web  ", "  emacs  ", "  5  ", "  6  ", "  7  ", "  8  ", "  9  "]
+myWorkspaces = ["terminal", "chat", "web", "emacs", "5", "6", "7", "8", "9"]
 
 myStartupHook = do
   spawn "~/.screenlayout/office3.sh"
@@ -53,9 +53,8 @@ wsPP = xmobarPP { ppOrder           = \(ws:l:t:_) -> [ws,t]
                 , ppUrgent          = xmobarColor colorWhite colorNormalbg
                 , ppVisible         = xmobarColor colorWhite colorNormalbg
                 , ppHidden          = xmobarColor colorWhite colorNormalbg
-                , ppHiddenNoWindows = xmobarColor colorGray colorNormalbg
+                , ppHiddenNoWindows = xmobarColor colorGray  colorNormalbg
                 , ppTitle           = xmobarColor colorWhite colorNormalbg
-                , ppWsSep           = ""
+                , ppWsSep           = "    "
                 , ppSep             = "  :::  "
                 }
-e
