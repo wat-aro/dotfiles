@@ -7,6 +7,8 @@ import XMonad.Util.Run(spawnPipe, hPutStrLn)
 import XMonad.Util.SpawnOnce
 import XMonad.ManageHook(composeAll)
 import XMonad.StackSet(greedyView, view, shift)
+import XMonad.Actions.Warp(warpToScreen)
+import Data.Ratio((%))
 
 main = do
   wsbar <- spawnPipe myWsBar
@@ -88,7 +90,7 @@ myKeys =
   , ((0, 0x1008FF02), spawn "xbacklight + 10")
   , ((0, 0x1008FF03), spawn "xbacklight - 10")
   ] ++
-  [((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >>  (windows $ greedyView i))
+  [((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >>  (windows $ greedyView i) >> (warpToWorkSpace i))
     | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0]]
   ++
   [((shiftMask .|. mod4Mask, k), windows $ shift i)
@@ -102,3 +104,8 @@ selectScreenByWorkSpaceId _ = selectScreen 0
 
 selectScreen ::ScreenId -> X ()
 selectScreen scid = screenWorkspace scid >>= flip whenJust (windows . view)
+
+warpToWorkSpace :: WorkspaceId -> X ()
+warpToWorkSpace "chat" = warpToScreen 1 (1%2) (1%2)
+warpToWorkSpace "web" = warpToScreen 2 (1%2) (1%2)
+warpToWorkSpace _ = warpToScreen 0 (1%2) (1%2)
