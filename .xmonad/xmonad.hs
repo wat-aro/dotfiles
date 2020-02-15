@@ -53,22 +53,26 @@ myStartupHook = do
   spawn "feh --bg-scale ~/Pictures/Wallpapers/arch-linux.png"
   spawn "albert"
   spawnOnOnce terminalWs "urxvt"
-  -- spawnOnOnce chat "Idobata"
-  -- spawnOnOnce chat "slack"
-  -- spawnOnOnce web "google-chrome-stable"
-  -- spawnOnOnce emacs "emacs"
+  spawn "~/.local/bin/Idobata"
+  spawn "slack"
+  spawn "google-chrome-stable"
+  spawn "emacs"
+  (selectScreenByWorkSpaceId web) >> (windows $ greedyView web)
+  (selectScreenByWorkSpaceId chat) >> (windows $ greedyView chat)
+  (selectScreenByWorkSpaceId terminalWs) >> (windows $ greedyView terminalWs)
 
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ className =? "Urxvt"                --> doShift terminalWs
-  , className =? "google-chrome-stable" --> doShift web
-  , className =? "slack"                --> doShift chat
-  , className =? "emacs"                --> doShift emacs
+  [ className =? "Urxvt"         --> doShift terminalWs
+  , appName   =? "crx_ahlpjaafdhnjmnibpibnanjjghbkcdpd"       --> doShift chat
+  , appName =? "google-chrome" --> doShift web
+  , className =? "Slack"         --> doShift chat
+  , className =? "Emacs"         --> doShift emacs
   ]
 
 myManageFloat :: ManageHook
 myManageFloat = composeAll
-  [ className =? "Google-chrome" --> doFloat
+  [ appName =? "google-chrome" --> doFloat
   , isDialog                     --> doFloat
   ]
 
