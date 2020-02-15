@@ -6,10 +6,11 @@ import XMonad.Util.Run (spawnPipe, hPutStrLn)
 -- import XMonad.Actions.SpawnOn(spawnOn)
 import XMonad.Util.SpawnOnce
 import XMonad.ManageHook (composeAll, doFloat)
-import XMonad.Hooks.ManageHelpers (isDialog)
+import XMonad.Hooks.ManageHelpers (isDialog, doFullFloat)
 import XMonad.StackSet (greedyView, view, shift)
 import XMonad.Actions.Warp (warpToScreen)
 import Data.Ratio ((%))
+import XMonad.Layout.PerWorkspace (onWorkspace)
 
 main = do
   wsbar <- spawnPipe myWsBar
@@ -24,6 +25,7 @@ main = do
     , workspaces         = myWorkspaces
     , logHook            = myLogHook wsbar
     , manageHook         = myManageHook <+> myManageFloat <+> manageHook defaultConfig
+    , layoutHook         = onWorkspace chat (Tall 1 (3/100) (3/4)) $ layoutHook desktopConfig
     } `additionalKeys` myKeys
 
 myTerminal = "urxvt"
@@ -72,7 +74,7 @@ myManageHook = composeAll
 
 myManageFloat :: ManageHook
 myManageFloat = composeAll
-  [ appName =? "google-chrome" --> doFloat
+  [ appName =? "google-chrome" --> doFullFloat
   , isDialog                     --> doFloat
   ]
 
