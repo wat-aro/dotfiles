@@ -1,14 +1,15 @@
 import XMonad
 import XMonad.Config.Desktop
-import XMonad.Util.EZConfig(removeKeys, additionalKeys)
-import XMonad.Hooks.DynamicLog(dynamicLogWithPP, ppOutput, ppOrder, ppCurrent, ppUrgent, ppVisible, ppHidden, ppHiddenNoWindows, ppTitle, ppWsSep, ppSep, xmobarPP, xmobarColor) --for xmobar
-import XMonad.Util.Run(spawnPipe, hPutStrLn)
+import XMonad.Util.EZConfig (removeKeys, additionalKeys)
+import XMonad.Hooks.DynamicLog (dynamicLogWithPP, ppOutput, ppOrder, ppCurrent, ppUrgent, ppVisible, ppHidden, ppHiddenNoWindows, ppTitle, ppWsSep, ppSep, xmobarPP, xmobarColor) --for xmobar
+import XMonad.Util.Run (spawnPipe, hPutStrLn)
 -- import XMonad.Actions.SpawnOn(spawnOn)
 import XMonad.Util.SpawnOnce
-import XMonad.ManageHook(composeAll)
-import XMonad.StackSet(greedyView, view, shift)
-import XMonad.Actions.Warp(warpToScreen)
-import Data.Ratio((%))
+import XMonad.ManageHook (composeAll, doFloat)
+import XMonad.Hooks.ManageHelpers (isDialog)
+import XMonad.StackSet (greedyView, view, shift)
+import XMonad.Actions.Warp (warpToScreen)
+import Data.Ratio ((%))
 
 main = do
   wsbar <- spawnPipe myWsBar
@@ -22,7 +23,7 @@ main = do
     , focusFollowsMouse  = myFocusFollowsMouse
     , workspaces         = myWorkspaces
     , logHook            = myLogHook wsbar
-    , manageHook         = myManageHook <+> manageHook defaultConfig
+    , manageHook         = myManageHook <+> myManageFloat <+> manageHook defaultConfig
     } `additionalKeys` myKeys
 
 myTerminal = "urxvt"
@@ -65,6 +66,11 @@ myManageHook = composeAll
   , className =? "emacs"                --> doShift emacs
   ]
 
+myManageFloat :: ManageHook
+myManageFloat = composeAll
+  [ className =? "Google-chrome" --> doFloat
+  , isDialog                     --> doFloat
+  ]
 
 myLogHook h = dynamicLogWithPP $ wsPP { ppOutput = hPutStrLn h }
 
