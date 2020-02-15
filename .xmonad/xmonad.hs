@@ -65,7 +65,7 @@ myStartupHook = do
 
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ className =? "Urxvt"         --> doShift terminalWs
+  [ className =? "URxvt"         --> doShift terminalWs
   , appName   =? "crx_ahlpjaafdhnjmnibpibnanjjghbkcdpd"       --> doShift chat
   , appName =? "google-chrome" --> doShift web
   , className =? "Slack"         --> doShift chat
@@ -101,6 +101,7 @@ myKeys =
   , ((0, 0x1008ff12), spawn "amixer -D default set PCM toggle")
   , ((0, 0x1008FF02), spawn "xbacklight + 10")
   , ((0, 0x1008FF03), spawn "xbacklight - 10")
+  , ((mod4Mask, xK_g), spawn "google-chrome-stable")
   ] ++
   [((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >>  (windows $ greedyView i) >> (warpToWorkSpace i))
     | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0]]
