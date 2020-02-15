@@ -11,6 +11,8 @@ import XMonad.StackSet (greedyView, view, shift)
 import XMonad.Actions.Warp (warpToScreen)
 import Data.Ratio ((%))
 import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Util.SpawnOnce (spawnOnce, spawnOnOnce)
+import XMonad.Actions.SpawnOn (manageSpawn)
 
 main = do
   wsbar <- spawnPipe myWsBar
@@ -24,11 +26,11 @@ main = do
     , focusFollowsMouse  = myFocusFollowsMouse
     , workspaces         = myWorkspaces
     , logHook            = myLogHook wsbar
-    , manageHook         = myManageHook <+> myManageFloat <+> manageHook defaultConfig
+    , manageHook         = myManageHook <+> manageSpawn <+> myManageFloat <+> manageHook defaultConfig
     , layoutHook         = onWorkspace chat (Tall 1 (3/100) (3/4)) $ layoutHook desktopConfig
     } `additionalKeys` myKeys
 
-myTerminal = "urxvt"
+myTerminal = "urxvt -e bash -c 'tmux -q has-session && exec tmux attach-session -d || exec tmux new-session -n$USER -s$USER@$HOSTNAME'"
 myFocusFollowsMouse = False
 
 colorBlue      = "#857da9"
@@ -51,31 +53,29 @@ myWorkspaces = [terminalWs, emacs, "3", "4", "5", "6", "7", "8", web, chat]
 
 myStartupHook :: X ()
 myStartupHook = do
-  spawn "~/.screenlayout/office3.sh"
-  spawn "feh --bg-scale ~/Pictures/Wallpapers/arch-linux.png"
-  spawn "albert"
-  spawnOnOnce terminalWs "urxvt"
-  spawn "~/.local/bin/Idobata"
-  spawn "slack"
-  spawn "google-chrome-stable"
-  spawn "emacs"
+  spawnOnce "~/.screenlayout/private3.sh"
+  spawnOnce "feh --bg-scale ~/Pictures/Wallpapers/arch-linux.png"
+  spawnOnce "albert"
+  spawnOnOnce terminalWs myTerminal
+  spawnOnOnce emacs "emacs"
+  spawnOnOnce "web" "google-chrome-stable"
+  spawnOnce "~/.local/bin/Idobata"
+  spawnOnce "slack"
   (selectScreenByWorkSpaceId web) >> (windows $ greedyView web)
   (selectScreenByWorkSpaceId chat) >> (windows $ greedyView chat)
   (selectScreenByWorkSpaceId terminalWs) >> (windows $ greedyView terminalWs)
 
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ className =? "URxvt"         --> doShift terminalWs
-  , appName   =? "crx_ahlpjaafdhnjmnibpibnanjjghbkcdpd"       --> doShift chat
-  , appName =? "google-chrome" --> doShift web
+  [ appName   =? "crx_ahlpjaafdhnjmnibpibnanjjghbkcdpd" --> doShift chat
+  --, appName =? "google-chrome" --> doShift web
   , className =? "Slack"         --> doShift chat
-  , className =? "Emacs"         --> doShift emacs
   ]
 
 myManageFloat :: ManageHook
 myManageFloat = composeAll
-  [ appName =? "google-chrome" --> doFullFloat
-  , isDialog                     --> doFloat
+  [ appName =? "google-chrome" <&&> resource =? "Dialog" --> doFloat
+--    isDialog                   --> doFloat
   ]
 
 myLogHook h = dynamicLogWithPP $ wsPP { ppOutput = hPutStrLn h }
@@ -101,14 +101,13 @@ myKeys =
   , ((0, 0x1008ff12), spawn "amixer -D default set PCM toggle")
   , ((0, 0x1008FF02), spawn "xbacklight + 10")
   , ((0, 0x1008FF03), spawn "xbacklight - 10")
-  , ((mod4Mask, xK_g), spawn "google-chrome-stable")
+  , ((mod4Mask, xK_c), kill)
   ] ++
-  [((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >>  (windows $ greedyView i) >> (warpToWorkSpace i))
+  [((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >> (windows $ greedyView i) >> (warpToWorkSpace i))
     | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0]]
   ++
   [((shiftMask .|. mod4Mask, k), windows $ shift i)
     | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0]]
-
 
 selectScreenByWorkSpaceId :: WorkspaceId -> X ()
 selectScreenByWorkSpaceId "chat" = selectScreen 1
