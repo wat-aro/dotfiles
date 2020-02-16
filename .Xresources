@@ -24,7 +24,13 @@ URxvt*scrollTtyKeypress: true
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 
-URxvt*font: xft:Ricty:size=14:antialias=true
+URxvt*font:xft:Ricty:size=14:antialias=true,xft:Noto Sans CJK JP:style=Regular:pixelsize=14
+URxvt.inputMethod: uim
+URxvt.preeditType: OnTheSpot
+
+URxvt.perl-ext-common: default,matcher,resize-font
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.matcher.button: 1
 
 URxvt.geometry:             96x32
 URxvt.scrollBar_right:      true
@@ -64,4 +70,6 @@ URxvt.colorIT:              [90]#8ec07c
 URxvt.colorBD:              [90]#d5c4a1
 URxvt.colorUL:              [90]#83a598
 URxvt.scrollColor:          [90]#504945
-!URxvt.troughColor:          [90]#3C3836
+URxvt.troughColor:          [90]#3C3836
+
+xscreensaver.newLoginCommand: dm-tool switch-to-greeter
