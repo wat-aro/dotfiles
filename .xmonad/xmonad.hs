@@ -1,6 +1,6 @@
 import XMonad
 import XMonad.Config.Desktop
-import XMonad.Util.EZConfig (removeKeys, additionalKeys)
+import XMonad.Util.EZConfig (removeKeys, additionalKeys, additionalKeysP)
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, ppOutput, ppOrder, ppCurrent, ppUrgent, ppVisible, ppHidden, ppHiddenNoWindows, ppTitle, ppWsSep, ppSep, xmobarPP, xmobarColor) --for xmobar
 import XMonad.Util.Run (spawnPipe, hPutStrLn)
 -- import XMonad.Actions.SpawnOn(spawnOn)
@@ -28,7 +28,30 @@ main = do
     , logHook            = myLogHook wsbar
     , manageHook         = myManageHook <+> manageSpawn <+> myManageFloat <+> manageHook defaultConfig
     , layoutHook         = onWorkspace chat (Tall 1 (3/100) (3/4)) $ layoutHook desktopConfig
-    } `additionalKeys` myKeys
+    } `additionalKeys`
+    [
+      ((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >> (windows $ greedyView i) >> (warpToWorkSpace i))
+        | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0]
+    ]
+    `additionalKeys`
+    [
+      ((shiftMask .|. mod4Mask, k), windows $ shift i)
+        | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0]
+    ]
+    `additionalKeys`
+    [
+      ((0, 0x1008ff13), spawn "amixer -D default set PCM 5%+ && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
+    , ((0, 0x1008ff11), spawn "amixer -D default set PCM 5%- && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
+    , ((0, 0x1008ff12), spawn "amixer -D default set PCM toggle")
+    , ((0, 0x1008FF02), spawn "xbacklight + 10")
+    , ((0, 0x1008FF03), spawn "xbacklight - 10")
+    ]
+    `additionalKeysP`
+    [
+      ("M-c", kill)
+    , ("M-g", spawn "google-chrome-stable")
+    , ("M-s", spawn "xscreensaver-command -lock")
+    ]
 
 myTerminal = "urxvt -e bash -c 'tmux -q has-session && exec tmux attach-session -d || exec tmux new-session -n$USER -s$USER@$HOSTNAME'"
 myFocusFollowsMouse = False
@@ -56,6 +79,7 @@ myStartupHook = do
   spawnOnce "~/.screenlayout/private3.sh"
   spawnOnce "feh --bg-scale ~/Pictures/Wallpapers/arch-linux.png"
   spawnOnce "albert"
+  spawnOnce "xscreensaver -no-splash"
   spawnOnOnce terminalWs myTerminal
   spawnOnOnce emacs "emacs"
   spawnOnOnce "web" "google-chrome-stable"
@@ -92,22 +116,6 @@ wsPP = xmobarPP { ppOrder           = \(ws:l:t:_) -> [ws,t]
                 , ppWsSep           = "    "
                 , ppSep             = "  :::  "
                 }
-
--- KeyBindings
-
-myKeys =
-  [ ((0, 0x1008ff13), spawn "amixer -D default set PCM 5%+ && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
-  , ((0, 0x1008ff11), spawn "amixer -D default set PCM 5%- && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
-  , ((0, 0x1008ff12), spawn "amixer -D default set PCM toggle")
-  , ((0, 0x1008FF02), spawn "xbacklight + 10")
-  , ((0, 0x1008FF03), spawn "xbacklight - 10")
-  , ((mod4Mask, xK_c), kill)
-  ] ++
-  [((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >> (windows $ greedyView i) >> (warpToWorkSpace i))
-    | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0]]
-  ++
-  [((shiftMask .|. mod4Mask, k), windows $ shift i)
-    | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0]]
 
 selectScreenByWorkSpaceId :: WorkspaceId -> X ()
 selectScreenByWorkSpaceId "chat" = selectScreen 1
