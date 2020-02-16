@@ -7,7 +7,7 @@ import XMonad.Util.Run (spawnPipe, hPutStrLn)
 import XMonad.Util.SpawnOnce
 import XMonad.ManageHook (composeAll, doFloat)
 import XMonad.Hooks.ManageHelpers (isDialog, doFullFloat)
-import XMonad.StackSet (greedyView, view, shift)
+import qualified XMonad.StackSet as W
 import XMonad.Actions.Warp (warpToScreen)
 import Data.Ratio ((%))
 import XMonad.Layout.PerWorkspace (onWorkspace)
@@ -30,12 +30,12 @@ main = do
     , layoutHook         = onWorkspace chat (Tall 1 (3/100) (3/4)) $ layoutHook desktopConfig
     } `additionalKeys`
     [
-      ((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >> (windows $ greedyView i) >> (warpToWorkSpace i))
+      ((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >> (windows $ W.greedyView i) >> (warpToWorkSpace i))
         | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0]
     ]
     `additionalKeys`
     [
-      ((shiftMask .|. mod4Mask, k), windows $ shift i)
+      ((shiftMask .|. mod4Mask, k), windows $ W.shift i)
         | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0]
     ]
     `additionalKeys`
@@ -49,6 +49,7 @@ main = do
     `additionalKeysP`
     [
       ("M-c", kill)
+    , ("M-f", withFocused $ windows . (\a -> W.float a (W.RationalRect 0 0 1 1)))
     , ("M-g", spawn "google-chrome-stable")
     , ("M-s", spawn "xscreensaver-command -lock")
     ]
@@ -81,25 +82,23 @@ myStartupHook = do
   spawnOnce "albert"
   spawnOnce "xscreensaver -no-splash"
   spawnOnOnce terminalWs myTerminal
+  spawnOnOnce web "google-chrome-stable"
   spawnOnOnce emacs "emacs"
-  spawnOnOnce "web" "google-chrome-stable"
   spawnOnce "~/.local/bin/Idobata"
   spawnOnce "slack"
-  (selectScreenByWorkSpaceId web) >> (windows $ greedyView web)
-  (selectScreenByWorkSpaceId chat) >> (windows $ greedyView chat)
-  (selectScreenByWorkSpaceId terminalWs) >> (windows $ greedyView terminalWs)
+  (selectScreenByWorkSpaceId web) >> (windows $ W.greedyView web)
+  (selectScreenByWorkSpaceId chat) >> (windows $ W.greedyView chat)
+  (selectScreenByWorkSpaceId terminalWs) >> (windows $ W.greedyView terminalWs)
 
 myManageHook :: ManageHook
 myManageHook = composeAll
   [ appName   =? "crx_ahlpjaafdhnjmnibpibnanjjghbkcdpd" --> doShift chat
-  --, appName =? "google-chrome" --> doShift web
   , className =? "Slack"         --> doShift chat
   ]
 
 myManageFloat :: ManageHook
 myManageFloat = composeAll
   [ appName =? "google-chrome" <&&> resource =? "Dialog" --> doFloat
---    isDialog                   --> doFloat
   ]
 
 myLogHook h = dynamicLogWithPP $ wsPP { ppOutput = hPutStrLn h }
@@ -123,7 +122,7 @@ selectScreenByWorkSpaceId "web" = selectScreen 2
 selectScreenByWorkSpaceId _ = selectScreen 0
 
 selectScreen ::ScreenId -> X ()
-selectScreen scid = screenWorkspace scid >>= flip whenJust (windows . view)
+selectScreen scid = screenWorkspace scid >>= flip whenJust (windows . W.view)
 
 warpToWorkSpace :: WorkspaceId -> X ()
 warpToWorkSpace "chat" = warpToScreen 1 (1%2) (1%2)
