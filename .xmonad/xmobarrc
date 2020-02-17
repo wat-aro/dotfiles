@@ -35,7 +35,7 @@ Config { font = "xft:Noto Sans CJK JP:size=14:Bold"
                                               , "-O" , "Charging <left>%"
                                               , "-i" , "<left>%"
                                               ] 50
-                    , Run Date "%Y  %m/%d  %H:%M %a" "date" 10
+                    , Run Date "%Y  %m/%d %a  %H:%M:%S" "date" 10
                     , Run StdinReader
                     ]
        , sepChar = "%"
