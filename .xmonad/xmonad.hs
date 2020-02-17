@@ -27,7 +27,7 @@ main = do
     , workspaces         = myWorkspaces
     , logHook            = myLogHook wsbar
     , manageHook         = myManageHook <+> manageSpawn <+> myManageFloat <+> manageHook defaultConfig
-    , layoutHook         = onWorkspace chat (Tall 1 (3/100) (3/4)) $ layoutHook desktopConfig
+    , layoutHook         = onWorkspace chat (Tall 1 (3/100) (7/10)) $ layoutHook desktopConfig
     } `additionalKeys`
     [
       ((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >> (windows $ W.greedyView i) >> (warpToWorkSpace i))
