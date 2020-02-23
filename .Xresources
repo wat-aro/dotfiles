@@ -24,7 +24,9 @@ URxvt*scrollTtyKeypress: true
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 
-URxvt*font:xft:Ricty:size=14:antialias=true,xft:Noto Sans CJK JP:style=Regular:pixelsize=14
+URxvt*font:xft:Ricty:size=14:antialias=true, \
+           xft:DejaVu Sans Mono:size=14 \
+           xft:Noto Color Emoji:style=Regular:size=14
 URxvt.inputMethod: fxitx
 URxvt.preeditType: OnTheSpot
 
@@ -47,7 +49,7 @@ URxvt.fading:               40
 URxvt.lineSpace:            0
 
 !! Color Scheme and Opacity - gruvbox-dark https://github.com/morhetz/gruvbox
-URxvt.depth:                32
+URxvt.depth:                24
 URxvt.color0:               [90]#282828
 URxvt.color1:               [90]#cc241d
 URxvt.color2:               [90]#98971a
