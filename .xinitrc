@@ -41,5 +41,5 @@ export QT_IM_MODULE='uim'
 uim-xim &
 export XMODIFIERS='@im=uim'
 
-#xsetroot -cursor_name left_ptr
+xsetroot -cursor_name left_ptr
 exec xmonad
