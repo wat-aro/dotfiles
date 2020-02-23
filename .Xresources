@@ -25,10 +25,10 @@ URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 
 URxvt*font:xft:Ricty:size=14:antialias=true,xft:Noto Sans CJK JP:style=Regular:pixelsize=14
-URxvt.inputMethod: uim
+URxvt.inputMethod: fxitx
 URxvt.preeditType: OnTheSpot
 
-URxvt.perl-ext-common: default,matcher,resize-font
+URxvt.perl-ext-common: default,matcher,resize-font,xim-onthespot
 URxvt.url-launcher: /usr/bin/xdg-open
 URxvt.matcher.button: 1
 
@@ -73,3 +73,5 @@ URxvt.scrollColor:          [90]#504945
 URxvt.troughColor:          [90]#3C3836
 
 xscreensaver.newLoginCommand: dm-tool switch-to-greeter
+
+Emacs*UseXIM: false

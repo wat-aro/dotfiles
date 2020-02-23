@@ -30,8 +30,6 @@
  ("C-c C-z"   . window-resizer)
  ("<f8>"      . neotree-toggle)
  ("M-\\"      . dired)
- ("C-\\"      . uim-mode)
- ("C-x C-j"   . skk-mode)
  ("C-x 3"     . split-window-right-and-balance)
  ("C-x 2"     . split-window-below-and-balance)
  ("C-x 0"     . delete-window-and-balance)
