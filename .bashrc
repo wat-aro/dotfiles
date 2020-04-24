@@ -1,7 +1,7 @@
 # eval "$(rbenv init -)"
 alias be='bundle exec'
-alias ls='ls -G'
-alias la='ls -alG'
+alias ls='ls --color'
+alias la='ls -al --color'
 alias grep='grep --color=auto'
 alias mkdir='mkdir -p -v'
 

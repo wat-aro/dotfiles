@@ -24,7 +24,15 @@ URxvt*scrollTtyKeypress: true
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 
-URxvt*font: xft:Ricty:size=14:antialias=true
+URxvt*font:xft:Ricty:size=14:antialias=true, \
+           xft:DejaVu Sans Mono:size=14 \
+           xft:Noto Color Emoji:style=Regular:size=14
+URxvt.inputMethod: fxitx
+URxvt.preeditType: OnTheSpot
+
+URxvt.perl-ext-common: default,matcher,resize-font,xim-onthespot
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.matcher.button: 1
 
 URxvt.geometry:             96x32
 URxvt.scrollBar_right:      true
@@ -41,7 +49,7 @@ URxvt.fading:               40
 URxvt.lineSpace:            0
 
 !! Color Scheme and Opacity - gruvbox-dark https://github.com/morhetz/gruvbox
-URxvt.depth:                32
+URxvt.depth:                24
 URxvt.color0:               [90]#282828
 URxvt.color1:               [90]#cc241d
 URxvt.color2:               [90]#98971a
@@ -64,4 +72,8 @@ URxvt.colorIT:              [90]#8ec07c
 URxvt.colorBD:              [90]#d5c4a1
 URxvt.colorUL:              [90]#83a598
 URxvt.scrollColor:          [90]#504945
-!URxvt.troughColor:          [90]#3C3836
+URxvt.troughColor:          [90]#3C3836
+
+xscreensaver.newLoginCommand: dm-tool switch-to-greeter
+
+Emacs*UseXIM: false

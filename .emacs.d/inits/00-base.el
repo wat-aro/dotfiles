@@ -23,5 +23,10 @@
 ;;; Environment:
 (setenv "LC_ALL" "ja_JP.UTF-8")
 
-(require 'uim)
-(uim-mode)
+(use-package mozc
+  :init
+  (setq default-input-method "japanese-mozc")
+  :custom
+  (mozc-candidate-style 'overlay)
+  :bind
+  ("M-SPC" . toggle-input-method))

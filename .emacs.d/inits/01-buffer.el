@@ -1,7 +1,8 @@
 ;;; Bar
 (when window-system
   (tool-bar-mode -1)
-  (scroll-bar-mode -1))
+  (scroll-bar-mode -1)
+  (menu-bar-mode 0))
 
 ;; Column mode
 (column-number-mode t)
