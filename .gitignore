@@ -65,3 +65,4 @@ xmonad.o
 straight
 .config/albert/core.db
 .config/albert/last_used_version
+.config/fish/fish_variables
