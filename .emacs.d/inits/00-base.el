@@ -29,4 +29,4 @@
   :custom
   (mozc-candidate-style 'overlay)
   :bind
-  ("M-SPC" . toggle-input-method))
+  ("C-\\" . toggle-input-method))
