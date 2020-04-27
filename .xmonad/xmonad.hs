@@ -50,7 +50,6 @@ main = do
     [
       ("M-c", kill)
     , ("M-f", withFocused $ windows . (\a -> W.float a (W.RationalRect 0 0 1 1)))
-    , ("M-g", spawn "google-chrome-stable")
     , ("M-s", spawn "xscreensaver-command -lock")
     ]
 
@@ -65,7 +64,7 @@ colorGrayAlt   = "#313131"
 colorNormalbg  = "#1a1e1b"
 
 myNormalBorderColor  = "#000000"
-myFocusedBorderColor = "#dddddd"
+myFocusedBorderColor = "#555555"
 
 -- Workspaces
 terminalWs = "terminal"
@@ -78,7 +77,7 @@ myWorkspaces = [terminalWs, emacs, "3", "4", "5", "6", "7", "8", web, chat]
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "~/.screenlayout/private3.sh"
-  spawnOnce "feh --bg-scale ~/Pictures/Wallpapers/arch-linux.png"
+  spawnOnce "feh --bg-scale ~/Pictures/Wallpapers/wallpaper.jpg"
   spawnOnce "albert"
   spawnOnce "xscreensaver -no-splash"
   spawnOnOnce terminalWs myTerminal
