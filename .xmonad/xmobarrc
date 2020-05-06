@@ -3,7 +3,10 @@ Config { font = "xft:Noto Sans CJK JP:size=14:Bold"
        , bgColor = "#1a1e1b"
        , fgColor = "#676767"
        , position = Top
+       , overrideRedirect = True
        , lowerOnStart = False
+       , hideOnStart = False
+       , persistent = True
        , commands = [ Run Network "wlp0s20f3" [ "-t"       , " ⇩ <rx> : ⇧ <tx>"
                                               , "-L"       , "400"
                                               , "-H"       , "2000"

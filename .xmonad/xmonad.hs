@@ -2,6 +2,7 @@ import XMonad
 import XMonad.Config.Desktop
 import XMonad.Util.EZConfig (removeKeys, additionalKeys, additionalKeysP)
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, ppOutput, ppOrder, ppCurrent, ppUrgent, ppVisible, ppHidden, ppHiddenNoWindows, ppTitle, ppWsSep, ppSep, xmobarPP, xmobarColor) --for xmobar
+import XMonad.Hooks.ManageDocks (avoidStruts)
 import XMonad.Util.Run (spawnPipe, hPutStrLn)
 -- import XMonad.Actions.SpawnOn(spawnOn)
 import XMonad.Util.SpawnOnce
@@ -15,7 +16,7 @@ import XMonad.Util.SpawnOnce (spawnOnce, spawnOnOnce)
 import XMonad.Actions.SpawnOn (manageSpawn)
 
 main = do
-  wsbar <- spawnPipe myWsBar
+  wsbars <- mapM (\scid -> spawnPipe (myWsBar scid)) [0, 1]
   xmonad $ desktopConfig
     { terminal           = myTerminal
     , modMask            = mod4Mask -- Rebind Mod to the Windows key
@@ -25,9 +26,9 @@ main = do
     , focusedBorderColor = myFocusedBorderColor
     , focusFollowsMouse  = myFocusFollowsMouse
     , workspaces         = myWorkspaces
-    , logHook            = myLogHook wsbar
+    , logHook            = myLogHooks wsbars
     , manageHook         = myManageHook <+> manageSpawn <+> myManageFloat <+> manageHook defaultConfig
-    , layoutHook         = onWorkspace chat (Tall 1 (3/100) (7/10)) $ layoutHook desktopConfig
+    , layoutHook         = avoidStruts $ onWorkspace chat (Tall 1 (3/100) (7/10)) $ layoutHook desktopConfig
     } `additionalKeys`
     [
       ((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >> (windows $ W.greedyView i) >> (warpToWorkSpace i))
@@ -100,9 +101,10 @@ myManageFloat = composeAll
   [ appName =? "google-chrome" <&&> resource =? "Dialog" --> doFloat
   ]
 
+myLogHooks hs = mapM_ myLogHook hs
 myLogHook h = dynamicLogWithPP $ wsPP { ppOutput = hPutStrLn h }
 
-myWsBar = "xmobar ~/.xmonad/xmobarrc"
+myWsBar scid = "xmobar ~/.xmonad/xmobarrc -x " ++ show scid
 
 wsPP = xmobarPP { ppOrder           = \(ws:l:t:_) -> [ws,t]
                 , ppCurrent         = xmobarColor colorGreen colorNormalbg
