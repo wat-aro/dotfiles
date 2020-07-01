@@ -1,4 +1,3 @@
--- -*- mode:haskell -*-
 Config { font = "xft:Noto Sans CJK JP:size=14:Bold"
        , bgColor = "#1a1e1b"
        , fgColor = "#676767"
@@ -7,14 +6,14 @@ Config { font = "xft:Noto Sans CJK JP:size=14:Bold"
        , lowerOnStart = False
        , hideOnStart = False
        , persistent = True
-       , commands = [ Run Network "wlp0s20f3" [ "-t"       , " ⇩ <rx> : ⇧ <tx>"
+       , commands = [ Run Network "wlp0s20f3" [ "-t"       , " ⇩ <rx> ⇧ <tx>"
                                               , "-L"       , "400"
                                               , "-H"       , "2000"
                                               , "--normal" , "#d3d7cf"
                                               , "--high"   , "#88b986"
                                               ] 10
 
-                    , Run MultiCpu            [ "-t"       , "<total0>.<total1>.<total2>.<total3>"
+                    , Run MultiCpu            [ "-t"       , "<total0>%  <total1>%  <total2>%  <total3>%  <total4>%  <total5>%  <total6>%  <total7>%"
                                               , "-L"       , "40"
                                               , "-H"       , "85"
                                               , "--normal" , "#d3d7cf"
@@ -43,5 +42,5 @@ Config { font = "xft:Noto Sans CJK JP:size=14:Bold"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %StdinReader% }{≫%multicpu%  ≫%memory%  ≫%wlp0s20f3%  ≫%battery%  <fc=#c7a273>%date%</fc> "
+       , template = " %StdinReader% }{≫CPU: %multicpu%  ≫ MEM: %memory%  ≫%wlp0s20f3%  ≫BAT: %battery%  <fc=#c7a273>%date%</fc> "
        }
