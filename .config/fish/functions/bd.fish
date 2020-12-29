@@ -1,1 +1,0 @@
-/home/wat-aro/.config/fisherman/bd/functions/bd.fish

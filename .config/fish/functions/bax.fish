@@ -1,1 +1,0 @@
-/home/wat-aro/.config/fisherman/spin/bax.fish
