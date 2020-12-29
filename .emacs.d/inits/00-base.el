@@ -5,13 +5,12 @@
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
-(let ((default-directory (locate-user-emacs-file "./elisp")))
+(let ((default-directory (locate-user-emacs-file "elisp")))
   (add-to-list 'load-path default-directory)
   (normal-top-level-add-subdirs-to-load-path))
 
-(let ((local-bin "~/.local/bin"))
-  (add-to-list 'load-path local-bin)
-  (add-to-list 'exec-path local-bin))
+(add-to-list 'exec-path "~/.local/bin")
+(add-to-list 'exec-path "~/.cargo/bin")
 
 ;;; Language
 (set-language-environment 'Japanese)
