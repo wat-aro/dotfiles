@@ -16,6 +16,7 @@
 
 (bind-keys
  ("C-?"       . help-command)
+ ("C-o"       . openline-and-indent)
  ("C-m"       . newline-and-indent)
  ("C-M-m"     . newline)
  ("C-x j"     . open-junk-file)

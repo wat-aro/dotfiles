@@ -37,3 +37,48 @@
   (interactive)
   (delete-window)
   (balance-windows))
+
+(defun openline-and-indent ()
+  "Open line and indent."
+  (interactive)
+  (beginning-of-line)
+  (newline-and-indent)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(defun open-blacket ()
+  (newline-and-indent)
+  (newline-and-indent)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(defun end-of-bufferp (pos)
+  (= (point-max) pos))
+
+(defun between-blacketp ()
+  (and (not (end-of-bufferp (point)))
+       (or (and (progn
+                  (skip-chars-backward " \t")
+                  (string-equal (buffer-substring (- (point) 1) (point)) "("))
+                (progn
+                  (skip-chars-forward " \t")
+                  (string-equal (buffer-substring (point) (+ (point) 1)) ")")))
+           (and (progn
+                  (skip-chars-backward " \t")
+                  (string-equal (buffer-substring (- (point) 1) (point)) "{"))
+                (progn
+                  (skip-chars-forward " \t")
+                  (string-equal (buffer-substring (point) (+ (point) 1)) "}")))
+           (and (progn
+                  (skip-chars-backward " \t")
+                  (string-equal (buffer-substring (- (point) 1) (point)) "["))
+                (progn
+                  (skip-chars-forward " \t")
+                  (string-equal (buffer-substring (point) (+ (point) 1)) "]"))))))
+
+(defun newline-and-open-blacket ()
+  "Add newline and indentation"
+  (interactive)
+  (if (between-blacketp)
+      (open-blacket)
+    (newline-and-indent)))
