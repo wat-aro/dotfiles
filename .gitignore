@@ -65,3 +65,4 @@ xmonad.o
 straight
 .config/albert
 .config/fish/fish_variables
+.cofnig/fisherman
