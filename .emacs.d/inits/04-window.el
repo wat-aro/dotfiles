@@ -28,13 +28,18 @@
   :custom-face
   (doom-modeline-bar ((t (:background "#6272a4"))))
   :config
-  (load-theme 'doom-dracula t)
+  ;; (load-theme 'doom-material t)
   (doom-themes-neotree-config)
-  (doom-themes-org-config))
+  (doom-themes-org-config)
+  (load-theme 'doom-dracula t)
+  (custom-theme-set-faces
+   'doom-dracula
+   '(font-lock-variable-name-face ((t (:foreground "#6272a4")))))
+  (load-theme 'doom-dracula t))
 
 (use-package doom-modeline
   :custom
-  (doom-modeline-buffer-file-name-style 'truncate-with-project)
+  (doom-modeline-buffer-file-name-style 'relative-from-project)
   (doom-modeline-icon t)
   (doom-modeline-major-mode-icon nil)
   (doom-modeline-minor-modes nil)
@@ -42,10 +47,13 @@
   (after-init . doom-modeline-mode)
   :config
   (line-number-mode 0)
-  (column-number-mode 0))
+  (column-number-mode 0)
+  (doom-modeline-def-modeline 'main
+    '(bar window-number matches buffer-info remote-host buffer-position parrot selection-info)
+    '(misc-info persp-name lsp github debug minor-modes input-method major-mode process vcs checker)))
 
-;; (custom-set-faces
-;;  '(linum ((t (:inherit (shadow default) :foreground "Gray")))))
+(custom-set-faces
+ '(linum ((t (:inherit (shadow default) :foreground "Gray")))))
 
 ;; 選択中の色
 (set-face-background 'region "MediumPurple4")
