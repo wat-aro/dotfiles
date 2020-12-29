@@ -2,7 +2,7 @@
   :custom
   (multi-term-program shell-file-name)
   :bind
-  (("C-c C-t . multi-term")
+  (("C-c C-t" . multi-term)
    :map term-raw-map
    ("C-c C-p" . multi-term-prev)
    ("C-c C-n" . multi-term-next)

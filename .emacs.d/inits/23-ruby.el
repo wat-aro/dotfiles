@@ -2,7 +2,8 @@
   :interpreter (("ruby" . ruby-mode))
   :custom
   (ruby-deep-indent-paren nil)
-  (ruby-insert-encoding-magic-comment nil))
+  (ruby-insert-encoding-magic-comment nil)
+  (lsp-solargraph-use-bundler t))
 
 (use-package ruby-electric
   :hook
@@ -44,7 +45,8 @@
 
 (use-package projectile-rails
   :init
-  (projectile-rails-global-mode))
+  (projectile-rails-global-mode)
+  (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map))
 
 (use-package rinari
   :hook
@@ -54,4 +56,5 @@
   :hook
   (ruby-mode . rubocop-mode)
   :custom
-  (rubocop-keymap-prefix (kbd "C-c .")))
+  (rubocop-keymap-prefix (kbd "C-c ."))
+  (rubocop-autocorrect-on-save t))

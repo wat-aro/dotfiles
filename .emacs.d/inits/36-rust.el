@@ -1,10 +1,9 @@
 (use-package rust-mode
-  :custom
-  (rust-format-on-save t)
-  :hook
-  (rust-mode . racer-mode)
-  (racer-mode . eldoc-mode)
-  (racer-mode . (lambda ()
-                  (company-mode)
-                  (set (make-variable-buffer-local 'company-idle-delay) 0.1)
-                  (set (make-variable-buffer-local 'company-minimum-prefix-length) 0))))
+  :ensure t
+  :custom rust-format-on-save t
+  :bind
+  (:map rust-mode-map ("C-m" . newline-and-open-blacket)))
+
+(use-package cargo
+  :ensure t
+  :hook (rust-mode . cargo-minor-mode))

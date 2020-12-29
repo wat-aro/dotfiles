@@ -5,6 +5,8 @@
   (org-agenda-files (list org-directory))
   (org-hide-leading-stars t)
   (org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+  (org-todo-keywords '((sequence "TODO" "DOING" "DONE")))
+  (org-use-speed-commands t)
   :config
   (setq org-src-fontify-natively t)
 
@@ -14,4 +16,4 @@
              (string= lang "ruby")
              (string= lang "C")
              (string= lang "cpp")
-             ))))
+             (string= lang "python")))))
