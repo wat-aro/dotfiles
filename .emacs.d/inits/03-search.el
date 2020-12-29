@@ -12,3 +12,5 @@
   (rspec-use-rake-when-possible nil)
   (tab-width 2)
   (anzu-use-migemo t))
+
+(use-package migemo)
