@@ -4,7 +4,6 @@ abbr --add r "bin/rails"
 alias e 'emacsclient -nw -a ""'
 alias e-kill 'emacsclient -e "(kill-emacs)"'
 abbr --add psg 'ps aux | grep -v grep | grep'
-alias gh 'hub browse (ghq list | peco | cut -d "/" -f 2,3)'
 alias onkeyboard "sudo kextload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
 alias offkeyboard "sudo kextunload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
 abbr --add ghc "stack ghc --"
