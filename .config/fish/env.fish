@@ -16,3 +16,4 @@ set -x PATH ~/.opam/system/bin $PATH
 set -x PATH ~/.screenlayout $PATH
 set -x SBT_OPTS "-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
 set -x PATH ~/.cargo/bin $PATH
+set -x PATH ~/go/bin $PATH
