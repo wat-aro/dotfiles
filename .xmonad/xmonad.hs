@@ -14,6 +14,7 @@ import Data.Ratio ((%))
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Util.SpawnOnce (spawnOnce, spawnOnOnce)
 import XMonad.Actions.SpawnOn (manageSpawn)
+import XMonad.Layout.ThreeColumns
 
 main = do
   wsbars <- mapM (\scid -> spawnPipe (myWsBar scid)) [0, 1]
@@ -28,7 +29,7 @@ main = do
     , workspaces         = myWorkspaces
     , logHook            = myLogHooks wsbars
     , manageHook         = myManageHook <+> manageSpawn <+> myManageFloat <+> manageHook defaultConfig
-    , layoutHook         = avoidStruts $ onWorkspace chat (Tall 1 (3/100) (7/10)) $ layoutHook desktopConfig
+    , layoutHook         = myLayout
     } `additionalKeys`
     [
       ((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >> (windows $ W.greedyView i) >> (warpToWorkSpace i))
@@ -41,9 +42,9 @@ main = do
     ]
     `additionalKeys`
     [
-      ((0, 0x1008ff13), spawn "amixer -D default set Master 5%+ && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
-    , ((0, 0x1008ff11), spawn "amixer -D default set Master 5%- && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
-    , ((0, 0x1008ff12), spawn "amixer -D default set Master toggle")
+      ((0, 0x1008ff13), spawn "pactl set-sink-volume `pactl list sinks short | awk '{print $1}'` +5% && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
+    , ((0, 0x1008ff11), spawn "pactl set-sink-volume `pactl list sinks short | awk '{print $1}'` -5% && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
+    , ((0, 0x1008ff12), spawn "pactl set-sink-mute `pactl list sinks short | awk '{print $1}'` toggle")
     , ((0, 0x1008FF02), spawn "xbacklight + 10")
     , ((0, 0x1008FF03), spawn "xbacklight - 10")
     ]
@@ -54,8 +55,11 @@ main = do
     , ("M-s", spawn "xscreensaver-command -lock")
     ]
 
-myTerminal = "urxvt -e bash -c 'tmux -q has-session && exec tmux attach-session || exec tmux new-session -n$USER -s$USER@$HOSTNAME'"
+myTerminal = "urxvtc -e bash -c 'tmux -q has-session && exec tmux attach-session || exec tmux new-session -n$USER -s$USER@$HOSTNAME'"
 myFocusFollowsMouse = False
+
+myLayout = avoidStruts $ onWorkspace chat (Tall 1 (3/100) (7/10)) $ layoutHook desktopConfig
+-- myLayout = avoidStruts $ onWorkspace chat (ThreeCol 1 (3/100) (1/3) ||| ThreeColMid 1 (3/100) (1/3)) $ layoutHook desktopConfig
 
 colorBlue      = "#857da9"
 colorGreen     = "#88b986"
@@ -65,26 +69,27 @@ colorGrayAlt   = "#313131"
 colorNormalbg  = "#1a1e1b"
 
 myNormalBorderColor  = "#000000"
-myFocusedBorderColor = "#555555"
+myFocusedBorderColor = "#000000"
 
 -- Workspaces
 terminalWs = "terminal"
 chat = "chat"
 web = "web"
 emacs = "emacs"
+vscode = "vscode"
 
-myWorkspaces = [terminalWs, emacs, "3", "4", "5", "6", "7", "8", web, chat]
+myWorkspaces = [terminalWs, emacs, vscode, "4", "5", "6", "7", "8", web, chat]
 
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "~/.screenlayout/private3.sh"
-  spawnOnce "feh --bg-scale ~/Pictures/Wallpapers/wallpaper.jpg"
+  spawnOnce "feh --bg-scale ~/Pictures/Wallpapers/wallpaper.png"
   spawnOnce "albert"
   spawnOnce "xscreensaver -no-splash"
   spawnOnOnce terminalWs myTerminal
   spawnOnOnce web "google-chrome-stable"
   spawnOnOnce emacs "emacs"
-  spawnOnce "~/.local/bin/Idobata"
+  spawnOnce "google-chrome-stable --app=https://idobata.io"
   spawnOnce "slack"
   (selectScreenByWorkSpaceId web) >> (windows $ W.greedyView web)
   (selectScreenByWorkSpaceId chat) >> (windows $ W.greedyView chat)
@@ -92,7 +97,7 @@ myStartupHook = do
 
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ appName   =? "crx_ahlpjaafdhnjmnibpibnanjjghbkcdpd" --> doShift chat
+  [ appName   =? "idobata.io" --> doShift chat
   , className =? "Slack"         --> doShift chat
   ]
 
