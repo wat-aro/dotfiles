@@ -9,3 +9,5 @@
   (flycheck-display-errors-function #'flycheck-pos-tip-error-messages)
   :hook
   (flycheck . flycheck-pos-tip-mode))
+
+(use-package flycheck-pos-tip)
