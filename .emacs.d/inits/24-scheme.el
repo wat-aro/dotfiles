@@ -17,7 +17,7 @@
     (switch-to-buffer-other-window
      (get-buffer-create buf-name))))
 
-(use-package scheme
+(use-package scheme :defer t
   :bind (:map shceme-mode-map ("C-c g" . scheme-other-window))
   :config
   (put 'and-let* 'scheme-indent-function 1)

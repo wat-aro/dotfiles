@@ -1,7 +1,7 @@
-(use-package haskell-mode
+(use-package haskell-mode :defer t
   :hook
   (haskell-mode . flycheck-mode)
   :custom
   (haskell-stylish-on-save t))
 
-(use-package lsp-haskell)
+(use-package lsp-haskell :defer t)

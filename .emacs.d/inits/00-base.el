@@ -1,4 +1,5 @@
 ;;; GC
+(setq gc-cons-threshold (* 128 1024 1024))
 (setq-default gc-cons-percentage 0.5)
 
 ;; PATH
@@ -21,6 +22,8 @@
 
 ;;; Environment:
 (setenv "LC_ALL" "ja_JP.UTF-8")
+
+(use-package bind-key)
 
 (use-package mozc
   :init

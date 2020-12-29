@@ -1,11 +1,11 @@
-(use-package ruby-mode
+(use-package ruby-mode :defer t
   :interpreter (("ruby" . ruby-mode))
   :custom
   (ruby-deep-indent-paren nil)
   (ruby-insert-encoding-magic-comment nil)
   (lsp-solargraph-use-bundler t))
 
-(use-package ruby-electric
+(use-package ruby-electric :defer t
   :hook
   (ruby-mode . (lambda () (ruby-electric-mode t))))
 
@@ -18,7 +18,7 @@
   (inf-ruby-eval-binding "Pry.toplevel_binding"))
 
 ;; RSpec
-(use-package rspec-mode
+(use-package rspec-mode :defer t
   :hook
   (after-init . inf-ruby-switch-setup)
   :custom
@@ -48,11 +48,11 @@
   (projectile-rails-global-mode)
   (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map))
 
-(use-package rinari
+(use-package rinari :defer t
   :hook
   (ruby-mode . rinari-minor-mode))
 
-(use-package rubocop
+(use-package rubocop :defer t
   :hook
   (ruby-mode . rubocop-mode)
   :custom

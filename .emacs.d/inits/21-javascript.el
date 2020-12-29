@@ -22,10 +22,10 @@
 ;;    ("C-c C-b" . nodejs-repl-send-buffer)
 ;;    ("C-c C-g" . nodejs-repl-send-region)))
 
-(use-package tern
+(use-package tern :defer t
   ;; :config
   ;; (use-package tern-auto-complete)
   ;; (tern-ac-setup)
   )
 
-(use-package vue-mode)
+(use-package vue-mode :defer t)

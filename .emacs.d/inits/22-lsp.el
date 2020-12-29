@@ -1,4 +1,5 @@
 (use-package lsp-mode
+  :defer t
   :ensure t
   :custom
   ;; debug

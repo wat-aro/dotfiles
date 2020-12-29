@@ -1,4 +1,4 @@
-(use-package elm-mode
+(use-package elm-mode :defer t
   :custom
   (elm-indent-offset 4)
   (elm-tags-on-save t)

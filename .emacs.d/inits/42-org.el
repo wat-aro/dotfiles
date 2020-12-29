@@ -1,5 +1,5 @@
 ;; org
-(use-package org
+(use-package org :defer t
   :custom
   (org-directory "~/Documents/junk")
   (org-agenda-files (list org-directory))

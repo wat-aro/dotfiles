@@ -1,10 +1,10 @@
-(use-package clojure-mode
+(use-package clojure-mode :defer t
   :hook
   (clojure-mode . paredit-mode)
   :custom
   (clojure-align-forms-automatically t))
 
-(use-package cider
+(use-package cider :defer t
   :hook
   (cider-mode . clj-refactor-mode)
   ((cider-mode cider-repl-mode) . company-mode)
