@@ -15,8 +15,6 @@
 ;;               ("C-p" . ac-previous)))
 
 (use-package company
-  :init
-  (global-company-mode)
   :custom
   (company-idle-delay 0.1)
   (company-minimum-prefix-length 2)
@@ -30,3 +28,6 @@
          :map company-search-map
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous)))
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
