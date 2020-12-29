@@ -2,7 +2,7 @@
 	name = wat-aro
 	email = kazutas1008@gmail.com
 [core]
-	editor = emacsclient -nw
+	editor = code --wait
 	precomposeunicode = true
 	quotepath = false
 	excludesfile = ~/.gitignore
@@ -30,10 +30,9 @@
 	enabled = true
 [ghq]
   root = ~/src
-[url "github:"]
-    InsteadOf = https://github.com/
-    InsteadOf = git@github.com:
 [merge]
 	conflictstyle = diff3
 [rebase]
 	autosquash = true
+[init]
+	defaultBranch = main

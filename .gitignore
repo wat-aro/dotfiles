@@ -63,6 +63,5 @@ xmonad-x86_64-linux
 xmonad.hi
 xmonad.o
 straight
-.config/albert/core.db
-.config/albert/last_used_version
+.config/albert
 .config/fish/fish_variables
