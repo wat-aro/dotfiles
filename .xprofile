@@ -8,3 +8,5 @@ export QT_IM_MODULE=fcitx
 fcitx &
 export XMODIFIERS='@im=fcitx'
 export DefaultIMModule=fcitx
+
+urxvtd --quiet --fork --opendisplay &
