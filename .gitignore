@@ -78,3 +78,4 @@ straight
 .config/pavucontrol.ini
 .config/user-dirs*
 .config/zoomus.conf
+opam-user-setup.el
