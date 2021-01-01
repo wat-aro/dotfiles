@@ -1,5 +1,4 @@
 (use-package lsp-mode
-  :defer t
   :ensure t
   :custom
   ;; debug
@@ -24,24 +23,42 @@
   (lsp-keymap-prefix "C-c C-l")
   :config
   (lsp-register-client
-   (make-lsp-client :new-connection (lsp-tramp-connection '("bundle" "exec" "solargraph" "stdio"))
-                    :major-modes '(ruby-mode enh-ruby-mode)
-                    :priority 0
-                    :remote? t
-                    :multi-root t
-                    :server-id :ruby-ls-remote
-                    :initialized-fn (lambda (workspace)
-                                      (with-lsp-workspace workspace
-                                        (lsp--set-configuration
-                                         (lsp-configuration-section "solargraph"))))))
+    (make-lsp-client :new-connection (lsp-tramp-connection '("bundle" "exec" "solargraph" "stdio"))
+                     :major-modes '(ruby-mode enh-ruby-mode)
+                     :priority 0
+                     :remote? t
+                     :multi-root t
+                     :server-id 'ruby-ls-remote
+                     :initialized-fn (lambda (workspace)
+                        (with-lsp-workspace workspace
+                          (lsp--set-configuration
+                            (lsp-configuration-section "solargraph"))))))
+  (require 'lsp-rust)
   (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection
-                                     (lambda () (cons lsp-gopls-server-path lsp-gopls-server-args)))
-                    :major-modes '(go-mode go-dot-mod-mode)
-                    :priority 0
-                    :remote? t
-                    :server-id 'gopls-remote
-                    :library-folders-fn 'lsp-clients-go--library-default-directories)))
+    (make-lsp-client :new-connection (lsp-tramp-connection '("rust-analyzer"))
+                     :major-modes '(rust-mode rustic-mode)
+                     :remote? t
+                     :priority 2
+                     :initialization-options 'lsp-rust-analyzer--make-init-options
+                     :notification-handlers (ht<-alist lsp-rust-notification-handlers)
+                     :action-handlers (ht ("rust-analyzer.runSingle" #'lsp-rust--analyzer-run-single))
+                     :library-folders-fn (lambda (_workspace) lsp-rust-library-directories)
+                     :after-open-fn (lambda ()
+                       (when lsp-rust-analyzer-server-display-inlay-hints
+                         (lsp-rust-analyzer-inlay-hints-mode)))
+                     :ignore-messages nil
+                     :server-id 'rust-analyzer-remote
+                     :custom-capabilities `((experimental . ((snippetTextEdit . ,(and lsp-enable-snippet (featurep 'yasnippet))))))
+                     :download-server-fn (lambda (_client callback error-callback _update?)
+                            (lsp-package-ensure 'rust-analyzer callback error-callback))))
+  (lsp-register-client
+    (make-lsp-client :new-connection (lsp-stdio-connection
+                                       (lambda () (cons lsp-gopls-server-path lsp-gopls-server-args)))
+                     :major-modes '(go-mode go-dot-mod-mode)
+                     :priority 0
+                     :remote? t
+                     :server-id 'gopls-remote
+                     :library-folders-fn 'lsp-clients-go--library-default-directories)))
 
 (use-package lsp-ui
   :ensure t
