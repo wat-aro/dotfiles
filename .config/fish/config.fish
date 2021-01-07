@@ -4,7 +4,7 @@ if status --is-login
   . ~/.config/fish/env.fish
 end
 
-eval (direnv hook fish)
+direnv hook fish | source
 
 function fish_user_key_bindings
   bind \cr 'peco_select_history (commandline -b)'
