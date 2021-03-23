@@ -42,9 +42,9 @@ main = do
     ]
     `additionalKeys`
     [
-      ((0, 0x1008ff13), spawn "pactl set-sink-volume `pactl list sinks short | awk '{print $1}'` +5% && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
-    , ((0, 0x1008ff11), spawn "pactl set-sink-volume `pactl list sinks short | awk '{print $1}'` -5% && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
-    , ((0, 0x1008ff12), spawn "pactl set-sink-mute `pactl list sinks short | awk '{print $1}'` toggle")
+      ((0, 0x1008ff13), spawn "pactl set-sink-volume `pactl list sinks short | grep RUNNING | awk '{print $1}'` +5% && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
+    , ((0, 0x1008ff11), spawn "pactl set-sink-volume `pactl list sinks short | grep RUNNING | awk '{print $1}'` -5% && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
+    , ((0, 0x1008ff12), spawn "pactl set-sink-mute `pactl list sinks short | grep RUNNING | awk '{print $1}'` toggle")
     , ((0, 0x1008FF02), spawn "xbacklight + 10")
     , ((0, 0x1008FF03), spawn "xbacklight - 10")
     ]
