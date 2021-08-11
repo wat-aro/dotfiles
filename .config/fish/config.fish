@@ -21,5 +21,5 @@ perl -wle \
     PATH > ~/.emacs.d/shellenv.el
 
 # opam configuration
-source /home/wat-aro/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
-eval (opam config env)
+# source /home/wat-aro/.opam/opam-init/init.fish
+# eval (opam config env)

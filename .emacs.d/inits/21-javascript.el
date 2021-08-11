@@ -29,3 +29,9 @@
   )
 
 (use-package vue-mode :defer t)
+(use-package js2-mode :defer t
+  :mode
+  (("\\.js\\'" . js2-mode)
+   ("\\.es6\\'" . js2-mode))
+  :custom
+  (js2-basic-offset 2))

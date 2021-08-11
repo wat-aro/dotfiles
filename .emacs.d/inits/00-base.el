@@ -8,10 +8,12 @@
 
 (let ((default-directory (locate-user-emacs-file "elisp")))
   (add-to-list 'load-path default-directory)
+  (add-to-list 'load-path (locate-user-emacs-file "elisp/gcal"))
   (normal-top-level-add-subdirs-to-load-path))
 
 (add-to-list 'exec-path "~/.local/bin")
 (add-to-list 'exec-path "~/.cargo/bin")
+(add-to-list 'exec-path "~/go/bin")
 
 ;;; Language
 (set-language-environment 'Japanese)
@@ -22,6 +24,7 @@
 
 ;;; Environment:
 (setenv "LC_ALL" "ja_JP.UTF-8")
+(set-coding-system-priority 'utf-8)
 
 (use-package bind-key)
 

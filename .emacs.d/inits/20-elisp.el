@@ -1,6 +1,3 @@
-;;; setting for emacs-lisp
-(add-to-list 'auto-mode-alist '("Cask\\'" . emacs-lisp-mode))
-
 ;; (defvar my/emacs-lisp-ac-sources
 ;;   '(ac-source-features ac-source-functions ac-source-variables ac-source-symbols))
 

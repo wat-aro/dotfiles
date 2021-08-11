@@ -9,7 +9,8 @@
   (lsp-auto-guess-root t)
   (lsp-document-sync-method 'incremental) ;; always send incremental document
   (lsp-response-timeout 5)
-  (lsp-enable-completion-at-point nil)
+  ;; (lsp-enable-completion-at-point nil)
+  (lsp-prefer-capf t)
   :hook
   ((rust-mode haskell-mode vue-mode ruby-mode go-mode) . lsp)
   (lsp-mode . yas-minor-mode)
@@ -21,6 +22,8 @@
   (lsp-rust-server 'rust-analyzer)
   (lsp-completion-provider :capf)
   (lsp-keymap-prefix "C-c C-l")
+  (lsp-document-sync-method 2)
+  (read-process-output-max 4000)
   :config
   (lsp-register-client
     (make-lsp-client :new-connection (lsp-tramp-connection '("bundle" "exec" "solargraph" "stdio"))
@@ -35,6 +38,29 @@
                             (lsp-configuration-section "solargraph"))))))
   (require 'lsp-rust)
   (lsp-register-client
+    (make-lsp-client
+      :new-connection (lsp-stdio-connection
+                        (lambda ()
+                          `(,(or (executable-find
+                                   (cl-first lsp-rust-analyzer-server-command)
+                                   t)
+                               (lsp-package-path 'rust-analyzer)
+                               "rust-analyzer")
+                             ,@(cl-rest lsp-rust-analyzer-server-args))))
+      :major-modes '(rust-mode rustic-mode)
+      :remote? t
+      :priority (if (eq lsp-rust-server 'rust-analyzer) 1 -1)
+      :initialization-options 'lsp-rust-analyzer--make-init-options
+      :notification-handlers (ht<-alist lsp-rust-notification-handlers)
+      :action-handlers (ht ("rust-analyzer.runSingle" #'lsp-rust--analyzer-run-single))
+      :library-folders-fn (lambda (_workspace) lsp-rust-library-directories)
+      :after-open-fn (lambda ()
+                       (when lsp-rust-analyzer-server-display-inlay-hints
+                         (lsp-rust-analyzer-inlay-hints-mode)))
+      :ignore-messages nil
+      :server-id 'rust-analyzer-remote
+      :custom-capabilities `((experimental . ((snippetTextEdit . ,(and lsp-enable-snippet (featurep 'yasnippet))))))))
+  (lsp-register-client
     (make-lsp-client :new-connection (lsp-tramp-connection '("rust-analyzer"))
                      :major-modes '(rust-mode rustic-mode)
                      :remote? t
@@ -48,9 +74,7 @@
                          (lsp-rust-analyzer-inlay-hints-mode)))
                      :ignore-messages nil
                      :server-id 'rust-analyzer-remote
-                     :custom-capabilities `((experimental . ((snippetTextEdit . ,(and lsp-enable-snippet (featurep 'yasnippet))))))
-                     :download-server-fn (lambda (_client callback error-callback _update?)
-                            (lsp-package-ensure 'rust-analyzer callback error-callback))))
+                     :custom-capabilities `((experimental . ((snippetTextEdit . ,(and lsp-enable-snippet (featurep 'yasnippet))))))))
   (lsp-register-client
     (make-lsp-client :new-connection (lsp-stdio-connection
                                        (lambda () (cons lsp-gopls-server-path lsp-gopls-server-args)))

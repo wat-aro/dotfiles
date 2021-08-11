@@ -7,7 +7,7 @@
 (setq create-lockfiles nil)
 
 ;;; Font
-(set-face-attribute 'default nil :family "Ricty" :height 180)
+(set-face-attribute 'default nil :family "Ricty" :height 160)
 
 ;;; Tab
 (setq-default indent-tabs-mode nil)

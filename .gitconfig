@@ -26,6 +26,8 @@
   delete-merged-branch = "!f () { git checkout $1; git branch --merged|egrep -v '\\*|develop|master'|xargs git branch -d; };f"
   dmb = delete-merged-branch
   showpr = !"f() { git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1; }; f"
+	searchpr = "!f(){ git log --oneline --merges --reverse --ancestry-path $1..HEAD | grep \"Merge pull request\" | head -n 1 | cut -d\" \" -f 5;};f"
+	openpr = "!f(){ git searchpr $1 | xargs -I ISSUE_NUMBER gh pr view ISSUE_NUMBER --web;};f"
 [rerere]
 	enabled = true
 [ghq]
@@ -36,3 +38,5 @@
 	autosquash = true
 [init]
 	defaultBranch = main
+[pull]
+	rebase = true

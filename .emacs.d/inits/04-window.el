@@ -43,6 +43,7 @@
   (doom-modeline-icon t)
   (doom-modeline-major-mode-icon nil)
   (doom-modeline-minor-modes nil)
+  (doom-modeline-vcs-max-length 20)
   :hook
   (after-init . doom-modeline-mode)
   :config

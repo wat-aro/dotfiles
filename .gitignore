@@ -79,3 +79,4 @@ straight
 .config/user-dirs*
 .config/zoomus.conf
 opam-user-setup.el
+worktree

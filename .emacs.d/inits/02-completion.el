@@ -37,3 +37,21 @@
 (use-package counsel-tramp
   :bind
   ("C-x M-f" . counsel-tramp))
+
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :init (all-the-icons-ivy-rich-mode 1))
+
+(require 'cl-lib)
+(defun evenp (integer) (cl-evenp integer))
+
+(use-package ivy-rich
+  :ensure t
+  :init (ivy-rich-mode 1)
+  :custom
+  (ivy-rich-path-style 'abbrev)
+  ;; :config
+  ;; (ivy-rich-modify-column 'ivy-switch-buffer
+  ;;   'ivy-rich-switch-buffer-major-mode
+  ;;   '(:width 20))
+  )
