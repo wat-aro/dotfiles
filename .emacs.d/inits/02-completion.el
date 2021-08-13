@@ -42,7 +42,6 @@
   :ensure t
   :init (all-the-icons-ivy-rich-mode 1))
 
-(require 'cl-lib)
 (defun evenp (integer) (cl-evenp integer))
 
 (use-package ivy-rich
