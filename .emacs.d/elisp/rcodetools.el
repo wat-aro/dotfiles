@@ -54,7 +54,7 @@
      (if current-prefix-arg
          (setq rct-option-local
                (read-from-minibuffer "rcodetools option: " option nil nil 'rct-option-history))
-       option))))  
+       option))))
 
 (defun rct-shell-command (command &optional buffer)
   "Replacement for `(shell-command-on-region (point-min) (point-max) command buffer t' because of encoding problem."
@@ -82,7 +82,7 @@ See also `rct-interactive'. "
 (defun xmpfilter-command (&optional option)
   "The xmpfilter command line, DWIM."
   (setq option (or option ""))
-  (flet ((in-block (beg-re)
+  (cl-flet ((in-block (beg-re)
                    (save-excursion
                      (goto-char (point-min))
                      (when (re-search-forward beg-re nil t)
@@ -185,15 +185,13 @@ See also `rct-interactive'."
             (format "-t %s --filename=%s" t-opt bfn))
         ""))))
 
-(require 'cl)
-
 (defun rct-find-test-script-buffer (&optional buffer-list)
   "Find the latest used Ruby test script buffer."
   (setq buffer-list (or buffer-list (buffer-list)))
   (dolist (buf buffer-list)
     (with-current-buffer buf
       (if (and buffer-file-name (string-match "test.*\.rb$" buffer-file-name))
-          (return buf)))))
+          (cl-return buf)))))
 
 ;; (defun rct-find-test-method (buffer)
 ;;   "Find test method on point on BUFFER."
@@ -262,7 +260,7 @@ To kill rct-fork process, use \\[rct-fork-kill].
    (lambda (lib) (format "-r %s" lib))
    (save-excursion
      (goto-char (point-min))
-     (loop while (re-search-forward "\\<require\\> ['\"]\\([^'\"]+\\)['\"]" nil t)
+     (cl-loop while (re-search-forward "\\<require\\> ['\"]\\([^'\"]+\\)['\"]" nil t)
            collect (match-string-no-properties 1)))
    " "))
 
