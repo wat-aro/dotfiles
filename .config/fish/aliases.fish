@@ -1,7 +1,7 @@
 abbr --add g "git"
 abbr --add be 'bundle exec'
 abbr --add r "bin/rails"
-alias e 'emacsclient -nw -a ""'
+alias e 'emacsclient -n -c -a ""'
 alias e-kill 'emacsclient -e "(kill-emacs)"'
 abbr --add psg 'ps aux | grep -v grep | grep'
 alias onkeyboard "sudo kextload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
@@ -25,7 +25,7 @@ abbr --add dcr "docker-compose run --rm \$APP_NAME"
 abbr --add dce "docker-compose exec \$APP_NAME"
 abbr --add mkdir "mkdir -p -v"
 abbr --add c "cargo"
-abbr --add cc "cargo check"
+abbr --add ch "cargo check"
 abbr --add cr "cargo run"
 abbr --add ct "cargo test"
 abbr --add codegh "ghq list | peco | xargs -I{} code (ghq root)/{}"
