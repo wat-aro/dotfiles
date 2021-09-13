@@ -13,4 +13,23 @@
   (tab-width 2)
   (anzu-use-migemo t))
 
-(use-package migemo)
+(use-package migemo
+  :custom
+  (migemo-dictionary "/usr/share/migemo/utf-8/migemo-dict"))
+(use-package dash)
+(use-package s)
+
+
+
+(defun ytn-ivy-migemo-re-builder (str)
+  (let* ((sep " \\|\\^\\|\\.\\|\\*")
+         (splitted (--map (s-join "" it)
+                          (--partition-by (s-matches-p " \\|\\^\\|\\.\\|\\*" it)
+                                          (s-split "" str t)))))
+    (s-join "" (--map (cond ((s-equals? it " ") ".*?")
+                            ((s-matches? sep it) it)
+                            (t (migemo-get-pattern it)))
+                      splitted))))
+
+(setq ivy-re-builders-alist '((t . ivy--regex-plus)
+                              (swiper . ytn-ivy-migemo-re-builder)))
