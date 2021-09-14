@@ -82,3 +82,7 @@
   (if (between-blacketp)
       (open-blacket)
     (newline-and-indent)))
+
+(defun org-find-file ()
+  (interactive)
+  (counsel-find-file "~/Dropbox/org"))
