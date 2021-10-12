@@ -83,7 +83,6 @@ myWorkspaces = [terminalWs, emacs, vscode, "4", "5", "6", "7", "8", web, chat]
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "~/.screenlayout/private3.sh"
-  spawnOnce "feh --bg-scale ~/Pictures/Wallpapers/wallpaper.png"
   spawnOnce "albert"
   spawnOnce "xscreensaver -no-splash"
   spawnOnOnce terminalWs myTerminal
@@ -94,6 +93,7 @@ myStartupHook = do
   (selectScreenByWorkSpaceId web) >> (windows $ W.greedyView web)
   (selectScreenByWorkSpaceId chat) >> (windows $ W.greedyView chat)
   (selectScreenByWorkSpaceId terminalWs) >> (windows $ W.greedyView terminalWs)
+  spawnOnce "feh --bg-scale ~/Pictures/Wallpapers/wallpaper.jpg"
 
 myManageHook :: ManageHook
 myManageHook = composeAll
