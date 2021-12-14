@@ -12,7 +12,7 @@
   ;; (lsp-enable-completion-at-point nil)
   (lsp-prefer-capf t)
   :hook
-  ((rust-mode haskell-mode vue-mode ruby-mode go-mode) . lsp)
+  ((rust-mode haskell-mode vue-mode ruby-mode go-mode c-mode) . lsp)
   (lsp-mode . yas-minor-mode)
   :bind
   (:map lsp-mode-map
