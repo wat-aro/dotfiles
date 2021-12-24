@@ -39,42 +39,23 @@
   (require 'lsp-rust)
   (lsp-register-client
     (make-lsp-client
-      :new-connection (lsp-stdio-connection
-                        (lambda ()
-                          `(,(or (executable-find
-                                   (cl-first lsp-rust-analyzer-server-command)
-                                   t)
-                               (lsp-package-path 'rust-analyzer)
-                               "rust-analyzer")
-                             ,@(cl-rest lsp-rust-analyzer-server-args))))
+      :new-connection (lsp-tramp-connection '("rust-analyzer"))
       :major-modes '(rust-mode rustic-mode)
-      :remote? t
       :priority (if (eq lsp-rust-server 'rust-analyzer) 1 -1)
       :initialization-options 'lsp-rust-analyzer--make-init-options
       :notification-handlers (ht<-alist lsp-rust-notification-handlers)
-      :action-handlers (ht ("rust-analyzer.runSingle" #'lsp-rust--analyzer-run-single))
+      :action-handlers (ht ("rust-analyzer.runSingle" #'lsp-rust--analyzer-run-single)
+                         ("rust-analyzer.debugSingle" #'lsp-rust--analyzer-debug-lens)
+                         ("rust-analyzer.showReferences" #'lsp-rust--analyzer-show-references))
       :library-folders-fn (lambda (_workspace) lsp-rust-library-directories)
       :after-open-fn (lambda ()
                        (when lsp-rust-analyzer-server-display-inlay-hints
                          (lsp-rust-analyzer-inlay-hints-mode)))
       :ignore-messages nil
       :server-id 'rust-analyzer-remote
-      :custom-capabilities `((experimental . ((snippetTextEdit . ,(and lsp-enable-snippet (featurep 'yasnippet))))))))
-  (lsp-register-client
-    (make-lsp-client :new-connection (lsp-tramp-connection '("rust-analyzer"))
-                     :major-modes '(rust-mode rustic-mode)
-                     :remote? t
-                     :priority 2
-                     :initialization-options 'lsp-rust-analyzer--make-init-options
-                     :notification-handlers (ht<-alist lsp-rust-notification-handlers)
-                     :action-handlers (ht ("rust-analyzer.runSingle" #'lsp-rust--analyzer-run-single))
-                     :library-folders-fn (lambda (_workspace) lsp-rust-library-directories)
-                     :after-open-fn (lambda ()
-                       (when lsp-rust-analyzer-server-display-inlay-hints
-                         (lsp-rust-analyzer-inlay-hints-mode)))
-                     :ignore-messages nil
-                     :server-id 'rust-analyzer-remote
-                     :custom-capabilities `((experimental . ((snippetTextEdit . ,(and lsp-enable-snippet (featurep 'yasnippet))))))))
+      :custom-capabilities `((experimental . ((snippetTextEdit . ,(and lsp-enable-snippet (featurep 'yasnippet))))))
+      :download-server-fn (lambda (_client callback error-callback _update?)
+                            (lsp-package-ensure 'rust-analyzer callback error-callback))))
   (lsp-register-client
     (make-lsp-client :new-connection (lsp-stdio-connection
                                        (lambda () (cons lsp-gopls-server-path lsp-gopls-server-args)))
