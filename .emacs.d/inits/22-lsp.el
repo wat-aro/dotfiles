@@ -26,7 +26,7 @@
   (read-process-output-max 4000)
   :config
   (lsp-register-client
-    (make-lsp-client :new-connection (lsp-tramp-connection '("bundle" "exec" "solargraph" "stdio"))
+    (make-lsp-client :new-connection (lsp-tramp-connection '("solargraph" "stdio"))
                      :major-modes '(ruby-mode enh-ruby-mode)
                      :priority 0
                      :remote? t
