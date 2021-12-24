@@ -5,10 +5,6 @@
   (ruby-insert-encoding-magic-comment nil)
   (lsp-solargraph-use-bundler t))
 
-(use-package ruby-electric :defer t
-  :hook
-  (ruby-mode . (lambda () (ruby-electric-mode t))))
-
 ;; inf-ruby
 (use-package inf-ruby :defer t
   :hook
