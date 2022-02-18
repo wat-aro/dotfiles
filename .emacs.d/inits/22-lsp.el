@@ -90,6 +90,8 @@
   (lsp-ui-doc-max-height 30)
   (lsp-ui-doc-use-childframe t)
   (lsp-ui-doc-use-webkit t)
+  (lsp-ui-doc-show-with-cursor t)
+  (lsp-ui-doc-alignment 'window)
   ;; lsp-ui-flycheck
   (lsp-ui-flycheck-enable t)
   ;; lsp-ui-sideline
