@@ -26,37 +26,6 @@
   (read-process-output-max 4000)
   :config
   (lsp-register-client
-    (make-lsp-client :new-connection (lsp-tramp-connection '("solargraph" "stdio"))
-                     :major-modes '(ruby-mode enh-ruby-mode)
-                     :priority 0
-                     :remote? t
-                     :multi-root t
-                     :server-id 'ruby-ls-remote
-                     :initialized-fn (lambda (workspace)
-                        (with-lsp-workspace workspace
-                          (lsp--set-configuration
-                            (lsp-configuration-section "solargraph"))))))
-  (require 'lsp-rust)
-  (lsp-register-client
-    (make-lsp-client
-      :new-connection (lsp-tramp-connection '("rust-analyzer"))
-      :major-modes '(rust-mode rustic-mode)
-      :priority (if (eq lsp-rust-server 'rust-analyzer) 1 -1)
-      :initialization-options 'lsp-rust-analyzer--make-init-options
-      :notification-handlers (ht<-alist lsp-rust-notification-handlers)
-      :action-handlers (ht ("rust-analyzer.runSingle" #'lsp-rust--analyzer-run-single)
-                         ("rust-analyzer.debugSingle" #'lsp-rust--analyzer-debug-lens)
-                         ("rust-analyzer.showReferences" #'lsp-rust--analyzer-show-references))
-      :library-folders-fn (lambda (_workspace) lsp-rust-library-directories)
-      :after-open-fn (lambda ()
-                       (when lsp-rust-analyzer-server-display-inlay-hints
-                         (lsp-rust-analyzer-inlay-hints-mode)))
-      :ignore-messages nil
-      :server-id 'rust-analyzer-remote
-      :custom-capabilities `((experimental . ((snippetTextEdit . ,(and lsp-enable-snippet (featurep 'yasnippet))))))
-      :download-server-fn (lambda (_client callback error-callback _update?)
-                            (lsp-package-ensure 'rust-analyzer callback error-callback))))
-  (lsp-register-client
     (make-lsp-client :new-connection (lsp-stdio-connection
                                        (lambda () (cons lsp-gopls-server-path lsp-gopls-server-args)))
                      :major-modes '(go-mode go-dot-mod-mode)
@@ -64,6 +33,50 @@
                      :remote? t
                      :server-id 'gopls-remote
                      :library-folders-fn 'lsp-clients-go--library-default-directories)))
+
+(with-eval-after-load "lsp-rust"
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-tramp-connection "rust-analyzer")
+    :remote? t
+    :major-modes '(rust-mode rustic-mode)
+    :initialization-options 'lsp-rust-analyzer--make-init-options
+    :notification-handlers (ht<-alist lsp-rust-notification-handlers)
+    :action-handlers (ht ("rust-analyzer.runSingle" #'lsp-rust--analyzer-run-single))
+    :library-folders-fn (lambda (_workspace) lsp-rust-library-directories)
+    :after-open-fn (lambda ()
+                     (when lsp-rust-analyzer-server-display-inlay-hints
+                       (lsp-rust-analyzer-inlay-hints-mode)))
+    :ignore-messages nil
+     :server-id 'rust-analyzer-remote)))
+
+(with-eval-after-load "lsp-solargraph"
+  (lsp-register-client
+    (make-lsp-client :new-connection (lsp-tramp-connection '("solargraph" "stdio"))
+      :major-modes '(ruby-mode enh-ruby-mode)
+      :priority 1
+      :remote? t
+      :multi-root t
+      :server-id 'ruby-ls-remote
+      :initialized-fn (lambda (workspace)
+                        (with-lsp-workspace workspace
+                          (lsp--set-configuration
+                            (lsp-configuration-section "solargraph")))))))
+
+(with-eval-after-load "lsp-go"
+  (lsp-register-client
+    (make-lsp-client :new-connection (lsp-tramp-connection
+                                       (lambda () (cons lsp-go-gopls-server-path lsp-go-gopls-server-args)))
+      :major-modes '(go-mode go-dot-mod-mode)
+      :remote? t
+      :language-id "go"
+      :priority 1
+      :server-id 'gopls-remote
+      :completion-in-comments? t
+      :library-folders-fn #'lsp-go--library-default-directories
+      :after-open-fn (lambda ()
+                       ;; https://github.com/golang/tools/commit/b2d8b0336
+                       (setq-local lsp-completion-filter-on-incomplete nil)))))
 
 (use-package lsp-ui
   :ensure t
