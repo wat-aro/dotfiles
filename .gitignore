@@ -80,3 +80,4 @@ straight
 .config/zoomus.conf
 opam-user-setup.el
 worktree
+definitions.rb
