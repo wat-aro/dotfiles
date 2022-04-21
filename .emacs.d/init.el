@@ -536,14 +536,13 @@
   :ensure t
   :bind (("M-g l" . flycheck-list-errors))
   :custom
-  (flycheck-display-errors-delay . 0.5)
-  (flycheck-idle-change-delay . 1.0)
-  (flycheck-display-errors-function . nil)
-  (flycheck-display-errors-function . #'flycheck-pos-tip-error-messages)
-  :hook
-  (flycheck . flycheck-pos-tip-mode))
+  (flycheck-display-errors-delay . 0.1)
+  (flycheck-idle-change-delay . 1.0))
 
-(leaf flycheck-pos-tip)
+(leaf flycheck-posframe
+  :ensure t
+  :hook
+  (flycheck-mode-hook . flycheck-posframe-mode))
 
 ;; paren
 (show-paren-mode t)
