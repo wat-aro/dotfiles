@@ -553,10 +553,11 @@
 ;; Smartparens
 (leaf smartparens
   :ensure t
-  :hook (after-init-hook . smartparens-strict-mode)
+  :hook (after-init-hook . smartparens-global-mode)
   :require smartparens-config
   :custom (electric-pair-mode . nil)
-  :config (sp-pair "<%" " %>"))
+  :config (sp-pair "<%" " %>")
+  :global-minor-mode t)
 
 (leaf paredit :leaf-defer t
   :ensure t
@@ -620,7 +621,7 @@
 (defhydra hydra-tab-bar (global-map "C-q")
   "tab-bar"
   ("c" tab-bar-new-tab "Create new tab")
-  ("w" tab-bar-close-tab "Close current tab")
+  ("k" tab-bar-close-tab "Close current tab")
   ("n" tab-bar-switch-to-next-tab "Switch to next tab")
   ("p" tab-bar-switch-to-prev-tab "Switch to prev tab"))
 
@@ -799,7 +800,7 @@
   :interpreter (("ruby" . ruby-mode))
   :mode ("\\.jb\\'" . ruby-mode)
   :hook
-  (ruby-mode-hook . inf-ruby-swith-setup)
+  (ruby-mode-hook . inf-ruby-switch-setup)
   :custom
   (ruby-deep-indent-paren . nil)
   (ruby-insert-encoding-magic-comment . nil)
@@ -807,6 +808,7 @@
 
 ;; inf-ruby
 (leaf inf-ruby :leaf-defer t
+  :ensure t
   :hook
   (inf-ruby-mode-hook . ansi-color-for-comint-mode-on)
   :custom
@@ -816,6 +818,8 @@
 ;; RSpec
 (leaf rspec-mode :leaf-defer t
   :ensure t
+  :hook
+  (ruby-mode-hook . rspec-mode)
   :custom
   (compilation-scroll-output . t)
   (rspec-spec-command . "bin/rspec")
@@ -840,15 +844,17 @@
 
 (leaf projectile-rails
   :ensure t
-  :defer-config
+  :init
   (projectile-rails-global-mode)
   (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map))
 
 (leaf rinari :leaf-defer t
+  :ensure t
   :hook
   (ruby-mode-hook . rinari-minor-mode))
 
 (leaf rubocop :leaf-defer t
+  :ensure t
   :hook
   (ruby-mode-hook . rubocop-mode)
   :custom
@@ -1153,6 +1159,7 @@
 
 ;; Projectile
 (leaf projectile :leaf-defer t
+  :ensure t
   :init
   (setq projectile-completion-system 'ivy)
   :custom
@@ -1182,6 +1189,7 @@
   (counsel-dired-jump "~/Documents/junk/"))
 
 (leaf open-junk-file
+  :ensure t
   :custom
   (open-junk-file-format . "~/Documents/junk/%Y/%m/%Y-%m-%d-%H%M%S.")
   :bind
@@ -1271,7 +1279,9 @@
   (nyan-bar-length . 16)
   :global-minor-mode t)
 
-(leaf ddskk)
+(leaf ddskk
+  :ensure t
+  :require skk)
 ;;(require 'skk)
 (bind-keys
   ("C-x C-j" . skk-mode)
