@@ -28,7 +28,7 @@
   :custom
   (package-native-compile . t))
 
-(require 'ht)
+(leaf ht :ensure t)
 
 (leaf cus-edit
   :doc "tools for customizing Emacs and Lisp packages"
@@ -232,7 +232,7 @@
  '(uniquify-buffer-name-style 'post-forward-angle-brackets))
 
 (leaf ivy
-  :url "https://github.com/abo-abo/swiper"
+  :ensure t
   :custom
   (ivy-height . 20)
   :bind
@@ -243,7 +243,6 @@
 (setq enable-recursive-minibuffers t)
 
 (leaf counsel
-  :url "https://github.com/abo-abo/swiper"
   :ensure t
   :bind (
   ("C-c g" . counsel-git)
@@ -256,6 +255,7 @@
   :global-minor-mode t)
 
 (leaf swiper
+  :ensure t
   :bind
   ("C-s" . swiper))
 
