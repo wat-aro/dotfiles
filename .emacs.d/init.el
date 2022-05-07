@@ -67,6 +67,8 @@
   :custom
   (aw-keys . '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
+(leaf s :ensure t)
+
 (defun my-find-file-init-el ()
   "init.elを開く"
   (interactive)
@@ -154,7 +156,7 @@
 (setq create-lockfiles nil)
 
 ;;; Font
-(set-face-attribute 'default nil :family "Ricty" :height 140)
+(set-face-attribute 'default nil :family "Ricty" :height 135)
 
 ;;; Tab
 (setq-default indent-tabs-mode nil)
@@ -184,9 +186,9 @@
 ;; 自動でバッファの再読み込み
 (global-auto-revert-mode 1)
 
-(add-to-list 'safe-local-variable-values
-  '(rspec-docker-command . "docker-compose run --rm")
-  '(rspec-spec-command . "bundle exec rspec"))
+(add-to-list 'safe-local-variable-values '(rspec-docker-command . "docker-compose run --rm"))
+(add-to-list 'safe-local-variable-values '(rspec-spec-command . "bundle exec rspec"))
+(add-to-list 'safe-local-variable-values '(cargo-process--custom-path-to-bin . "/usr/local/cargo/bin/cargo"))
 
 (leaf sudo-edit :ensure t)
 
@@ -234,11 +236,17 @@
 (leaf ivy
   :ensure t
   :custom
-  (ivy-height . 20)
+  (ivy-height . 30)
+  (ivy-wrap . t)
   :bind
   ("C-c C-r" . ivy-resume)
   ("<f6>" . ivy-resume)
   :global-minor-mode t)
+
+(leaf ivy-hydra
+  :ensure t
+  :custom
+  (ivy-read-action-function #'ivy-hydra-read-action))
 
 (setq enable-recursive-minibuffers t)
 
@@ -542,7 +550,9 @@
 (leaf flycheck-posframe
   :ensure t
   :hook
-  (flycheck-mode-hook . flycheck-posframe-mode))
+  (flycheck-mode-hook . flycheck-posframe-mode)
+  :custom
+  (flycheck-posframe-position . 'window-top-right-corner))
 
 ;; paren
 (show-paren-mode t)
@@ -616,12 +626,15 @@
   (tab-bar-new-tab-choice . "*scratch*")
   (tab-bar-tab-hints . t)
   (tab-bar-show . 1)
+  (tab-bar-new-button-show . nil)
+  (tab-bar-close-button-show . nil)
   :global-minor-mode t)
 
 (defhydra hydra-tab-bar (global-map "C-q")
   "tab-bar"
   ("c" tab-bar-new-tab "Create new tab")
   ("k" tab-bar-close-tab "Close current tab")
+  ("C-k" tab-bar-close-tab "Close current tab")
   ("n" tab-bar-switch-to-next-tab "Switch to next tab")
   ("p" tab-bar-switch-to-prev-tab "Switch to prev tab"))
 
@@ -762,7 +775,7 @@
   (lsp-ui-sideline-ignore-duplicate . t)
   (lsp-ui-sideline-show-symbol . t)
   (lsp-ui-sideline-show-hover . t)
-  (lsp-ui-sideline-show-diagnostics . nil)
+  (lsp-ui-sideline-show-diagnostics . t)
   (lsp-ui-sideline-show-code-actions . nil)
   ;; lsp-ui-imenu
   (lsp-ui-imenu-enable . nil)
@@ -772,6 +785,7 @@
   (lsp-ui-peek-peek-height . 20)
   (lsp-ui-peek-list-width . 50)
   (lsp-ui-peek-fontify . 'on-demand) ;; never, on-demand, or always
+  (lsp-modeline-code-actions-segments . '(icon count name))
   :bind
   (lsp-mode-map
         ("C-c C-r" . lsp-ui-peek-find-references)
@@ -860,6 +874,8 @@
   :custom
   `((rubocop-keymap-prefix . ,(kbd "C-c ."))
     (rubocop-autocorrect-on-save . t)))
+
+(leaf yaml-mode :ensure t)
 
 ;; Scheme
 (setq process-coding-system-alist
@@ -958,9 +974,17 @@
   (add-hook 'before-save-hook 'lsp-organize-imports)
   :hook (go-mode-hook . (lambda () (setq tab-width 4))))
 
-(add-hook 'c-mode-hook 'company-mode)
-(add-hook 'c-mode-hook 'flycheck-mode)
-(add-hook 'c-mode-hook #'lsp)
+(leaf c-mode
+  :hook
+  (c-mode-hook . company-mode)
+  (c-mode-hook . flycheck-mode)
+  (c-mode-hook . (lambda () (progn (setq comment-start "// ") (setq comment-end "")))))
+
+(leaf ansi-color
+  :require ansi-color
+  :hook
+  (compilation-filter-hook . (lambda ()
+                               (ansi-color-apply-on-region (point-min) (point-max)))))
 
 (leaf haskell-mode :leaf-defer t
   :ensure t
@@ -1085,9 +1109,35 @@
   :bind
   (rust-mode-map ("C-m" . newline-and-open-blacket)))
 
-(leaf cargo :leaf-defer t
+(defun cargo-process-files (from-path)
+  "Cargo のプロジェクトルートから from-path にあるファイルのリストを返す"
+  (let* ((path (concat (file-name-as-directory (cargo-process--project-root)) from-path))
+          (files (seq-filter (lambda (path) (string-match-p ".rs$" path)) (directory-files path)))
+          (names (mapcar (lambda (file) (s-chop-suffixes '(".rs") file)) files)))
+    (completing-read "Select files: " names)))
+
+(defun cargo-run-bin ()
+  "Select run bin file for cargo"
+  (interactive)
+  (let* ((bin (cargo-process-files "src/bin")))
+    (cargo-process--start (concat "Run " bin)
+      (concat cargo-process--command-run-bin " " bin))))
+
+(defun cargo-process-run-example-completing ()
+  "Select run bin file for cargo"
+  (interactive)
+  (let* ((example (cargo-process-files "examples")))
+    (cargo-process--start (concat "Run " example)
+      (concat cargo-process--command-run-example " " example))))
+
+(leaf cargo
+  :leaf-defer t
   :ensure t
-  :hook (rust-mode-hook . cargo-minor-mode))
+  :require cargo
+  :hook (rust-mode-hook . cargo-minor-mode)
+  :bind (:cargo-minor-mode-command-map
+          ("C-i" . cargo-run-bin)
+          ("C-X" . cargo-process-run-example-completing)))
 
 (leaf typescript-mode :leaf-defer t
   :custom
@@ -1174,8 +1224,14 @@
   :ensure t
   :bind
   ("C-c C-m" . docker))
-(leaf dockerfile-mode)
-(leaf docker-compose-mode)
+
+(leaf dockerfile-mode
+  :leaf-defer t
+  :ensure t)
+
+(leaf docker-compose-mode
+  :leaf-defer t
+  :ensure t)
 
 (custom-set-variables
   '(enable-remote-dir-locals t))
@@ -1244,6 +1300,7 @@
 
 ;; Visual
 (leaf visual-regexp
+  :ensure t
   :bind
   ("M-%" . vr/query-replace))
 
