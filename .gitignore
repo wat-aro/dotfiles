@@ -48,6 +48,10 @@ transient
 brittany
 configstore
 .config/fcitx
+.config/fcitx5
+.config/ibus
+.config/libskk
+.config/mozc
 .config/dconf
 .config/gconf
 .config/google-chrome
@@ -81,3 +85,8 @@ straight
 opam-user-setup.el
 worktree
 definitions.rb
+.emacs.d/.cache
+.emacs.d/el-get
+.emacs.d/games
+.emacs.d/eln-cache
+.emacs.d/kkcrc
