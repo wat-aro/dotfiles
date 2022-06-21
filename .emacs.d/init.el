@@ -667,6 +667,7 @@
 
 (leaf vue-mode :leaf-defer t)
 (leaf js2-mode :leaf-defer t
+  :ensure t
   :mode
   (("\\.js\\'" . js2-mode)
    ("\\.es6\\'" . js2-mode))
@@ -1025,7 +1026,9 @@
                       (get-text-property (point) 'block-side))))
     t))
 
-(leaf web-mode :leaf-defer t
+(leaf web-mode
+  :leaf-defer t
+  :ensure t
   :init
   (--each '("\\.html?\\'" "\\.tpl\\'" "\\.tpl\\.xhtml\\'" "\\.ejs\\'" "\\.hbs\\'"
             "\\.html\\.erb\\'" "\\.html\\+smartphone\\.erb\\'" "\\.css?\\'"
@@ -1044,6 +1047,7 @@
   (flycheck-add-mode 'css-csslint 'web-mode))
 
 (leaf slim-mode
+  :ensure t
   :hook
   (slim-mode-hook . (lambda () (flycheck-mode t)))
   :mode
@@ -1051,9 +1055,13 @@
   ("\\.html\\.slim\\'" . slim-mode))
 
 (leaf haml-mode
+  :ensure t
   :mode
   ("\\.haml\\'" . haml-mode)
   ("\\.html\\.haml\\'" . haml-mode))
+
+(leaf sass-mode
+  :ensure t)
 
 ;; Emmet-mode
 (leaf emmet-mode :leaf-defer t
@@ -1186,6 +1194,7 @@
   (toggle-truncate-lines t))
 
 (leaf org-bullets
+  :ensure t
   ;;:custom (org-bullets-bullet-list '("" "" "" "" "" "" "" "" "" ""))
   :hook (org-mode-hook . org-bullets-mode))
 
