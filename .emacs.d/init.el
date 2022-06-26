@@ -794,14 +794,14 @@
         ("C-c i"   . lsp-ui-peek-find-implementation)
         ("C-c m"   . lsp-ui-imenu)
         ("C-c s"   . lsp-ui-sideline-mode)
-        ("C-c d"   . ladicle/toggle-lsp-ui-doc)
+        ("C-c d"   . wat-aro/toggle-lsp-ui-doc)
         ("C-c h"   . lsp-describe-thing-at-point))
   :hook
   (lsp-mode-hook . lsp-ui-mode))
 
 (leaf lsp-ui-doc
   :preface
-  (defun ladicle/toggle-lsp-ui-doc ()
+  (defun wat-aro/toggle-lsp-ui-doc ()
     (interactive)
     (if lsp-ui-doc-mode
         (progn
