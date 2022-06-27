@@ -28,7 +28,7 @@ main = do
     , focusFollowsMouse  = myFocusFollowsMouse
     , workspaces         = myWorkspaces
     , logHook            = myLogHooks wsbars
-    , manageHook         = myManageHook <+> manageSpawn <+> myManageFloat <+> manageHook defaultConfig
+    , manageHook         = myManageHook <+> manageSpawn <+> myManageFloat <+> manageHook def
     , layoutHook         = myLayout
     } `additionalKeys`
     [
@@ -82,18 +82,14 @@ myWorkspaces = [terminalWs, emacs, vscode, "4", "5", "6", "7", "8", web, chat]
 
 myStartupHook :: X ()
 myStartupHook = do
-  spawnOnce "~/.screenlayout/private3.sh"
   spawnOnce "albert"
-  spawnOnce "xscreensaver -no-splash"
   spawnOnOnce terminalWs myTerminal
   spawnOnOnce web "google-chrome-stable"
   spawnOnOnce emacs "emacs"
-  spawnOnce "google-chrome-stable --app=https://idobata.io"
   spawnOnce "slack"
   (selectScreenByWorkSpaceId web) >> (windows $ W.greedyView web)
   (selectScreenByWorkSpaceId chat) >> (windows $ W.greedyView chat)
   (selectScreenByWorkSpaceId terminalWs) >> (windows $ W.greedyView terminalWs)
-  spawnOnce "feh --bg-scale ~/Pictures/Wallpapers/wallpaper.jpg"
 
 myManageHook :: ManageHook
 myManageHook = composeAll
