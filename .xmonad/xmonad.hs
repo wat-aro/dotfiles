@@ -84,7 +84,7 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "albert"
   spawnOnOnce terminalWs myTerminal
-  spawnOnOnce web "google-chrome-stable"
+  spawnOnOnce web "firefox"
   spawnOnOnce emacs "emacs"
   spawnOnce "slack"
   (selectScreenByWorkSpaceId web) >> (windows $ W.greedyView web)
@@ -99,7 +99,7 @@ myManageHook = composeAll
 
 myManageFloat :: ManageHook
 myManageFloat = composeAll
-  [ appName =? "google-chrome" <&&> resource =? "Dialog" --> doFloat
+  [ appName =? "firefox" <&&> resource =? "Dialog" --> doFloat
   ]
 
 myLogHooks hs = mapM_ myLogHook hs
