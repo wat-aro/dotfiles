@@ -1,4 +1,4 @@
-Config { font = "xft:Noto Sans CJK JP:size=10:Bold"
+Config { font = "xft:Noto Sans CJK JP:size=14:Bold"
        , bgColor = "#1a1e1b"
        , fgColor = "#676767"
        , position = Top
