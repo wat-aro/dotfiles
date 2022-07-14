@@ -1247,6 +1247,9 @@
   :defer-config
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
+(leaf pest-mode
+  :ensure t)
+
 ;; Open junk file
 (defun open-junk-file-directory ()
   (interactive)
