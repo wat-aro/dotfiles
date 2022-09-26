@@ -675,7 +675,18 @@
 
 (leaf yasnippet :ensure t
   :hook
-  (lsp-mode-hook . yas-minor-mode))
+  (lsp-mode-hook . yas-minor-mode)
+  :custom
+  (yas-snippet-dirs . '("~/.emacs.d/snippets")))
+
+(leaf yasnippet-snippets :ensure t)
+
+(leaf ivy-yasnippet
+  :ensure t
+  :after (yasnippet)
+  :bind (("C-c y" . ivy-yasnippet)
+         ("C-c C-y" . ivy-yasnippet)))
+
 
 (leaf lsp-mode
   :ensure t
@@ -689,6 +700,7 @@
   (lsp-document-sync-method . 'incremental) ;; always send incremental document
   (lsp-response-timeout . 5)
   ;; (lsp-enable-completion-at-point . nil)
+  (lsp-enable-snippet . t)
   (lsp-prefer-capf . t)
   (lsp-completion-provider . :capf)
   (lsp-keymap-prefix . "C-c C-l")
