@@ -909,6 +909,7 @@
      (get-buffer-create buf-name))))
 
 (leaf scheme :leaf-defer t
+  :mode ("\\.scm\\'" . scheme-mode)
   :bind (shceme-mode-map ("C-c g" . scheme-other-window))
   :config
   (put 'and-let* 'scheme-indent-function 1)
