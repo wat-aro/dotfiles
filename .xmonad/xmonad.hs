@@ -87,6 +87,7 @@ myStartupHook = do
   spawnOnOnce web "firefox"
   spawnOnOnce emacs "emacs"
   spawnOnce "slack"
+  spawnOnOnce "8" "zulip"
   (selectScreenByWorkSpaceId web) >> (windows $ W.greedyView web)
   (selectScreenByWorkSpaceId chat) >> (windows $ W.greedyView chat)
   (selectScreenByWorkSpaceId terminalWs) >> (windows $ W.greedyView terminalWs)
