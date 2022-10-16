@@ -1362,7 +1362,10 @@
 
 (leaf ddskk
   :ensure t
-  :require skk)
+  :require skk
+  :custom
+  (skk-jisyo . "~/.skk-jisyo")
+  (skk-large-jisyo . "/usr/share/skk/SKK-JISYO.L"))
 ;;(require 'skk)
 (bind-keys
   ("C-x C-j" . skk-mode)
