@@ -7,7 +7,7 @@ import XMonad.Util.Run (spawnPipe, hPutStrLn)
 -- import XMonad.Actions.SpawnOn(spawnOn)
 import XMonad.Util.SpawnOnce
 import XMonad.ManageHook (composeAll, doFloat)
-import XMonad.Hooks.ManageHelpers (isDialog, doFullFloat)
+import XMonad.Hooks.ManageHelpers (isDialog, doFullFloat, doRectFloat, isInProperty)
 import qualified XMonad.StackSet as W
 import XMonad.Actions.Warp (warpToScreen)
 import Data.Ratio ((%))
@@ -87,20 +87,24 @@ myStartupHook = do
   spawnOnOnce web "firefox"
   spawnOnOnce emacs "emacs"
   spawnOnce "slack"
-  spawnOnOnce "8" "zulip"
+  spawnOnOnce "8" "discord"
   (selectScreenByWorkSpaceId web) >> (windows $ W.greedyView web)
   (selectScreenByWorkSpaceId chat) >> (windows $ W.greedyView chat)
   (selectScreenByWorkSpaceId terminalWs) >> (windows $ W.greedyView terminalWs)
+  spawnOnce "~/.screenlayout/private3.sh"
 
 myManageHook :: ManageHook
 myManageHook = composeAll
   [ appName   =? "idobata.io" --> doShift chat
-  , className =? "Slack"         --> doShift chat
+  , className =? "Slack"      --> doShift chat
   ]
+
+isAlert :: Query Bool
+isAlert = isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_NOTIFICATION"
 
 myManageFloat :: ManageHook
 myManageFloat = composeAll
-  [ appName =? "firefox" <&&> resource =? "Dialog" --> doFloat
+  [ isAlert --> doFloat
   ]
 
 myLogHooks hs = mapM_ myLogHook hs
