@@ -2,12 +2,15 @@ import XMonad
 import XMonad.Config.Desktop
 import XMonad.Util.EZConfig (removeKeys, additionalKeys, additionalKeysP)
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, ppOutput, ppOrder, ppCurrent, ppUrgent, ppVisible, ppHidden, ppHiddenNoWindows, ppTitle, ppWsSep, ppSep, xmobarPP, xmobarColor) --for xmobar
-import XMonad.Hooks.ManageDocks (avoidStruts)
+import XMonad.Hooks.EwmhDesktops (ewmh)
+import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run (spawnPipe, hPutStrLn)
 -- import XMonad.Actions.SpawnOn(spawnOn)
 import XMonad.Util.SpawnOnce
 import XMonad.ManageHook (composeAll, doFloat)
 import XMonad.Hooks.ManageHelpers (isDialog, doFullFloat, doRectFloat, isInProperty)
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
 import qualified XMonad.StackSet as W
 import XMonad.Actions.Warp (warpToScreen)
 import Data.Ratio ((%))
@@ -15,10 +18,15 @@ import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Util.SpawnOnce (spawnOnce, spawnOnOnce)
 import XMonad.Actions.SpawnOn (manageSpawn)
 import XMonad.Layout.ThreeColumns
-
+import XMonad.Layout.ToggleLayouts (toggleLayouts)
+import XMonad.Layout.NoBorders (noBorders)
+  
 main = do
-  wsbars <- mapM (\scid -> spawnPipe (myWsBar scid)) [0, 1]
-  xmonad $ desktopConfig
+  xmonad
+    $ withSB myPolybarConf
+    $ ewmh
+    $ docks
+    $ desktopConfig
     { terminal           = myTerminal
     , modMask            = mod4Mask -- Rebind Mod to the Windows key
     , startupHook        = myStartupHook
@@ -27,9 +35,8 @@ main = do
     , focusedBorderColor = myFocusedBorderColor
     , focusFollowsMouse  = myFocusFollowsMouse
     , workspaces         = myWorkspaces
-    , logHook            = myLogHooks wsbars
-    , manageHook         = myManageHook <+> manageSpawn <+> myManageFloat <+> manageHook def
-    , layoutHook         = myLayout
+    , manageHook         = manageDocks <+> myManageHook <+> manageSpawn <+> myManageFloat <+> manageHook def
+    , layoutHook         = toggleLayouts (noBorders Full) $ avoidStruts $ myLayout
     } `additionalKeys`
     [
       ((0 .|. mod4Mask, k), (selectScreenByWorkSpaceId i) >> (windows $ W.greedyView i) >> (warpToWorkSpace i))
@@ -47,6 +54,8 @@ main = do
     , ((0, 0x1008ff12), spawn "pactl set-sink-mute `pactl list sinks short | grep RUNNING | awk '{print $1}'` toggle")
     , ((0, 0x1008FF02), spawn "xbacklight + 10")
     , ((0, 0x1008FF03), spawn "xbacklight - 10")
+    , ((mod4Mask, xK_b), sendMessage ToggleStruts)
+    , ((mod4Mask, xK_i), spawn "rofi -show drun -theme $HOME/.config/polybar/shapes/scripts/rofi/styles.rasi")
     ]
     `additionalKeysP`
     [
@@ -58,7 +67,7 @@ main = do
 myTerminal = "urxvtc -e bash -c 'tmux -q has-session && exec tmux attach-session || exec tmux new-session -n$USER -s$USER@$HOSTNAME'"
 myFocusFollowsMouse = False
 
-myLayout = avoidStruts $ onWorkspace chat (Tall 1 (3/100) (7/10)) $ layoutHook desktopConfig
+myLayout = onWorkspace chat (Tall 1 (3/100) (7/10)) $ layoutHook desktopConfig
 -- myLayout = avoidStruts $ onWorkspace chat (ThreeCol 1 (3/100) (1/3) ||| ThreeColMid 1 (3/100) (1/3)) $ layoutHook desktopConfig
 
 colorBlue      = "#857da9"
@@ -91,7 +100,6 @@ myStartupHook = do
   (selectScreenByWorkSpaceId web) >> (windows $ W.greedyView web)
   (selectScreenByWorkSpaceId chat) >> (windows $ W.greedyView chat)
   (selectScreenByWorkSpaceId terminalWs) >> (windows $ W.greedyView terminalWs)
-  spawnOnce "~/.screenlayout/private3.sh"
 
 myManageHook :: ManageHook
 myManageHook = composeAll
@@ -107,21 +115,21 @@ myManageFloat = composeAll
   [ isAlert --> doFloat
   ]
 
-myLogHooks hs = mapM_ myLogHook hs
-myLogHook h = dynamicLogWithPP $ wsPP { ppOutput = hPutStrLn h }
+-- myLogHooks hs = mapM_ myLogHook hs
+-- myLogHook h = dynamicLogWithPP $ wsPP { ppOutput = hPutStrLn h }
 
-myWsBar scid = "xmobar ~/.xmonad/xmobarrc -x " ++ show scid
+-- myWsBar scid = "xmobar ~/.xmonad/xmobarrc -x " ++ show scid
 
-wsPP = xmobarPP { ppOrder           = \(ws:l:t:_) -> [ws,t]
-                , ppCurrent         = xmobarColor colorGreen colorNormalbg
-                , ppUrgent          = xmobarColor colorWhite colorNormalbg
-                , ppVisible         = xmobarColor colorWhite colorNormalbg
-                , ppHidden          = xmobarColor colorWhite colorNormalbg
-                , ppHiddenNoWindows = xmobarColor colorGray  colorNormalbg
-                , ppTitle           = xmobarColor colorWhite colorNormalbg
-                , ppWsSep           = "    "
-                , ppSep             = "  :::  "
-                }
+-- wsPP = xmobarPP { ppOrder           = \(ws:l:t:_) -> [ws,t]
+--                 , ppCurrent         = xmobarColor colorGreen colorNormalbg
+--                 , ppUrgent          = xmobarColor colorWhite colorNormalbg
+--                 , ppVisible         = xmobarColor colorWhite colorNormalbg
+--                 , ppHidden          = xmobarColor colorWhite colorNormalbg
+--                 , ppHiddenNoWindows = xmobarColor colorGray  colorNormalbg
+--                 , ppTitle           = xmobarColor colorWhite colorNormalbg
+--                 , ppWsSep           = "    "
+--                 , ppSep             = "  :::  "
+--                 }
 
 selectScreenByWorkSpaceId :: WorkspaceId -> X ()
 selectScreenByWorkSpaceId "chat" = selectScreen 1
@@ -135,3 +143,29 @@ warpToWorkSpace :: WorkspaceId -> X ()
 warpToWorkSpace "chat" = warpToScreen 1 (1%2) (1%2)
 warpToWorkSpace "web" = warpToScreen 2 (1%2) (1%2)
 warpToWorkSpace _ = warpToScreen 0 (1%2) (1%2)
+
+---------------------------------------------------------------
+-- Polybar Setting
+---------------------------------------------------------------
+
+myPolybarConf
+  = def { sbLogHook 
+            = xmonadPropLog 
+                =<< dynamicLogString polybarPPdef
+        , sbStartupHook = spawn "~/.config/polybar/launch.sh --shapes"
+        , sbCleanupHook = spawn "killall polybar"
+        }
+
+polybarPPdef 
+  = def { ppCurrent 
+            = polybarFgColor "#FF9F1C" . wrap "[" "]"
+        , ppTitle = const ""
+        }
+
+polybarFgColor :: String -> String -> String
+polybarFgColor fore_color contents
+  = wrap ("%{F" <> fore_color <> "} ") " %{F-}"  contents 
+
+polybarBgColor :: String -> String -> String
+polybarBgColor back_color contents
+  = wrap ("%{B" <> back_color <> "} ") " %{B-}"  contents 

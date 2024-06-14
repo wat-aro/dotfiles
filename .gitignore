@@ -25,7 +25,7 @@ jisyo.bak
 .config/direnv
 hub
 .mc-lists.el
-.bundle/
+
 .stack-work/
 fisherman
 shellenv.el
@@ -83,7 +83,6 @@ straight
 .config/zoomus.conf
 opam-user-setup.el
 worktree
-definitions.rb
 .emacs.d/.cache
 .emacs.d/el-get
 .emacs.d/games

@@ -23,3 +23,4 @@ perl -wle \
 # opam configuration
 # source /home/wat-aro/.opam/opam-init/init.fish
 # eval (opam config env)
+status --is-interactive; and /usr/bin/rbenv init - fish | source

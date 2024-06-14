@@ -156,6 +156,7 @@
 (setq create-lockfiles nil)
 
 ;;; Font
+;; (set-face-attribute 'default nil :family "Ricty" :height 135)
 (set-face-attribute 'default nil :family "Ricty" :height 135)
 
 ;;; Tab
@@ -202,10 +203,10 @@
 (column-number-mode t)
 
 ;; 行番号の表示
-(leaf line-number-mode
+(leaf display-line-numbers-mode
   :custom ((linum-format . "%4d"))
   :config
-  (global-linum-mode))
+  (global-display-line-numbers-mode))
 
 ;; モードラインの割合表示を総行数表示
 (defvar my-lines-page-mode t)
@@ -279,9 +280,11 @@
   :bind
   ("C-x M-f" . counsel-tramp))
 
-(leaf all-the-icons-ivy-rich
+(leaf nerd-icons-ivy-rich
   :ensure t
-  :init (all-the-icons-ivy-rich-mode 1))
+  :init
+  (nerd-icons-ivy-rich-mode 1)
+  (ivy-rich-mode 1))
 
 (defun evenp (integer) (cl-evenp integer))
 
@@ -313,8 +316,6 @@
   ((migemo-dictionary . "/usr/share/migemo/utf-8/migemo-dict")))
 (leaf dash)
 (leaf s)
-
-
 
 ;; (defun ytn-ivy-migemo-re-builder (str)
 ;;   (let* ((sep " \\|\\^\\|\\.\\|\\*")
@@ -381,7 +382,7 @@
     '(misc-info persp-name lsp github debug minor-modes input-method major-mode process vcs checker)))
 
 (custom-set-faces
- '(linum ((t (:inherit (shadow default) :foreground "Gray")))))
+  '(line-number ((t (:inherit default :foreground "dark gray" :strike-through nil :underline nil :slant normal :weight normal)))))
 
 ;; 選択中の色
 (set-face-background 'region "MediumPurple4")
@@ -620,6 +621,11 @@
 
 (put 'dired-find-alternate-file 'disabled nil)
 
+(leaf smartrep :ensure t
+  :config
+  (declare-function smartrep-define-key "smartrep"))
+
+(global-unset-key (kbd "C-q"))
 (leaf tab-bar-mode
   :custom
   (tab-bar-new-tab-choice . "*scratch*")
@@ -627,15 +633,22 @@
   (tab-bar-show . 1)
   (tab-bar-new-button-show . nil)
   (tab-bar-close-button-show . nil)
-  :global-minor-mode t)
+  :global-minor-mode t
+  :smartrep (global-map
+              "C-q"
+              (("c" tab-bar-new-tab "Create new tab")
+                ("k" tab-bar-close-tab "Close current tab")
+                ("C-k" tab-bar-close-tab "Close current tab")
+                ("n" tab-bar-switch-to-next-tab "Switch to next tab")
+                ("p" tab-bar-switch-to-prev-tab "Switch to prev tab"))))
 
-(defhydra hydra-tab-bar (global-map "C-q")
-  "tab-bar"
-  ("c" tab-bar-new-tab "Create new tab")
-  ("k" tab-bar-close-tab "Close current tab")
-  ("C-k" tab-bar-close-tab "Close current tab")
-  ("n" tab-bar-switch-to-next-tab "Switch to next tab")
-  ("p" tab-bar-switch-to-prev-tab "Switch to prev tab"))
+;; (defhydra hydra-tab-bar (global-map "C-q")
+;;   "tab-bar"
+;;   ("c" tab-bar-new-tab "Create new tab")
+;;   ("k" tab-bar-close-tab "Close current tab")
+;;   ("C-k" tab-bar-close-tab "Close current tab")
+;;   ("n" tab-bar-switch-to-next-tab "Switch to next tab")
+;;   ("p" tab-bar-switch-to-prev-tab "Switch to prev tab"))
 
 (defun my/emacs-lisp-mode-hook ()
   "My Emacs Lisp mode."
@@ -732,9 +745,22 @@
 
 (with-eval-after-load "lsp-solargraph"
   (lsp-register-client
-   (make-lsp-client :new-connection (lsp-tramp-connection '("solargraph" "stdio"))
+   (make-lsp-client :new-connection (lsp-tramp-connection '("bundle" "exec" "rubocop" "--lsp"))
                     :major-modes '(ruby-mode enh-ruby-mode)
                     :priority 1
+                    :remote? t
+                    :multi-root t
+                    :server-id 'rubocop-ls-remote
+                    :initialized-fn (lambda (workspace)
+                                      (with-lsp-workspace workspace
+                                                          (lsp--set-configuration
+                                                           (lsp-configuration-section "rubocop")))))))
+
+(with-eval-after-load "lsp-solargraph"
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-tramp-connection '("solargraph" "stdio"))
+                    :major-modes '(ruby-mode enh-ruby-mode)
+                    :priority 10
                     :remote? t
                     :multi-root t
                     :server-id 'ruby-ls-remote
@@ -830,7 +856,7 @@
   :custom
   (ruby-deep-indent-paren . nil)
   (ruby-insert-encoding-magic-comment . nil)
-  (lsp-solargraph-use-bundler . t))
+  (lsp-solargraph-use-bundler . nil))
 
 ;; inf-ruby
 (leaf inf-ruby :leaf-defer t
@@ -848,10 +874,22 @@
   (ruby-mode-hook . rspec-mode)
   :custom
   (compilation-scroll-output . t)
-  (rspec-spec-command . "bin/rspec")
-  (rspec-use-bundler-when-possible . nil)
+  ;; (rspec-spec-command . "bundle exec")
+  (rspec-command-options . "--format documentation")
+  (rspec-use-bundler-when-possible . t)
   :defer-config
   (rspec-install-snippets))
+
+;; minitest
+;; (leaf minitest :leaf-defer t
+;;   :ensure t
+;;   :hook
+;;   (ruby-mode-hook . minitest-mode)
+;;   :custom
+;;   (minitest-use-rails . t)
+;;   (minitest-use-bundler . nil)
+;;   :config
+;;   (minitest-install-snippets))
 
 (defadvice ruby-indent-line (after unindent-closing-paren activate)
   (let ((column (current-column))
@@ -867,6 +905,19 @@
     (when indent
       (indent-line-to indent)
       (when (> offset 0) (forward-char offset)))))
+
+;; Projectile
+(leaf projectile :leaf-defer t
+  :url "https://github.com/bbatsov/projectile/blob/5703797bb2a400e962479e670086aca4241a77b7/projectile.el"
+  :ensure t
+  :init
+  (setq projectile-completion-system 'ivy)
+  :custom
+  (projectile-mode-line
+   '(:eval (format " Projectile[%s]"
+                   (projectile-project-name))))
+  :bind
+  ("C-c p" . projectile-command-map))
 
 (leaf projectile-rails
   :ensure t
@@ -1213,6 +1264,7 @@
 (leaf fish-mode :leaf-defer t)
 
 (leaf terraform-mode :leaf-defer t
+  :ensure t
   :custom
   (terraform-indent-level . 4))
 
@@ -1228,19 +1280,8 @@
   :hook
   (vc . (remove-hook 'find-file-hooks 'vc-find-file-hook)))
 
-;; Projectile
-(leaf projectile :leaf-defer t
-  :ensure t
-  :init
-  (setq projectile-completion-system 'ivy)
-  :custom
-  (projectile-mode-line
-   '(:eval (format " Projectile[%s]"
-                   (projectile-project-name))))
-  :bind
-  ("C-c p" . projectile-command-map))
+;; (leaf docker-tramp :ensure t)
 
-(leaf docker-tramp)
 (leaf docker
   :ensure t
   :bind
@@ -1266,7 +1307,37 @@
 ;; Open junk file
 (defun open-junk-file-directory ()
   (interactive)
-  (counsel-dired-jump "~/Documents/junk/"))
+  (counsel-find-file "~/Documents/junk/"))
+
+(leaf request :ensure t :leaf-defer t)
+
+(leaf request :ensure t :leaf-defer t)
+
+(defun globalip-me ()
+  (interactive)
+  (request "https://globalip.me"
+    :parser 'buffer-string
+    :success (cl-function
+               (lambda (&key data &allow-other-keys)
+                 (let ((globalip (substring data 0 (- (length data) 1))))
+                   (kill-new globalip)
+                   (message globalip))))))
+
+(defun open-sg ()
+  (interactive)
+  (request "https://globalip.me"
+    :parser 'buffer-string
+    :success (cl-function
+               (lambda (&key data &allow-other-keys)
+                 (let* ((globalip (substring data 0 (- (length data) 1)))
+                        (text (concat "@hubot dev open_sg " globalip)))
+                   (kill-new text)
+                   (message text))))))
+
+
+(defun display-ansi-colors ()
+  (interactive)
+  (ansi-color-apply-on-region (point-min) (point-max)))
 
 (leaf open-junk-file
   :ensure t
@@ -1280,24 +1351,23 @@
 (leaf multiple-cursors
   :ensure t
   :defer-config
-  (declare-function smartrep-define-key "smartrep")
-  (global-unset-key (kbd "C-."))
-  (smartrep-define-key global-map "C-."
-    '(("C-'" . 'mc/mark-next-like-this)
-      ("n"   . 'mc/mark-next-like-this)
-      ("p"   . 'mc/mark-previous-like-this)
-      ("m"   . 'mc/mark-more-like-this-extended)
-      ("u"   . 'mc/unmark-next-like-this)
-      ("U"   . 'mc/unmark-previous-like-this)
-      ("s"   . 'mc/skip-to-next-like-this)
-      ("S"   . 'mc/skip-to-previous-like-this)
-      ("*"   . 'mc/mark-all-like-this)
-      ("d"   . 'mc/mark-all-like-this-dwim)
-      ("i"   . 'mc/insert-numbers)
-      ("o"   . 'mc/sort-regions)
-      ("O"   . 'mc/reverse-regions)))
+  :init
+  :smartrep ("C-."
+              (("C-'" . 'mc/mark-next-like-this)
+                ("n"   . 'mc/mark-next-like-this)
+                ("p"   . 'mc/mark-previous-like-this)
+                ("m"   . 'mc/mark-more-like-this-extended)
+                ("u"   . 'mc/unmark-next-like-this)
+                ("U"   . 'mc/unmark-previous-like-this)
+                ("s"   . 'mc/skip-to-next-like-this)
+                ("S"   . 'mc/skip-to-previous-like-this)
+                ("*"   . 'mc/mark-all-like-this)
+                ("d"   . 'mc/mark-all-like-this-dwim)
+                ("i"   . 'mc/insert-numbers)
+                ("o"   . 'mc/sort-regions)
+                ("O"   . 'mc/reverse-regions)))
   :bind  (("C-M-c" . mc/edit-lines)
-          ("C-M-r" . mc/mark-all-in-region)))
+           ("C-M-r" . mc/mark-all-in-region)))
 
 (leaf editorconfig
   :ensure t
@@ -1382,6 +1452,8 @@
 ;;; Key
 ;;(keyboard-translate ?\C-h ?\C-?)
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+
+(setq compilation--start-time nil)
 
 (require 'misc)
 
