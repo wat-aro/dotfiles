@@ -1,39 +1,38 @@
-(when (or load-file-name byte-compile-current-file)
-  (setq user-emacs-directory
-    (expand-file-name
-      (file-name-directory (or load-file-name byte-compile-current-file)))))
+(eval-and-compile
+  (customize-set-variable
+   'package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                       ("melpa" . "https://melpa.org/packages/")))
+  (package-initialize)
+  (use-package leaf :ensure t)
 
-(customize-set-variable
-  'package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
-                       ("melpa" . "https://melpa.org/packages/")
-                       ("org"   . "https://orgmode.org/elpa/")))
-(package-initialize)
-(unless (package-installed-p 'leaf)
-  (package-refresh-contents)
-  (package-install 'leaf))
+  (leaf leaf-keywords
+    :ensure t
+    :init
+    (leaf blackout :ensure t)
+    :config
+    (leaf-keywords-init)))
 
-(leaf leaf-keywords
-  :ensure t
-  :init
-  ;; optional packages if you want to use :hydra, :el-get, :blackout,,,
-  (leaf hydra :ensure t)
-  (leaf el-get :ensure t)
-  (leaf blackout :ensure t)
+(leaf leaf-convert
+  :doc "Convert many format to leaf format"
+  :ensure t)
 
-  :config
-  ;; initialize leaf-keywords.el
-  (leaf-keywords-init))
+(leaf cus-edit
+  :doc "tools for customizing Emacs and Lisp packages"
+  :custom `((custom-file . ,(locate-user-emacs-file "custom.el"))))
 
 (leaf package
   :custom
   (package-native-compile . t))
 
-(leaf ht :ensure t)
+(leaf autorevert
+  :doc "revert buffers when files on disk change"
+  :global-minor-mode global-auto-revert-mode)
 
-(leaf cus-edit
-  :doc "tools for customizing Emacs and Lisp packages"
-  :tag "builtin" "faces" "help"
-  :custom `((custom-file . ,(locate-user-emacs-file "custom.el"))))
+(leaf delsel
+  :doc "delete selection if you insert"
+  :global-minor-mode delete-selection-mode)
+
+(leaf ht :ensure t)
 
 ;;; GC
 (setq gc-cons-threshold (* 128 1024 1024))
@@ -157,7 +156,7 @@
 
 ;;; Font
 ;; (set-face-attribute 'default nil :family "Ricty" :height 135)
-(set-face-attribute 'default nil :family "Ricty" :height 135)
+(set-face-attribute 'default nil :family "PlemolJP" :height 135)
 
 ;;; Tab
 (setq-default indent-tabs-mode nil)
@@ -1268,6 +1267,8 @@
   :custom
   (terraform-indent-level . 4))
 
+
+
 ;; Magit
 (leaf magit
   :ensure t
@@ -1276,7 +1277,7 @@
   (magit-auto-revert-mode . nil)
   (vc-handled-backends . '())
   :bind (("C-x m" . magit-status)
-         ("C-c l" . magit-blame))
+          ("C-c l" . magit-blame))
   :hook
   (vc . (remove-hook 'find-file-hooks 'vc-find-file-hook)))
 
@@ -1293,6 +1294,14 @@
 
 (leaf docker-compose-mode
   :leaf-defer t
+  :ensure t)
+
+(leaf fish-mode
+  :doc "Major mode for fish shell scripts"
+  :req "emacs-24"
+  :tag "shell" "fish" "emacs>=24"
+  :added "2024-09-12"
+  :emacs>= 24
   :ensure t)
 
 (custom-set-variables
@@ -1430,18 +1439,21 @@
   (nyan-bar-length . 16)
   :global-minor-mode t)
 
-(leaf ddskk
-  :ensure t
-  :require skk
-  :custom
-  (skk-jisyo . "~/.skk-jisyo")
-  (skk-large-jisyo . "/usr/share/skk/SKK-JISYO.L"))
+;; (leaf ddskk
+;;   :ensure t
+;;   :require skk
+;;   :custom
+;;   (skk-jisyo . "~/.skk-jisyo")
+;;   (skk-large-jisyo . "/usr/share/skk/SKK-JISYO.L"))
 ;;(require 'skk)
-(bind-keys
-  ("C-x C-j" . skk-mode)
-  ("C-\\" . skk-mode))
-(setq default-input-method "japanese-skk")
-(setq skk-show-inline 'vertical)
+;; (bind-keys
+;;   ("C-x C-j" . skk-mode)
+;;   ("C-\\" . skk-mode))
+;; (setq skk-show-inline 'vertical)
+(leaf mozc
+  :ensure t
+  :init
+  (setq default-input-method "japanese-mozc"))
 
 (leaf direnv)
 
@@ -1481,7 +1493,8 @@
   ("M-f"       . forward-to-word)
   ("M-F"       . forward-word)
   ("M-b"       . backward-word)
-  ("M-B"       . backward-to-word))
+  ("M-B"       . backward-to-word)
+  ("C-x C-j"   . toggle-input-method))
 
 (setq windmove-wrap-around t)
 

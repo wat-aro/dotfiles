@@ -55,7 +55,6 @@ main = do
     , ((0, 0x1008FF02), spawn "xbacklight + 10")
     , ((0, 0x1008FF03), spawn "xbacklight - 10")
     , ((mod4Mask, xK_b), sendMessage ToggleStruts)
-    , ((mod4Mask, xK_i), spawn "rofi -show drun -theme $HOME/.config/polybar/shapes/scripts/rofi/styles.rasi")
     ]
     `additionalKeysP`
     [
@@ -93,7 +92,7 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "albert"
   spawnOnOnce terminalWs myTerminal
-  spawnOnOnce web "firefox"
+  spawnOnOnce web "google-chrome-stable"
   spawnOnOnce emacs "emacs"
   spawnOnce "slack"
   spawnOnOnce "8" "discord"

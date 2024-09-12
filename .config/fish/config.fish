@@ -19,8 +19,3 @@ end
 perl -wle \
     'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
     PATH > ~/.emacs.d/shellenv.el
-
-# opam configuration
-# source /home/wat-aro/.opam/opam-init/init.fish
-# eval (opam config env)
-status --is-interactive; and /usr/bin/rbenv init - fish | source

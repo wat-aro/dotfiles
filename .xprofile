@@ -3,13 +3,12 @@ export LC_CTYPE=ja_JP.utf-8
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS='@im=fcitx'
-export DefaultIMModule=fcitx
-fcitx5 &
+# export GTK_IM_MODULE=xim
+# export QT_IM_MODULE=ibus
+# export XMODIFIERS=@im=ibus
+ibus-daemon -drxR
 
 urxvtd --quiet --fork --opendisplay &
-xrandr --output eDP1 --mode 1920x1080 --pos 5760x1080 --rotate normal --output DP1 --off --output DP2 --off --output DP2-1 --mode 1920x1080 --pos 0x1080 --rotate normal --output DP2-2 --primary --mode 3840x2160 --pos 1920x0 --rotate normal --output DP2-3 --off --output DP3 --off --output DP4 --off --output DP5 --off --output HDMI1 --off --output VIRTUAL1 --off
+# ~/.screenlayout/private3.sh
 feh --bg-scale ~/Pictures/Wallpapers/wallpaper.jpg
 xset s off -dpms
