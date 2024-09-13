@@ -1,5 +1,7 @@
 export PATH="~/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 export MANPATH="/usr/share/man:$MANPATH"
 export MANPATH="~/.opam/default/man:$MANPATH"
 export MANPATH="~/.opam/system/man:$MANPATH"
