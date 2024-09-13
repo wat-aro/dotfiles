@@ -1,1 +1,0 @@
-/home/wat-aro/.config/fisherman/peco/functions/peco_kill.fish
