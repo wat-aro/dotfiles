@@ -63,7 +63,7 @@ main = do
     , ("M-s", spawn "xscreensaver-command -lock")
     ]
 
-myTerminal = "urxvtc -e bash -c 'tmux -q has-session && exec tmux attach-session || exec tmux new-session -n$USER -s$USER@$HOSTNAME'"
+myTerminal = "alacritty -e bash -c 'tmux -q has-session && exec tmux attach-session || exec tmux new-session -n$USER -s$USER@$HOSTNAME'"
 myFocusFollowsMouse = False
 
 myLayout = onWorkspace chat (Tall 1 (3/100) (7/10)) $ layoutHook desktopConfig
