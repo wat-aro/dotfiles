@@ -192,7 +192,7 @@
 (setq set-mark-command-repeat-pop t)
 
 ;;; yes or noをy or n
-(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
 
 ;;; ファイルを開いた位置を保存する
 (leaf save-place
@@ -373,35 +373,17 @@
   )
 
 ;;; Color Theme
-(leaf doom-themes
-  :ensure t neotree
-  :custom ((doom-themes-enable-italic . t)
-           (doom-themes-enable-bold . t))
-  :custom-face
-  (doom-modeline-bar . '((t (:background "#6272a4"))))
-  :config
-  (load-theme 'doom-monokai-pro t)
-  (doom-themes-neotree-config)
-  (doom-themes-org-config))
 
-(leaf doom-modeline
+(leaf ef-themes
+  :doc "Colorful and legible themes"
+  :req "emacs-27.1"
+  :tag "accessibility" "theme" "faces" "emacs>=27.1"
+  :url "https://git.sr.ht/~protesilaos/ef-themes"
+  :added "2024-09-13"
+  :emacs>= 27.1
   :ensure t
-  :custom ((doom-modeline-buffer-file-name-style . 'relative-from-project)
-           (doom-modeline-icon . t)
-           (doom-modeline-major-mode-icon . nil)
-           (doom-modeline-minor-modes . nil)
-           (doom-modeline-vcs-max-length . 20))
-  :hook
-  (after-init-hook . doom-modeline-mode)
   :config
-  (line-number-mode 0)
-  (column-number-mode 0)
-  (doom-modeline-def-modeline 'main
-    '(bar window-number matches buffer-info remote-host buffer-position parrot selection-info)
-    '(misc-info persp-name lsp github debug minor-modes input-method major-mode process vcs checker)))
-
-(custom-set-faces
-  '(line-number ((t (:inherit default :foreground "dark gray" :strike-through nil :underline nil :slant normal :weight normal)))))
+  (load-theme 'ef-elea-dark t))
 
 ;; 選択中の色
 (set-face-background 'region "MediumPurple4")
@@ -789,6 +771,7 @@
   (projectile-mode-line
    '(:eval (format " Projectile[%s]"
                    (projectile-project-name))))
+  (projectile-git-use-fd . nil)
   :bind
   ("C-c p" . projectile-command-map))
 
@@ -1081,11 +1064,37 @@
           ("C-i" . cargo-run-bin)
           ("C-X" . cargo-process-run-example-completing)))
 
+(leaf eglot
+  :doc "The Emacs Client for LSP servers"
+  :tag "builtin"
+  :added "2024-09-13"
+  :hook
+  (rust-mode-hook . eglot-ensure)
+  :custom
+  (eglot-events-buffer-config . '(:size 0  :format short))
+  :bind
+  (eglot-mode-map
+    ("C-c R" . eglot-rename)
+    ("C-c C-j" . eglot-code-actions))
+  :config
+  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
+  (leaf eldoc-box
+    :doc "Display documentation in childframe"
+    :req "emacs-27.1"
+    :tag "emacs>=27.1"
+    :url "https://github.com/casouri/eldoc-box"
+    :added "2024-09-13"
+    :emacs>= 27.1
+    :ensure t
+    :hook (eglot-managed-mode-hook . eldoc-box-hover-mode)))
+
+
+
 (leaf typescript-mode :leaf-defer t
   :custom
   (typescript-indent-level . 2)
   :mode (("\\.ts\\'"  . typescript-mode)
-         ("\\.tsx\\'" . typescript-mode)))
+          ("\\.tsx\\'" . typescript-mode)))
 
 (leaf csharp-mode)
 
