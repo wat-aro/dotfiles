@@ -8,7 +8,6 @@ export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 # export XMODIFIERS=@im=ibus
 ibus-daemon -drxR
 
-urxvtd --quiet --fork --opendisplay &
 # ~/.screenlayout/private3.sh
-feh --bg-scale ~/Pictures/Wallpapers/wallpaper.jpg
+feh --bg-scale --randomize ~/Pictures/Wallpapers/* &
 xset s off -dpms

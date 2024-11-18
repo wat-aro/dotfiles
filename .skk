@@ -25,11 +25,13 @@
 (setq skk-show-mode-style 'inline)	;デフォルトは 'inline
 (set-face-background 'skk-show-mode-inline-face "DodgerBlue")
 
-;; ;; 対応する閉括弧を自動的に挿入する
-;; (setq skk-auto-insert-paren t)
+;; 対応する閉括弧を自動的に挿入する
+(setq skk-auto-insert-paren t)
 
-;; ;; リージョンを括弧で囲む
-;; (setq skk-use-auto-enclose-pair-of-region t)
+;; リージョンを括弧で囲む
+(setq skk-use-auto-enclose-pair-of-region t)
 
 ;; 動的補完
 (setq skk-dcomp-activate t)
+
+(setq skk-isearch-start-mode 'latin)

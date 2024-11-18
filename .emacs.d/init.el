@@ -39,8 +39,7 @@
             (backup-directory-alist . '((".*" . ,(locate-user-emacs-file "backup"))
                                         (,tramp-file-name-regexp . nil)))
             (version-control . t)
-            (delete-old-versions . t)
-            (auto-save-visited-interval . 1)))
+            (delete-old-versions . t)))
 
 (leaf startup
   :doc "process Emacs shell arguments"
@@ -73,6 +72,7 @@
 (set-default-coding-systems 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (setenv "LANG" "ja_JP.UTF-8")
+
 
 ;;; Environment:
 (setenv "LC_ALL" "ja_JP.UTF-8")
@@ -534,7 +534,9 @@
            ("C-s" . company-search-words-regexp))
          (company-search-map
            ("C-n" . company-select-next)
-           ("C-p" . company-select-previous))))
+           ("C-p" . company-select-previous)))
+  :config
+  (global-company-mode))
 
 (leaf company-box
   :ensure t
@@ -708,6 +710,7 @@
   :mode ("\\.jb\\'" . ruby-mode)
   :hook
   (ruby-mode-hook . inf-ruby-switch-setup)
+  (ruby-mode-hook . eglot-ensure)
   :custom
   (ruby-deep-indent-paren . nil)
   (ruby-insert-encoding-magic-comment . nil)
@@ -911,6 +914,15 @@
   :hook
   (haskell-mode-hook . flycheck-mode))
 
+(leaf typescript-mode
+  :doc "Major mode for editing typescript"
+  :req "emacs-24.3"
+  :tag "languages" "typescript" "emacs>=24.3"
+  :url "http://github.com/ananthakumaran/typescript.el"
+  :added "2024-09-25"
+  :emacs>= 24.3
+  :ensure t)
+
 (leaf proof-general :leaf-defer t)
 
 (leaf company-coq :leaf-defer t
@@ -1064,6 +1076,26 @@
           ("C-i" . cargo-run-bin)
           ("C-X" . cargo-process-run-example-completing)))
 
+(leaf fsharp-mode
+  :doc "Support for the F# programming language"
+  :req "emacs-25"
+  :tag "languages" "emacs>=25"
+  :added "2024-09-19"
+  :emacs>= 25
+  :ensure t)
+
+(leaf eglot-fsharp
+  :doc "fsharp-mode eglot integration"
+  :req "emacs-27.1" "eglot-1.4" "fsharp-mode-1.10" "jsonrpc-1.0.14"
+  :tag "languages" "emacs>=27.1"
+  :url "https://github.com/fsharp/emacs-fsharp-mode"
+  :added "2024-09-27"
+  :emacs>= 27.1
+  :ensure t
+  :after fsharp-mode
+  :hook
+  (fsharp-mode-hook . eglot-ensure))
+
 (leaf eglot
   :doc "The Emacs Client for LSP servers"
   :tag "builtin"
@@ -1077,7 +1109,7 @@
     ("C-c R" . eglot-rename)
     ("C-c C-j" . eglot-code-actions))
   :config
-  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))
+  (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) . ("bundle" "exec" "ruby-lsp")))
   (leaf eldoc-box
     :doc "Display documentation in childframe"
     :req "emacs-27.1"
@@ -1230,6 +1262,13 @@
   (interactive)
   (ansi-color-apply-on-region (point-min) (point-max)))
 
+(require 'ivy-ghq)
+(defun magit-ghq ()
+  (interactive)
+  (let ((path (ivy-completing-read "Find ghq repo.: "
+                (ivy-ghq--list-candidates))))
+    (magit-status (format "%s%s" (ivy-ghq--get-root) path) (list (cons 0 0)))))
+
 (leaf open-junk-file
   :ensure t
   :custom
@@ -1321,21 +1360,15 @@
   (nyan-bar-length . 16)
   :global-minor-mode t)
 
-;; (leaf ddskk
-;;   :ensure t
-;;   :require skk
-;;   :custom
-;;   (skk-jisyo . "~/.skk-jisyo")
-;;   (skk-large-jisyo . "/usr/share/skk/SKK-JISYO.L"))
-;;(require 'skk)
-;; (bind-keys
-;;   ("C-x C-j" . skk-mode)
-;;   ("C-\\" . skk-mode))
-;; (setq skk-show-inline 'vertical)
-(leaf mozc
+(leaf ddskk
   :ensure t
-  :init
-  (setq default-input-method "japanese-mozc"))
+  :require skk
+  :custom
+  (skk-jisyo . "~/.skk-jisyo")
+  (skk-large-jisyo . "~/src/github.com/tokuhirom/jawiki-kana-kanji-dict/SKK-JISYO.jawiki")
+  (skk-aux-large-jisyo . "/usr/share/skk/SKK-JISYO.L")
+  :bind
+  ("C-x C-j" . skk-mode))
 
 (leaf direnv)
 
@@ -1382,5 +1415,6 @@
     ("C-x C-j"   . toggle-input-method)))
 
 (setq windmove-wrap-around t)
+(setq default-input-method "japanese-skk")
 
 (provide 'init)
