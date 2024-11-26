@@ -8,7 +8,7 @@
   (leaf leaf-keywords
     :ensure t
     :init
-    (leaf blackout :ensure t)
+    (leaf el-get :ensure t)
     :config
     (leaf-keywords-init)))
 
@@ -65,6 +65,8 @@
 (setq gc-cons-threshold (* 128 1024 1024))
 (setq-default gc-cons-percentage 0.5)
 
+;;; 必ずシンボリックリンクを全て辿って解決した絶対パスとして開く
+;; (setq-default find-file-visit-truename t)
 
 ;;; Language
 (set-language-environment 'Japanese)
@@ -176,7 +178,7 @@
 
 ;;; Font
 ;; (set-face-attribute 'default nil :family "Ricty" :height 135)
-(set-face-attribute 'default nil :family "PlemolJP" :height 160)
+(set-face-attribute 'default nil :family "PlemolJP" :height 200)
 
 ;;; Tab
 (setq-default indent-tabs-mode nil)
@@ -1373,8 +1375,9 @@
 (leaf direnv)
 
 ;; exchange meta-key to super-key
-(setq ns-command-modifier 'meta)
-(setq ns-alternate-modifier 'super)
+(when (and (eq system-type 'darwin) (eq window-system 'mac))
+  (setq mac-command-modifier 'meta)
+  (setq mac-alternate-modifier 'super))
 
 ;;; Key
 ;;(keyboard-translate ?\C-h ?\C-?)
