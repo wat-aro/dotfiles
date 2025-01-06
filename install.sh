@@ -10,6 +10,4 @@ do
     ln -snf $filepath $homefile
 done
 
-mv ${HOME}/.config ${HOME}.config.bak
 ln -snf ${HOME}/dotfiles/.config ${HOME}/.config
-cp -r ${HOME}/.config.bak/* ${HOME}/.config/

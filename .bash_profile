@@ -1,5 +1,4 @@
 export PATH="~/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export MANPATH="/usr/share/man:$MANPATH"
@@ -8,3 +7,4 @@ export MANPATH="~/.opam/system/man:$MANPATH"
 
 test -r ~/.bashrc && . ~/.bashrc
 if [ -e /home/wat-aro/.nix-profile/etc/profile.d/nix.sh ]; then . /home/wat-aro/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+. "$HOME/.cargo/env"

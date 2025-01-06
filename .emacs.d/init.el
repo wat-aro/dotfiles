@@ -1415,7 +1415,8 @@
     ("M-F"       . forward-word)
     ("M-b"       . backward-word)
     ("M-B"       . backward-to-word)
-    ("C-x C-j"   . toggle-input-method)))
+    ("C-x C-j"   . toggle-input-method)
+    ("C-M-S-SPC" . mark-sexp)))
 
 (setq windmove-wrap-around t)
 (setq default-input-method "japanese-skk")
