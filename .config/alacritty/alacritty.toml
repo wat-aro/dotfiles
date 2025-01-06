@@ -1,0 +1,21 @@
+
+[general]
+import = [
+    "~/.config/alacritty/themes/themes/ayu_dark.toml"
+]
+
+[terminal.shell]
+program = "/bin/zsh"
+args = ["-c", "/opt/homebrew/bin/tmux new-session -A -s main" ]
+
+[font]
+size = 20.0
+
+[env]
+TERM = "xterm-256color"
+
+[keyboard]
+bindings = [
+  { key = "F", mods = "Command", chars = "\u001b\u005b\u0031\u003b\u0035\u0043" },
+  { key = "B", mods = "Command", chars = "\u001b\u005b\u0031\u003b\u0035\u0044" }
+]
