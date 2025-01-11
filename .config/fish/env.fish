@@ -19,3 +19,4 @@ set -x PATH ~/.cargo/bin $PATH
 set -x PATH ~/go/bin $PATH
 
 # set -x TMUX_PLUGIN_MANAGER_PATH ~/.tmux/plugins
+set -x DOCKER_HOST_IP (ifconfig en0 | grep inet | grep -v inet6 | awk '{ print $2 }')
